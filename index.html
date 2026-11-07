@@ -1003,10 +1003,397 @@
       display: none !important;
     }
 
+    /* ===================================================================== */
+    /* ESTUDIO DE CARTELERÍA IMPRIMIBLE ESTILO MINALIMA / HOGWARTS PROP      */
+    /* ===================================================================== */
+    .printable-studio-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.9rem;
+      background: rgba(11, 9, 7, 0.75);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.2rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .print-cards-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* Tarjeta Principal Estilo MinaLima */
+    .minalima-sign-wrapper {
+      display: flex;
+      flex-direction: column;
+      filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.55));
+      transition: transform 0.25s ease;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .minalima-sign-wrapper:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Solapa superior plegable para modo caballete (Tent Card) */
+    .tent-flap-top {
+      background:
+        radial-gradient(circle at 50% 50%, #f6ebd4 0%, #e4cfa6 75%, #cbb07d 100%);
+      color: #362212;
+      border: 2px solid #5a3b1e;
+      border-bottom: 2px dashed #7c542d;
+      border-radius: 12px 12px 0 0;
+      padding: 0.85rem 1.1rem;
+      text-align: center;
+      position: relative;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .tent-flap-top.theme-royal {
+      background: radial-gradient(circle at 50% 50%, #241313 0%, #110908 100%);
+      color: #f2ca52;
+      border-color: #d4af37;
+      border-bottom: 2px dashed #d4af37;
+    }
+
+    .tent-flap-top.theme-ink {
+      background: #fffdf8;
+      color: #1f140b;
+      border-color: #2b1d10;
+      border-bottom: 2px dashed #5c4028;
+    }
+
+    .tent-flap-upside-down {
+      transform: rotate(180deg);
+      opacity: 0.88;
+      padding: 0.35rem 0;
+    }
+
+    .tent-fold-label {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #7c542d;
+      margin-top: 0.25rem;
+    }
+
+    .theme-royal .tent-fold-label {
+      color: #d4af37;
+    }
+
+    /* Cuerpo Frontal del Cartel de Mesa */
+    .minalima-card {
+      position: relative;
+      padding: 1.45rem 1.35rem 1.65rem;
+      border-radius: 12px;
+      text-align: center;
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .minalima-card.has-tent-flap {
+      border-radius: 0 0 12px 12px;
+    }
+
+    /* Tema 1: Pergamino Antiguo Hogwarts */
+    .minalima-card.theme-parchment {
+      background:
+        radial-gradient(ellipse at 20% 15%, rgba(255, 250, 235, 0.7) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 85%, rgba(168, 123, 67, 0.35) 0%, transparent 55%),
+        radial-gradient(circle at 50% 50%, #f8efda 0%, #ead6ae 68%, #d2b480 100%);
+      color: #26170b;
+      border: 2px solid #4e3218;
+      box-shadow: inset 0 0 28px rgba(102, 66, 29, 0.38);
+    }
+
+    /* Tema 2: Gala Nocturna Gran Comedor */
+    .minalima-card.theme-royal {
+      background:
+        radial-gradient(circle at 50% 25%, #4a1215 0%, #1c0b0c 58%, #0e0807 100%);
+      color: #f8f0dc;
+      border: 2px solid #d4af37;
+      box-shadow: inset 0 0 26px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Tema 3: Eco-Tinta (Blanco Marfil Grabado) */
+    .minalima-card.theme-ink {
+      background: #fffdf9;
+      color: #1a1109;
+      border: 2px solid #23160c;
+    }
+
+    /* Marco Filigrana Interior */
+    .minalima-inner-frame {
+      position: relative;
+      border: 2px double #734b24;
+      outline: 1px solid rgba(115, 75, 36, 0.45);
+      outline-offset: -6px;
+      padding: 1.25rem 1.05rem 1.35rem;
+      border-radius: 6px;
+      z-index: 2;
+    }
+
+    .theme-royal .minalima-inner-frame {
+      border-color: #d4af37;
+      outline-color: rgba(242, 202, 82, 0.45);
+    }
+
+    .theme-ink .minalima-inner-frame {
+      border-color: #23160c;
+      outline-color: rgba(35, 22, 12, 0.35);
+    }
+
+    /* Ornamentos Esquinas SVG */
+    .corner-ornament {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+    .corner-tl { top: 4px; left: 4px; }
+    .corner-tr { top: 4px; right: 4px; transform: scaleX(-1); }
+    .corner-bl { bottom: 4px; left: 4px; transform: scaleY(-1); }
+    .corner-br { bottom: 4px; right: 4px; transform: scale(-1, -1); }
+
+    .minalima-header-ribbon {
+      display: inline-block;
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.64rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.24rem 0.75rem;
+      border-top: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      color: #6b1414;
+      margin-bottom: 0.55rem;
+    }
+
+    .theme-royal .minalima-header-ribbon {
+      color: #f2ca52;
+    }
+
+    .minalima-emblem-box {
+      width: 68px;
+      height: 68px;
+      margin: 0.15rem auto 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .minalima-emblem-box svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .minalima-main-title {
+      font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+      font-size: 1.32rem;
+      font-weight: 900;
+      line-height: 1.16;
+      letter-spacing: 0.02em;
+      margin: 0.3rem 0;
+      text-transform: uppercase;
+    }
+
+    .theme-parchment .minalima-main-title {
+      color: #241206;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .theme-royal .minalima-main-title {
+      color: #f6d365;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .minalima-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      margin: 0.45rem auto;
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .minalima-divider::before,
+    .minalima-divider::after {
+      content: '';
+      height: 1px;
+      width: 48px;
+      background: currentColor;
+    }
+
+    .minalima-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.04rem;
+      font-style: italic;
+      font-weight: 700;
+      line-height: 1.32;
+      margin: 0.35rem auto 0.65rem;
+      max-width: 94%;
+    }
+
+    .minalima-lore-box {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 0.35rem 0.65rem;
+      border-radius: 4px;
+      background: rgba(92, 59, 28, 0.11);
+      border: 1px dashed rgba(92, 59, 28, 0.4);
+      margin-bottom: 0.75rem;
+    }
+
+    .theme-royal .minalima-lore-box {
+      background: rgba(212, 175, 55, 0.12);
+      border-color: rgba(212, 175, 55, 0.45);
+      color: #ebd8a0;
+    }
+
+    .minalima-footer-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(115, 75, 36, 0.35);
+      padding-top: 0.55rem;
+      margin-top: 0.35rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+
+    .theme-royal .minalima-footer-meta {
+      border-top-color: rgba(212, 175, 55, 0.35);
+      color: #d4af37;
+    }
+
+    /* Sello de Lacre Real en Relieve */
+    .wax-seal-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #c92a2a 0%, #8a1111 65%, #520808 100%);
+      border: 2px solid #6b0d0d;
+      box-shadow:
+        inset 0 2px 4px rgba(255, 180, 180, 0.35),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.6),
+        0 3px 8px rgba(0, 0, 0, 0.45);
+      color: #f6d57a;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.92rem;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Colección C: Cromos Pentagonales de Ranas de Chocolate */
+    .frog-pentagon-wrap {
+      width: 270px;
+      height: 275px;
+      margin: 0 auto;
+      position: relative;
+      padding: 10px;
+      background: linear-gradient(135deg, #d4af37 0%, #f9e27d 50%, #9a7416 100%);
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .frog-pentagon-inner {
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 42%, #4c1d95 0%, #2e1065 65%, #170736 100%);
+      clip-path: polygon(50% 2%, 98% 39%, 81% 98%, 19% 98%, 2% 39%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 1.5rem 1.2rem 1.15rem;
+      text-align: center;
+      color: #fef08a;
+      position: relative;
+    }
+
+    /* Colección D: Billete Expreso de Hogwarts Andén 9 3/4 */
+    .hogwarts-ticket-card {
+      background:
+        radial-gradient(circle at 50% 50%, #fdf5e2 0%, #edd9b4 75%, #d8bc89 100%);
+      color: #23160c;
+      border: 2px solid #5c3d1e;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      position: relative;
+      box-shadow: inset 0 0 0 4px #fdf5e2, inset 0 0 0 6px #8a6236;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Botones flotantes de edición sobre cada cartel en vista previa */
+    .card-edit-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.45rem;
+      padding: 0.3rem 0.5rem;
+      background: rgba(11, 9, 7, 0.75);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
     @media print {
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
       .no-print { display: none !important; }
       .print-only { display: block !important; }
-      body { background: #fff !important; color: #000 !important; }
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .print-sheet-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+      .minalima-sign-wrapper,
+      .frog-pentagon-wrap,
+      .hogwarts-ticket-card {
+        filter: none !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        margin-bottom: 8px;
+      }
     }
   </style>
 </head>
@@ -1385,20 +1772,63 @@
         <div id="checklistStepsGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0.75rem;"></div>
       </div>
 
-      <!-- Carteles Imprimibles Gratis -->
+      <!-- Estudio de Cartelería Mágica Imprimible Estilo MinaLima -->
       <div class="canvas-3d-card" style="padding:1.5rem;">
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.15rem;">
           <div>
-            <h2 style="font-size:1.15rem;color:var(--gold-bright);">🏷️ Carteles de Pergamino Listos para Imprimir Gratis</h2>
-            <p style="font-size:0.78rem;color:var(--text-muted);">
-              Truco de Tamara y Lucía: Imprimidlos en cartulina beige o folio blanco y pasad una bolsita de té húmeda por los bordes para envejecerlos.
+            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;letter-spacing:0.08em;">
+              ✨ Imprenta Oficial del Callejón Diagón · Estilo MinaLima Prop Replica
+            </span>
+            <h2 style="font-size:1.3rem;color:var(--text-main);margin-top:0.2rem;">
+              🏷️ Estudio de Cartelería Mágica Imprimible (Alta Resolución A4)
+            </h2>
+            <p style="font-size:0.8rem;color:var(--text-muted);max-width:780px;margin-top:0.2rem;">
+              Incluye <strong>4 colecciones completas</strong>: Carteles de Mesa con escudos grabados y lacre, Etiquetas Apotecarias para las Botellas de Pociones, <strong>Cromos Pentagonales de Magos Famosos</strong> para las Ranas de Chocolate y <strong>Billetes Dorados del Andén 9 ¾</strong>. Puedes editar cualquier texto o añadir vuestros propios carteles.
             </p>
           </div>
-          <button type="button" class="btn-gold" onclick="window.print()">
-            🖨️ Imprimir los 8 Carteles de Mesa
-          </button>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+            <button type="button" class="btn-outline-brass" onclick="openAddCustomSignModal()">
+              ➕ Crear Cartel Nuevo
+            </button>
+            <button type="button" class="btn-gold" onclick="window.print()">
+              🖨️ Imprimir Colección en A4 / Guardar PDF
+            </button>
+          </div>
         </div>
-        <div id="printablePreviewGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;"></div>
+
+        <!-- Barra de configuración del Estudio de Impresión -->
+        <div class="printable-studio-controls">
+          <div class="control-group">
+            <label for="printCollectionSelect"><span>📚 Qué colección mostrar e imprimir</span></label>
+            <select id="printCollectionSelect" class="select-dark" onchange="setPrintOption('collection', this.value)">
+              <option value="all">✨ Kit Completo (Carteles + Pociones + Cromos + Billetes)</option>
+              <option value="signs">🪧 1. Solo Carteles de Mesa Grandes (8+ uds)</option>
+              <option value="potions">🧪 2. Solo Etiquetas para Botellas de Pociones (4 uds)</option>
+              <option value="frogs">🐸 3. Solo Cromos Pentagonales Ranas de Chocolate (4 uds)</option>
+              <option value="tickets">🎫 4. Solo Billetes Expreso de Hogwarts Andén 9 ¾ (4 uds)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="printThemeSelect"><span>🎨 Acabado Visual de los Carteles</span></label>
+            <select id="printThemeSelect" class="select-dark" onchange="setPrintOption('theme', this.value)">
+              <option value="parchment">📜 Pergamino Antiguo MinaLima (A todo color)</option>
+              <option value="royal">🖤 Gala Nocturna Gran Comedor (Negro, Burdeos y Oro)</option>
+              <option value="ink">🖨️ Ahorro de Tinta (Para imprimir en cartulina beige)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="printFoldSelect"><span>⛺ Formato de Soporte en Mesa</span></label>
+            <select id="printFoldSelect" class="select-dark" onchange="setPrintOption('foldable', this.value === 'tent')">
+              <option value="tent">⛺ Plegable Caballete (Se sujeta de pie doblándolo)</option>
+              <option value="flat">🖼️ Tarjeta Plana (Para marcos o apoyar en tarros)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Previsualización Interactiva de las Colecciones Imprimibles -->
+        <div id="printablePreviewGrid" style="display:flex;flex-direction:column;gap:2rem;"></div>
       </div>
     </section>
 
@@ -3072,6 +3502,460 @@
       }).join('');
     }
 
+    // =========================================================================
+    // 8B. ESTUDIO DE CARTELERÍA IMPRIMIBLE MINALIMA (SVG, POCIONES, CROMOS, BILLETES)
+    // =========================================================================
+    function getMagicalSvgEmblem(type) {
+      const svgs = {
+        hogwarts: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="2" stroke-dasharray="3 2"/>
+          <path d="M22 18H58V42C58 56 40 65 40 65C40 65 22 56 22 42V18Z" stroke="currentColor" stroke-width="2.5" fill="rgba(212,175,55,0.18)"/>
+          <path d="M40 18V65M22 40H58" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="40" cy="40" r="9" fill="#7a1616" stroke="currentColor" stroke-width="2"/>
+          <text x="40" y="44" text-anchor="middle" fill="#f6d365" font-family="Cinzel Decorative,serif" font-size="12" font-weight="900">H</text>
+        </svg>`,
+        snitch: `<svg viewBox="0 0 90 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 36C20 18 4 14 2 22C1 28 14 34 31 38" stroke="currentColor" stroke-width="2" fill="rgba(212,175,55,0.25)"/>
+          <path d="M31 39C16 41 6 47 8 52C11 56 22 49 33 42" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M58 36C70 18 86 14 88 22C89 28 76 34 59 38" stroke="currentColor" stroke-width="2" fill="rgba(212,175,55,0.25)"/>
+          <path d="M59 39C74 41 84 47 82 52C79 56 68 49 57 42" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="45" cy="39" r="13" fill="#d4af37" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="45" cy="39" r="8" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2"/>
+        </svg>`,
+        frog: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,6 74,31 61,72 19,72 6,31" stroke="currentColor" stroke-width="2.4" fill="rgba(91,33,182,0.18)"/>
+          <polygon points="40,12 68,33 57,66 23,66 12,33" stroke="currentColor" stroke-width="1.2" stroke-dasharray="3 2"/>
+          <ellipse cx="40" cy="44" rx="14" ry="11" fill="#4e2614" stroke="currentColor" stroke-width="2"/>
+          <circle cx="33" cy="33" r="4" fill="#d4af37" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="47" cy="33" r="4" fill="#d4af37" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M26 48C18 52 18 60 27 58M54 48C62 52 62 60 53 58" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>`,
+        beans: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="22" y="20" width="36" height="48" rx="6" stroke="currentColor" stroke-width="2.4" fill="rgba(212,175,55,0.14)"/>
+          <path d="M27 20V14H53V20" stroke="currentColor" stroke-width="2.2"/>
+          <ellipse cx="40" cy="11" rx="6" ry="3" stroke="currentColor" stroke-width="2"/>
+          <ellipse cx="33" cy="36" rx="5" ry="3.5" transform="rotate(-20 33 36)" fill="#dc2626" stroke="currentColor" stroke-width="1.3"/>
+          <ellipse cx="46" cy="38" rx="5" ry="3.5" transform="rotate(25 46 38)" fill="#16a34a" stroke="currentColor" stroke-width="1.3"/>
+          <ellipse cx="36" cy="49" rx="5" ry="3.5" transform="rotate(15 36 49)" fill="#eab308" stroke="currentColor" stroke-width="1.3"/>
+          <ellipse cx="47" cy="52" rx="5" ry="3.5" transform="rotate(-18 47 52)" fill="#9333ea" stroke="currentColor" stroke-width="1.3"/>
+          <ellipse cx="39" cy="60" rx="5" ry="3.5" fill="#ea580c" stroke="currentColor" stroke-width="1.3"/>
+        </svg>`,
+        wand: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="16" y1="64" x2="62" y2="18" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="64" y1="64" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="40" cy="14" r="3" fill="#d4af37"/>
+          <path d="M40 4V9M40 19V24M30 14H35M45 14H50" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="64" cy="16" r="2.5" fill="#d4af37"/>
+          <circle cx="16" cy="16" r="2.5" fill="#d4af37"/>
+        </svg>`,
+        potion: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M33 14H47V26L62 54C65 60 61 68 54 68H26C19 68 15 60 18 54L33 26V14Z" stroke="currentColor" stroke-width="2.4" fill="rgba(16,185,129,0.2)"/>
+          <rect x="31" y="8" width="18" height="6" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M22 50Q32 45 40 50T58 50" stroke="currentColor" stroke-width="2"/>
+          <circle cx="35" cy="58" r="2.5" fill="currentColor"/>
+          <circle cx="45" cy="54" r="2" fill="currentColor"/>
+          <circle cx="41" cy="39" r="2" fill="currentColor"/>
+        </svg>`,
+        owl: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="40" cy="44" rx="18" ry="22" fill="rgba(255,255,255,0.5)" stroke="currentColor" stroke-width="2.3"/>
+          <circle cx="33" cy="34" r="5" stroke="currentColor" stroke-width="2" fill="#facc15"/>
+          <circle cx="47" cy="34" r="5" stroke="currentColor" stroke-width="2" fill="#facc15"/>
+          <circle cx="33" cy="34" r="2" fill="#111"/>
+          <circle cx="47" cy="34" r="2" fill="#111"/>
+          <polygon points="40,37 37,43 43,43" fill="currentColor"/>
+          <rect x="28" y="54" width="24" height="15" rx="2" fill="#f4ead5" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="40" cy="61" r="3" fill="#991b1b"/>
+        </svg>`,
+        broom: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="14" y1="62" x2="54" y2="24" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+          <path d="M50 28L64 12C68 16 70 22 68 27L54 32Z" fill="rgba(217,119,6,0.35)" stroke="currentColor" stroke-width="2.2"/>
+          <circle cx="40" cy="40" r="28" stroke="currentColor" stroke-width="1.4" stroke-dasharray="4 3"/>
+        </svg>`
+      };
+      return svgs[type] || svgs.hogwarts;
+    }
+
+    function getCornerFiligreeSvg() {
+      const svg = `<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 30V8C2 4.68629 4.68629 2 8 2H30" stroke="currentColor" stroke-width="2"/>
+        <path d="M6 24V10C6 7.79086 7.79086 6 10 6H24" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="10" cy="10" r="2.2" fill="currentColor"/>
+      </svg>`;
+      return `
+        <span class="corner-ornament corner-tl">${svg}</span>
+        <span class="corner-ornament corner-tr">${svg}</span>
+        <span class="corner-ornament corner-bl">${svg}</span>
+        <span class="corner-ornament corner-br">${svg}</span>
+      `;
+    }
+
+    function setPrintOption(key, value) {
+      if (!state.printSettings) {
+        state.printSettings = { collection: 'all', theme: 'parchment', foldable: true };
+      }
+      state.printSettings[key] = value;
+      saveState();
+      renderLabelsAndChecklist();
+    }
+
+    function editSignContent(signId) {
+      if (!state.customSignOverrides) state.customSignOverrides = {};
+      const currentList = getMasterSignsList();
+      const target = currentList.find(s => s.id === signId);
+      if (!target) return;
+
+      const newTitle = prompt('🪄 Editar Título Principal del Cartel:', target.title);
+      if (newTitle === null) return;
+      const newSubtitle = prompt('✨ Editar Subtítulo / Frase Mágica:', target.subtitle);
+      if (newSubtitle === null) return;
+      const newLore = prompt('📜 Editar Nota Inferior / Ingredientes / Precio:', target.lore);
+      if (newLore === null) return;
+
+      state.customSignOverrides[signId] = {
+        title: newTitle.trim() || target.title,
+        subtitle: newSubtitle.trim() || target.subtitle,
+        lore: newLore.trim() || target.lore
+      };
+      saveState();
+      renderLabelsAndChecklist();
+    }
+
+    function openAddCustomSignModal() {
+      const title = prompt('🪄 Título del nuevo cartel (ej: Cerveza de Mantequilla / Mandrágoras):');
+      if (!title || !title.trim()) return;
+      const subtitle = prompt('✨ Subtítulo o frase mágica:', 'Receta secreta de Las Tres Escobas · Hogsmeade') || '';
+      const badge = prompt('🏷️ Encabezado superior:', '🍺 TABERNA LAS TRES ESCOBAS · HOGSMEADE') || '⚡ ESPECIAL COMUNIÓN';
+      const lore = prompt('🪙 Detalle inferior o precio en Galeones:', 'Espuma cremosa de caramelo · 2 Sickles de Plata') || 'Edición Especial Comunión';
+
+      if (!state.userAddedSigns) state.userAddedSigns = [];
+      state.userAddedSigns.push({
+        id: 'custom_sign_' + Date.now(),
+        emblem: 'potion',
+        badge: badge.toUpperCase(),
+        title: title.trim(),
+        subtitle: subtitle.trim(),
+        lore: lore.trim(),
+        price: '2 SICKLES',
+        catalogNo: 'REG. N.º ' + Math.floor(100 + Math.random() * 899),
+        isCustom: true
+      });
+      saveState();
+      renderLabelsAndChecklist();
+    }
+
+    function deleteCustomSign(signId) {
+      if (!state.userAddedSigns) return;
+      state.userAddedSigns = state.userAddedSigns.filter(s => s.id !== signId);
+      saveState();
+      renderLabelsAndChecklist();
+    }
+
+    function getMasterSignsList() {
+      const name = (state.childName || 'Lucía').trim();
+      const house = state.house || 'Gryffindor';
+      const baseSigns = [
+        {
+          id: 'sign-welcome',
+          emblem: 'hogwarts',
+          badge: '⚡ EXPRESO DE HOGWARTS · ANDÉN 9 ¾',
+          title: `Gran Banquete de ${name}`,
+          subtitle: `Bienvenidos a la Dulcería Mágica Honeydukes · Casa ${house}`,
+          lore: '«Draco Dormiens Nunquam Titillandus» · Mesa Oficial de Primera Comunión',
+          price: 'ENTRADA LIBRE',
+          catalogNo: 'DECRETO N.º 9¾'
+        },
+        {
+          id: 'sign-snitches',
+          emblem: 'snitch',
+          badge: '🏆 CAMPEONATO MUNDIAL DE QUIDDITCH',
+          title: 'Snitches Doradas',
+          subtitle: `¡150 Puntos para ${house} al mago o bruja que atrape una!`,
+          lore: 'Corazón de avellana y cacao cubierto en oro batido con alas encantadas',
+          price: '150 PUNTOS',
+          catalogNo: 'LOTE Q-1991'
+        },
+        {
+          id: 'sign-frogs',
+          emblem: 'frog',
+          badge: '🐸 CONFITERÍA OFICIAL HONEYDUKES · HOGSMEADE',
+          title: 'Ranas de Chocolate',
+          subtitle: 'Hechizadas para dar un solo salto · ¡No las dejes escapar!',
+          lore: 'Elaboradas con 70% Cacao Mágico · Incluye Cromo Pentagonal de Mago Famoso',
+          price: '3 SICKLES',
+          catalogNo: 'HONEY-713'
+        },
+        {
+          id: 'sign-beans',
+          emblem: 'beans',
+          badge: '🫘 ARTÍCULOS DE BROMA Y DULCES MÁGICOS',
+          title: 'Grageas Bertie Bott',
+          subtitle: '¡Un riesgo en cada bocado! De Todos los Sabores imaginables',
+          lore: 'Fresa, Arándano, Limón, Manzana Verde... ¿o Pimienta Negra y Cera de Oído?',
+          price: '1 GALEÓN',
+          catalogNo: 'BERTIE-1935'
+        },
+        {
+          id: 'sign-wands',
+          emblem: 'wand',
+          badge: '🪄 CALLEJÓN DIAGÓN · FABRICANTES DESDE 382 a.C.',
+          title: 'Varitas de Ollivanders',
+          subtitle: `Recuerda siempre: la varita elige al mago en la Comunión de ${name}`,
+          lore: 'Núcleo de chocolate crujiente con polvo de estrella dorada · Hechizo Lumos',
+          price: '7 GALEONES',
+          catalogNo: 'OLLIV-382'
+        },
+        {
+          id: 'sign-potions',
+          emblem: 'potion',
+          badge: '🧪 MAZMORRAS DEL CASTILLO DE HOGWARTS',
+          title: 'Botica del Prof. Snape',
+          subtitle: 'Babosas de Pociones, Elixir Multijugos, Amortentia y Felix Felicis',
+          lore: 'Ingredientes confitados de grado N.E.W.T. · Prohibido el uso sin supervisión mágica',
+          price: '5 SICKLES',
+          catalogNo: 'MAZM-394'
+        },
+        {
+          id: 'sign-hedwig',
+          emblem: 'owl',
+          badge: '🦉 OFICINA POSTAL DE LECHUZAS DE HOGWARTS',
+          title: 'Rincón de Hedwig',
+          subtitle: `Mensajería Aérea Urgente y Cartas de Admisión para ${name}`,
+          lore: 'Tiernas lechuzas nevadas de malvavisco recién llegadas de la Torre Norte',
+          price: '2 KNUTS',
+          catalogNo: 'POST-OWL-07'
+        },
+        {
+          id: 'sign-brooms',
+          emblem: 'broom',
+          badge: '🧹 SUMINISTROS DE QUIDDITCH DE CALIDAD',
+          title: 'Escobas Nimbus 2000',
+          subtitle: 'El modelo más veloz del campo · Contraste dulce y salado encantado',
+          lore: 'Mango de madera crujiente salada con ramitas dulces de pica-pica encantado',
+          price: '20 GALEONES',
+          catalogNo: 'NIMBUS-2000'
+        }
+      ];
+
+      const overrides = state.customSignOverrides || {};
+      const mergedBase = baseSigns.map(s => {
+        if (overrides[s.id]) {
+          return Object.assign({}, s, overrides[s.id]);
+        }
+        return s;
+      });
+
+      const userSigns = (state.userAddedSigns || []).map(s => {
+        if (overrides[s.id]) return Object.assign({}, s, overrides[s.id]);
+        return s;
+      });
+
+      return [...mergedBase, ...userSigns];
+    }
+
+    function renderSingleMinaLimaSignHTML(sign, theme, foldable, isPrintSheet) {
+      const flapHTML = foldable ? `
+        <div class="tent-flap-top theme-${theme}">
+          <div class="tent-flap-upside-down">
+            <div style="font-family:'Cinzel',serif;font-size:0.65rem;font-weight:800;letter-spacing:0.12em;">⚡ HOGWARTS EXPRESS · HONEYDUKES ⚡</div>
+            <div style="font-family:'Cinzel Decorative',serif;font-size:0.9rem;font-weight:900;margin-top:2px;">${escapeHtml(sign.title)}</div>
+          </div>
+          <div class="tent-fold-label">✂️ --- DOBLAR POR ESTA LÍNEA PARA APOYAR DE PIE EN LA MESA --- ✂️</div>
+        </div>
+      ` : '';
+
+      const editBarHTML = !isPrintSheet ? `
+        <div class="card-edit-toolbar no-print">
+          <span>🪧 Cartel de Mesa (${foldable ? 'Caballete Plegable' : 'Plano'})</span>
+          <div style="display:flex;gap:0.4rem;">
+            <button type="button" class="btn-outline-brass" style="padding:0.18rem 0.5rem;font-size:0.68rem;" onclick="editSignContent('${sign.id}')">
+              ✏️ Editar texto
+            </button>
+            ${sign.isCustom ? `<button type="button" class="comment-delete-btn" onclick="deleteCustomSign('${sign.id}')" title="Borrar cartel">🗑️</button>` : ''}
+          </div>
+        </div>
+      ` : '';
+
+      return `
+        <div class="minalima-sign-wrapper">
+          ${flapHTML}
+          <div class="minalima-card theme-${theme} ${foldable ? 'has-tent-flap' : ''}">
+            <div class="minalima-inner-frame">
+              ${getCornerFiligreeSvg()}
+              <div class="minalima-header-ribbon">${escapeHtml(sign.badge)}</div>
+              <div class="minalima-emblem-box">${getMagicalSvgEmblem(sign.emblem)}</div>
+              <div class="minalima-main-title">${escapeHtml(sign.title)}</div>
+              <div class="minalima-divider">✦ ❖ ✦</div>
+              <div class="minalima-subtitle">«${escapeHtml(sign.subtitle)}»</div>
+              <div class="minalima-lore-box">${escapeHtml(sign.lore)}</div>
+              <div class="minalima-footer-meta">
+                <span>${escapeHtml(sign.catalogNo)}</span>
+                <div class="wax-seal-badge" title="Sello Oficial de Hogwarts">H</div>
+                <span>VALOR: ${escapeHtml(sign.price)}</span>
+              </div>
+            </div>
+          </div>
+          ${editBarHTML}
+        </div>
+      `;
+    }
+
+    function renderPotionApothecaryLabelsHTML(theme) {
+      const name = (state.childName || 'Lucía').trim();
+      const potions = [
+        {
+          code: 'ELIXIR N.º 394 · GRADO AVANZado',
+          name: 'POCIÓN MULTIJUGOS',
+          latin: 'Polyjuice Potion · Transformación Temporal',
+          accent: '#065f46',
+          ingredients: 'Crisopos guisados 21 días · Sanguijuelas · Descurainia Sophia · Polvo de cuerno de Bicornio',
+          warning: 'USO EXCLUSIVO PARA MAGOS AUTORIZADOS'
+        },
+        {
+          code: 'DESTILADO REAL · H. SLUGHORN',
+          name: 'FELIX FELICIS',
+          latin: 'Suerte Líquida · Oro Fundido Encantado',
+          accent: '#92400e',
+          ingredients: 'Huevo de Ashwinder · Bulbo de Scilla · Tentáculo de Murtlap · Tomillo y Ruda Mágica',
+          warning: `ÉXITO GARANTIZADO EN LA COMUNIÓN DE ${name.toUpperCase()}`
+        },
+        {
+          code: 'FILTRO DE LA BOTICA REAL',
+          name: 'AMORTENTIA',
+          latin: 'El Filtro de Amor y Alegría más Poderoso',
+          accent: '#991b1b',
+          ingredients: 'Espinas de Rosa Encantada · Polvo de Perla Lunar · Esencia de Miel de Honeydukes',
+          warning: 'VAPOR NACARADO EN ESPIRAL · NO DERRAMAR'
+        },
+        {
+          code: 'RESERVA DE LAS MAZMORRAS',
+          name: 'BABOSAS & VERITASERUM',
+          latin: 'Propiedad Privada del Prof. Severus Snape',
+          accent: '#1e3a8a',
+          ingredients: 'Tres gotas bastan para revelar cualquier secreto en el Gran Comedor de Hogwarts',
+          warning: 'MINISTERIO DE MAGIA · CLASIFICACIÓN X-5'
+        }
+      ];
+
+      return potions.map(p => `
+        <div class="minalima-sign-wrapper">
+          <div class="minalima-card theme-${theme}" style="border-width:3px;">
+            <div class="minalima-inner-frame" style="border-color:${theme === 'royal' ? '#d4af37' : p.accent};">
+              ${getCornerFiligreeSvg()}
+              <div style="font-family:'Cinzel',serif;font-size:0.6rem;font-weight:800;letter-spacing:0.14em;color:${theme === 'royal' ? '#f2ca52' : p.accent};">
+                ⚗️ ${p.code} ⚗️
+              </div>
+              <div style="width:46px;height:46px;margin:0.35rem auto;">${getMagicalSvgEmblem('potion')}</div>
+              <div class="minalima-main-title" style="font-size:1.18rem;">${p.name}</div>
+              <div class="font-serif-italic" style="font-size:0.92rem;font-weight:700;margin-bottom:0.45rem;">${p.latin}</div>
+              <div class="minalima-lore-box" style="font-size:0.65rem;line-height:1.35;">
+                <strong>INGREDIENTES:</strong> ${p.ingredients}
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.4rem;font-family:'Cinzel',serif;font-size:0.58rem;font-weight:800;">
+                <span>✂️ RECORTAR Y PEGAR EN FRASCO</span>
+                <div class="wax-seal-badge" style="width:30px;height:30px;font-size:0.75rem;">S</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderChocolateFrogPentagonsHTML() {
+      const name = (state.childName || 'Lucía').trim();
+      const house = state.house || 'Gryffindor';
+      const wizards = [
+        {
+          number: 'CROMO N.º 01 · COLECCIÓN ESPECIAL',
+          name: name.toUpperCase(),
+          role: `Magia de Primera Comunión · Casa ${house}`,
+          bio: `Protagonista absoluta del Gran Banquete de Hogwarts y fundadora honoraria de este rincón de Honeydukes.`,
+          icon: '👧🏻🪄'
+        },
+        {
+          number: 'CROMO N.º 101 · MAGOS FAMOSOS',
+          name: 'ALBUS DUMBLEDORE',
+          role: 'Director del Colegio Hogwarts de Magia y Hechicería',
+          bio: 'Célebre por derrotar a Grindelwald en 1945 y descubrir las doce aplicaciones mágicas de la sangre de dragón.',
+          icon: '🧙🏼‍♂️✨'
+        },
+        {
+          number: 'CROMO N.º 07 · BUSCADOR DE ORO',
+          name: 'HARRY POTTER',
+          role: 'El Niño que Sobrevivió · Campeón de Quidditch',
+          bio: 'El buscador más joven en un siglo. Experto en el encantamiento Patronus y cazador de Snitches Doradas.',
+          icon: '⚡👓'
+        },
+        {
+          number: 'CROMO N.º 12 · MENTE BRILLANTE',
+          name: 'HERMIONE GRANGER',
+          role: 'Maestra de Pociones, Aritmancia y Encantamientos',
+          bio: 'Capaz de preparar una Poción Multijugos perfecta en segundo curso. «Es Levi-O-sa, no Levio-SÁ».',
+          icon: '📚🪄'
+        }
+      ];
+
+      return wizards.map(w => `
+        <div style="display:flex;flex-direction:column;align-items:center;page-break-inside:avoid;break-inside:avoid;">
+          <div class="frog-pentagon-wrap">
+            <div class="frog-pentagon-inner">
+              <div style="font-family:'Cinzel',serif;font-size:0.52rem;font-weight:800;letter-spacing:0.1em;color:#facc15;margin-bottom:0.2rem;">
+                ★ HONEYDUKES · ${w.number} ★
+              </div>
+              <div style="width:66px;height:66px;border-radius:50%;border:2px solid #facc15;background:radial-gradient(circle,#3b0764,#1e1b4b);display:flex;align-items:center;justify-content:center;font-size:1.95rem;margin-bottom:0.35rem;box-shadow:0 0 15px rgba(250,204,21,0.35);">
+                ${w.icon}
+              </div>
+              <div style="font-family:'Cinzel Decorative',serif;font-size:0.95rem;font-weight:900;color:#fef08a;line-height:1.15;">
+                ${escapeHtml(w.name)}
+              </div>
+              <div class="font-serif-italic" style="font-size:0.78rem;color:#e9d5ff;margin:0.15rem 0 0.3rem;">
+                ${escapeHtml(w.role)}
+              </div>
+              <div style="font-size:0.6rem;line-height:1.28;color:#f3e8ff;background:rgba(0,0,0,0.35);padding:0.3rem 0.5rem;border-radius:6px;border:1px solid rgba(250,204,21,0.35);">
+                ${escapeHtml(w.bio)}
+              </div>
+            </div>
+          </div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-top:0.35rem;" class="no-print">
+            ✂️ Recortar por el borde dorado pentagonal y posar la Rana encima
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderHogwartsExpressTicketsHTML() {
+      const name = (state.childName || 'Lucía').trim();
+      const house = state.house || 'Gryffindor';
+      const tickets = [1, 2, 3, 4];
+      return tickets.map(num => `
+        <div class="hogwarts-ticket-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px solid #5c3d1e;padding-bottom:0.4rem;margin-bottom:0.55rem;">
+            <span style="font-family:'Cinzel',serif;font-size:0.65rem;font-weight:800;letter-spacing:0.12em;">LONDON TO HOGWARTS</span>
+            <span style="font-family:'Cinzel Decorative',serif;font-size:0.75rem;font-weight:900;color:#7a1616;">BILLETE N.º 009${num}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:0.65rem;text-align:center;">
+            <div>
+              <div style="font-size:0.6rem;font-weight:800;text-transform:uppercase;color:#6b4423;">SALIDA DESDE</div>
+              <div class="font-magical" style="font-size:0.95rem;font-weight:800;">KING'S CROSS</div>
+              <div class="font-serif-italic" style="font-size:0.8rem;">Expreso de las 11:00h</div>
+            </div>
+            <div style="width:62px;height:62px;border-radius:50%;border:2px double #7a1616;background:#7a1616;color:#f6d365;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Cinzel Decorative',serif;">
+              <span style="font-size:0.48rem;letter-spacing:0.06em;">ANDÉN</span>
+              <strong style="font-size:1.15rem;line-height:1;">9 ¾</strong>
+            </div>
+            <div>
+              <div style="font-size:0.6rem;font-weight:800;text-transform:uppercase;color:#6b4423;">DESTINO FINAL</div>
+              <div class="font-magical" style="font-size:0.95rem;font-weight:800;">COMUNIÓN ${escapeHtml(name.toUpperCase())}</div>
+              <div class="font-serif-italic" style="font-size:0.8rem;">Casa ${escapeHtml(house)}</div>
+            </div>
+          </div>
+          <div style="border-top:1px dashed #7c542d;margin-top:0.55rem;padding-top:0.4rem;display:flex;justify-content:space-between;font-size:0.62rem;font-weight:700;color:#5c3d1e;">
+            <span>✨ PASE VIP A LA DULCERÍA HONEYDUKES</span>
+            <span>✂️ IDEAL PARA LAS BOLSITAS KRAFT</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
     function renderLabelsAndChecklist() {
       const checklistGrid = document.getElementById('checklistStepsGrid');
       const badge = document.getElementById('checklistProgressBadge');
@@ -3094,43 +3978,96 @@
         }).join('');
       }
 
-      const name = (state.childName || 'Lucía').trim();
-      const cards = [
-        { badge: '⚡ EXPRESO DE HOGWARTS · ANDÉN 9 ¾', title: `La Comunión Mágica de ${name}`, subtitle: `Bienvenidos a Honeydukes · Casa ${state.house}` },
-        { badge: '🏆 TORNEO DE QUIDDITCH', title: 'Snitches Doradas', subtitle: `150 puntos para ${state.house} si atrapas una` },
-        { badge: '🐸 DULCERÍA HONEYDUKES', title: 'Ranas de Chocolate', subtitle: '¡Cuidado, que no den un salto antes de comerlas!' },
-        { badge: '🫘 ARTÍCULOS DE BROMA Y DULCES', title: 'Grageas de Bertie Bott', subtitle: 'De todos los sabores: fresa, limón... ¿o cera de oído?' },
-        { badge: '🪄 CALLEJÓN DIAGÓN · DESDE 382 a.C.', title: 'Varitas de Ollivanders', subtitle: `La varita elige al mago en la comunión de ${name}` },
-        { badge: '🧪 MAZMORRAS DE HOGWARTS', title: 'Botica del Prof. Snape', subtitle: 'Babosas de Pociones, Multijugos y Felix Felicis' },
-        { badge: '🦉 LECHUCERÍA DE HOGWARTS', title: 'Rincón de Hedwig', subtitle: 'Mensajería urgente y cartas de admisión' },
-        { badge: '🧹 QUIDDITCH · MODELO DE CARRERA', title: 'Escobas Nimbus 2000', subtitle: 'Dulces y saladas listas para salir volando' }
-      ];
+      if (!state.printSettings) {
+        state.printSettings = { collection: 'all', theme: 'parchment', foldable: true };
+      }
+      const { collection, theme, foldable } = state.printSettings;
+      const signsList = getMasterSignsList();
+
+      let previewSectionsHTML = '';
+      let printSheetSectionsHTML = '';
+
+      // 1. Carteles de Mesa Grandes
+      if (collection === 'all' || collection === 'signs') {
+        const signsCardsPreview = signsList.map(s => renderSingleMinaLimaSignHTML(s, theme, foldable, false)).join('');
+        const signsCardsPrint = signsList.map(s => renderSingleMinaLimaSignHTML(s, theme, foldable, true)).join('');
+        previewSectionsHTML += `
+          <div>
+            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
+              🪧 A. Carteles Principales de Mesa (${signsList.length} carteles · Formato ${foldable ? 'Caballete Plegable' : 'Tarjeta Plana'})
+            </h3>
+            <div class="print-cards-showcase">${signsCardsPreview}</div>
+          </div>
+        `;
+        printSheetSectionsHTML += `
+          <div style="margin-bottom:18px;">
+            <div class="print-sheet-grid">${signsCardsPrint}</div>
+          </div>
+        `;
+      }
+
+      // 2. Etiquetas Apotecarias de Pociones
+      if (collection === 'all' || collection === 'potions') {
+        const potionsHTML = renderPotionApothecaryLabelsHTML(theme);
+        previewSectionsHTML += `
+          <div>
+            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
+              🧪 B. Etiquetas Apotecarias para pegar en las Botellas de Pociones (4 etiquetas recortables)
+            </h3>
+            <div class="print-cards-showcase">${potionsHTML}</div>
+          </div>
+        `;
+        printSheetSectionsHTML += `
+          <div style="margin-bottom:18px;">
+            <div class="print-sheet-grid">${potionsHTML}</div>
+          </div>
+        `;
+      }
+
+      // 3. Cromos Pentagonales de Ranas de Chocolate
+      if (collection === 'all' || collection === 'frogs') {
+        const frogsHTML = renderChocolateFrogPentagonsHTML();
+        previewSectionsHTML += `
+          <div>
+            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
+              🐸 C. Cromos Pentagonales Coleccionables para las Ranas de Chocolate (Incluye el Cromo de ${(state.childName || 'Lucía').trim()})
+            </h3>
+            <div class="print-cards-showcase" style="justify-items:center;">${frogsHTML}</div>
+          </div>
+        `;
+        printSheetSectionsHTML += `
+          <div style="margin-bottom:18px;">
+            <div class="print-sheet-grid" style="justify-items:center;">${frogsHTML}</div>
+          </div>
+        `;
+      }
+
+      // 4. Billetes Expreso de Hogwarts Andén 9 3/4
+      if (collection === 'all' || collection === 'tickets') {
+        const ticketsHTML = renderHogwartsExpressTicketsHTML();
+        previewSectionsHTML += `
+          <div>
+            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
+              🎫 D. Billetes Conmemorativos del Expreso de Hogwarts · Andén 9 ¾ (Para las Bolsitas Kraft o Platos)
+            </h3>
+            <div class="print-cards-showcase">${ticketsHTML}</div>
+          </div>
+        `;
+        printSheetSectionsHTML += `
+          <div>
+            <div class="print-sheet-grid">${ticketsHTML}</div>
+          </div>
+        `;
+      }
 
       const previewGrid = document.getElementById('printablePreviewGrid');
       if (previewGrid) {
-        previewGrid.innerHTML = cards.map(c => `
-          <div style="background:var(--bg-parchment);color:var(--text-parchment);border:3px double #5c4028;border-radius:10px;padding:1.25rem;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,0.4);">
-            <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.08em;color:#6b4423;">${c.badge}</div>
-            <div class="font-magical" style="font-size:1.15rem;font-weight:800;margin:0.4rem 0;color:#23150b;">${c.title}</div>
-            <div class="font-serif-italic" style="font-size:0.88rem;color:#4a331f;">${c.subtitle}</div>
-          </div>
-        `).join('');
+        previewGrid.innerHTML = previewSectionsHTML;
       }
 
       const printArea = document.getElementById('printOnlyArea');
       if (printArea) {
-        printArea.innerHTML = `
-          <h2 style="font-size:18px;font-weight:bold;margin-bottom:14px;">Carteles de Mesa Harry Potter — Comunión de ${escapeHtml(name)}</h2>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            ${cards.map(c => `
-              <div style="border:3px double #2b1d12;padding:22px;text-align:center;border-radius:8px;page-break-inside:avoid;">
-                <div style="font-size:11px;font-weight:bold;letter-spacing:1px;">${c.badge}</div>
-                <div style="font-size:21px;font-weight:bold;margin:8px 0;font-family:Georgia,serif;">${c.title}</div>
-                <div style="font-size:13px;font-style:italic;">${c.subtitle}</div>
-              </div>
-            `).join('')}
-          </div>
-        `;
+        printArea.innerHTML = printSheetSectionsHTML;
       }
     }
 
