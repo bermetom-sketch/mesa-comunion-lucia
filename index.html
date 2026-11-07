@@ -3,552 +3,3227 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Planificador Mesa de Chuches Harry Potter — Comunión de Lucía</title>
-  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Mesa Dulce Harry Potter — Comunión de Lucía · Espacio Colaborativo de Tamara y Lucía</title>
+  <meta name="description" content="Planificador interactivo 3D y colaborativo para la Mesa de Chuches de Harry Potter de la Comunión de Lucía. Organizado por Tamara y Lucía con fotos recreadas por zona, enlaces de compra, comentarios y progreso en tiempo real." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root {
-      --background: #0f1117;
-      --foreground: #f8fafc;
-      --card: #181b24;
-      --border: #2a2f3d;
-      --muted-foreground: #94a3b8;
-      --primary: #d97706;
-      --primary-foreground: #ffffff;
-      --secondary: #262b38;
-      --secondary-foreground: #e2e8f0;
+      --bg-obsidian: #0b0907;
+      --bg-hall: #130f0c;
+      --bg-card: #1b1510;
+      --bg-card-elevated: #241c15;
+      --bg-parchment: #f4ead5;
+      --bg-parchment-dark: #e5d4b3;
+      --text-parchment: #2a1f16;
+      --text-main: #f7f0e4;
+      --text-muted: #baa88f;
+      --text-dim: #8a7861;
+      --gold-bright: #f2ca52;
+      --gold-main: #d4af37;
+      --gold-dark: #9a781c;
+      --crimson-main: #7a1616;
+      --crimson-bright: #a62424;
+      --emerald-done: #10b981;
+      --emerald-bg: rgba(16, 185, 129, 0.14);
+      --amber-wip: #f59e0b;
+      --amber-bg: rgba(245, 158, 11, 0.15);
+      --tamara-color: #e17055;
+      --tamara-bg: rgba(225, 112, 85, 0.16);
+      --lucia-color: #38bdf8;
+      --lucia-bg: rgba(56, 189, 248, 0.16);
+      --border-brass: rgba(212, 175, 55, 0.26);
+      --border-subtle: rgba(255, 238, 204, 0.1);
+      --shadow-deep: 0 20px 45px rgba(0, 0, 0, 0.65);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
     }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-obsidian);
+      background-image:
+        radial-gradient(circle at 18% 10%, rgba(122, 22, 22, 0.24) 0%, transparent 45%),
+        radial-gradient(circle at 82% 15%, rgba(212, 175, 55, 0.14) 0%, transparent 40%),
+        radial-gradient(circle at 50% 85%, rgba(36, 28, 21, 0.9) 0%, var(--bg-obsidian) 70%);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    h1, h2, .font-magical {
+      font-family: 'Cinzel', Georgia, serif;
+      letter-spacing: 0.03em;
+    }
+
+    .font-display {
+      font-family: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+    }
+
+    .font-serif-italic {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    /* Sticky Magical Top Progress & Collaboration Bar */
+    .sticky-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 11, 8, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-brass);
+      padding: 0.75rem 1.25rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .topbar-inner {
+      max-width: 1340px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .user-switcher {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--bg-card);
+      padding: 0.3rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-brass);
+    }
+
+    .user-switcher-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding-left: 0.65rem;
+      font-weight: 600;
+    }
+
+    .user-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      padding: 0.38rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .user-btn.active-tamara {
+      background: linear-gradient(135deg, #b33925, #d95338);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(217, 83, 56, 0.4);
+    }
+
+    .user-btn.active-lucia {
+      background: linear-gradient(135deg, #0284c7, #2563eb);
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.4);
+    }
+
+    .global-progress-wrap {
+      flex: 1;
+      min-width: 260px;
+      max-width: 560px;
+    }
+
+    .progress-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.3rem;
+      font-size: 0.8rem;
+    }
+
+    .progress-pct-badge {
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--gold-bright);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background: #090705;
+      border-radius: 999px;
+      border: 1px solid var(--border-brass);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--crimson-main) 0%, var(--gold-main) 60%, var(--emerald-done) 100%);
+      border-radius: 999px;
+      transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      animation: shimmer 2.6s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .sync-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37 0%, #aa8218 100%);
+      color: #161008;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 0.52rem 0.95rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid #f6dc7a;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+    }
+
+    .btn-outline-brass {
+      background: rgba(36, 28, 21, 0.85);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.76rem;
+      padding: 0.48rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-brass);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-outline-brass:hover {
+      border-color: var(--gold-bright);
+      background: rgba(212, 175, 55, 0.12);
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    /* Hero Banner */
+    .hero-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border-brass);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-deep);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 0;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-content {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.25rem;
+      background: linear-gradient(135deg, rgba(27, 21, 16, 0.98) 0%, rgba(19, 15, 12, 0.92) 100%);
+    }
+
+    .hogwarts-crest-line {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gold-bright);
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: clamp(1.65rem, 3vw, 2.35rem);
+      line-height: 1.18;
+      color: var(--text-main);
+      margin-top: 0.35rem;
+    }
+
+    .hero-title span {
+      color: var(--gold-bright);
+    }
+
+    .hero-subtitle {
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .stat-box {
+      background: rgba(11, 9, 7, 0.7);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+    }
+
+    .stat-box-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stat-box-value {
+      font-family: 'Cinzel', serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--gold-bright);
+      margin-top: 0.15rem;
+    }
+
+    .stat-box-sub {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 0.15rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 300px;
+      background: #090705;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero-visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      cursor: pointer;
+    }
+
+    .hero-visual:hover img {
+      transform: scale(1.03);
+    }
+
+    .hero-visual-overlay {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(to top, rgba(11, 9, 7, 0.95) 0%, rgba(11, 9, 7, 0.55) 65%, transparent 100%);
+      padding: 1.25rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    /* Controls Bar inside Hero */
+    .config-strip {
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(11, 9, 7, 0.85);
+      padding: 1rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .control-group label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .input-dark, .select-dark {
+      width: 100%;
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border-brass);
+      color: var(--text-main);
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-family: inherit;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--gold-main);
+      cursor: pointer;
+    }
+
+    /* Navigation Tabs */
+    .magical-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      background: var(--bg-card);
+      padding: 0.6rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-brass);
+    }
+
+    .magical-tab-btn {
+      flex: 1;
+      min-width: 165px;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.83rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .magical-tab-btn:hover {
+      color: var(--text-main);
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    .magical-tab-btn.active {
+      background: linear-gradient(135deg, var(--crimson-main) 0%, #4e0d0d 100%);
+      color: var(--gold-bright);
+      border-color: var(--gold-main);
+      box-shadow: 0 4px 16px rgba(122, 22, 22, 0.5);
+    }
+
+    .tab-badge {
+      font-size: 0.7rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.45);
+      color: var(--text-main);
+    }
+
+    /* 3D Interactive Section */
+    .layout-3d-wrapper {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 1.25rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 1040px) {
+      .layout-3d-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .canvas-3d-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-deep);
+    }
+
+    .canvas-3d-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      background: rgba(11, 9, 7, 0.6);
+    }
+
+    #table3dCanvasContainer {
+      position: relative;
+      width: 100%;
+      height: 510px;
+      background: radial-gradient(circle at 50% 35%, #231912 0%, #090705 85%);
+      cursor: grab;
+      user-select: none;
+    }
+
+    #table3dCanvasContainer:active {
+      cursor: grabbing;
+    }
+
+    .canvas-3d-overlay-top {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .canvas-3d-overlay-top > * {
+      pointer-events: auto;
+    }
+
+    .camera-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .cam-pill {
+      background: rgba(15, 11, 8, 0.85);
+      border: 1px solid var(--border-brass);
+      color: var(--text-main);
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: all 0.15s ease;
+    }
+
+    .cam-pill:hover, .cam-pill.active {
+      background: var(--gold-main);
+      color: #120d07;
+      font-weight: 800;
+    }
+
+    .zone-selector-strip {
+      padding: 0.85rem 1.1rem;
+      background: rgba(11, 9, 7, 0.85);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .zone-chip {
+      border: 1px solid var(--border-brass);
+      background: var(--bg-card-elevated);
+      color: var(--text-main);
+      padding: 0.42rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.18s ease;
+    }
+
+    .zone-chip:hover {
+      border-color: var(--gold-bright);
+    }
+
+    .zone-chip.active {
+      background: linear-gradient(135deg, var(--gold-main), var(--gold-dark));
+      color: #140e07;
+      font-weight: 800;
+      border-color: #fff2b2;
+    }
+
+    .zone-chip.is-done {
+      border-color: var(--emerald-done);
+    }
+
+    /* Zone Inspector Panel (Right of 3D) */
+    .inspector-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-deep);
+    }
+
+    .inspector-photo-wrap {
+      position: relative;
+      height: 235px;
+      background: #080605;
+      overflow: hidden;
+    }
+
+    .inspector-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+
+    .inspector-photo-wrap:hover img {
+      transform: scale(1.04);
+    }
+
+    .inspector-photo-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(11, 9, 7, 0.86);
+      border: 1px solid var(--gold-main);
+      color: var(--gold-bright);
+      padding: 0.28rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      backdrop-filter: blur(6px);
+    }
+
+    .inspector-zoom-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(11, 9, 7, 0.85);
+      border: 1px solid var(--border-brass);
+      color: var(--text-main);
+      padding: 0.3rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+
+    .inspector-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.95rem;
+      flex: 1;
+      overflow-y: auto;
+      max-height: 520px;
+    }
+
+    /* Zone & Item Cards Grid */
+    .zones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+      gap: 1.35rem;
+    }
+
+    @media (max-width: 480px) {
+      .zones-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .zone-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .zone-card.status-done {
+      border-color: var(--emerald-done);
+      box-shadow: 0 12px 30px rgba(16, 185, 129, 0.12);
+    }
+
+    .zone-card-photo {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: #090705;
+    }
+
+    .zone-card-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.45s ease;
+    }
+
+    .zone-card-photo:hover img {
+      transform: scale(1.05);
+    }
+
+    .zone-level-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(11, 9, 7, 0.88);
+      color: var(--gold-bright);
+      border: 1px solid var(--border-brass);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    .zone-status-pill {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+    }
+
+    .pill-done {
+      background: rgba(16, 185, 129, 0.92);
+      color: #042f2e;
+    }
+
+    .pill-wip {
+      background: rgba(245, 158, 11, 0.92);
+      color: #271300;
+    }
+
+    .pill-pending {
+      background: rgba(27, 21, 16, 0.9);
+      color: var(--text-muted);
+      border: 1px solid var(--border-brass);
+    }
+
+    .zone-card-content {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      flex: 1;
+    }
+
+    /* Assignee & Status Controls */
+    .collab-control-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      background: rgba(11, 9, 7, 0.65);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .status-toggle-btn {
+      border: 1px solid var(--border-brass);
+      background: var(--bg-card-elevated);
+      color: var(--text-main);
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .status-toggle-btn.done {
+      background: var(--emerald-done);
+      color: #052e16;
+      border-color: #34d399;
+    }
+
+    .assignee-select {
+      background: var(--bg-card-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-sm);
+      padding: 0.35rem 0.55rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Shopping Links Pills */
+    .shopping-links-box {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .shopping-links-title {
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .shopping-links-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .shop-link-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.32rem 0.65rem;
+      border-radius: var(--radius-sm);
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: var(--text-main);
+      font-size: 0.73rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .shop-link-chip:hover {
+      background: var(--gold-main);
+      color: #140f08;
+      transform: translateY(-1px);
+    }
+
+    /* Comments Thread inside Cards */
+    .comments-section {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.8rem;
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .comment-item {
+      background: rgba(11, 9, 7, 0.75);
+      border-left: 3px solid var(--gold-main);
+      padding: 0.5rem 0.65rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.77rem;
+      position: relative;
+    }
+
+    .comment-item.by-tamara {
+      border-left-color: var(--tamara-color);
+    }
+
+    .comment-item.by-lucia {
+      border-left-color: var(--lucia-color);
+    }
+
+    .comment-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .comment-author {
+      font-weight: 800;
+    }
+
+    .comment-author.tamara { color: var(--tamara-color); }
+    .comment-author.lucia { color: var(--lucia-color); }
+
+    .comment-delete-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 0.72rem;
+    }
+
+    .comment-delete-btn:hover {
+      color: #ef4444;
+    }
+
+    .comment-form {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .comment-input {
+      flex: 1;
+      background: rgba(11, 9, 7, 0.9);
+      border: 1px solid var(--border-brass);
+      color: var(--text-main);
+      padding: 0.42rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.76rem;
+      font-family: inherit;
+    }
+
+    .comment-submit-btn {
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--gold-main);
+      color: var(--gold-bright);
+      padding: 0.42rem 0.7rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .comment-submit-btn:hover {
+      background: var(--gold-main);
+      color: #140f08;
+    }
+
+    /* Filter Pills Bar */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-brass);
+      padding: 0.85rem 1.25rem;
+      border-radius: var(--radius-md);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .filter-pill {
+      background: var(--bg-card-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .filter-pill.active {
+      background: var(--gold-main);
+      color: #130e07;
+      font-weight: 800;
+      border-color: var(--gold-bright);
+    }
+
+    /* Lightbox Modal */
+    .lightbox-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 250;
+      background: rgba(5, 4, 3, 0.92);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .lightbox-modal {
+      max-width: 980px;
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--gold-main);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-deep);
+    }
+
+    .lightbox-modal img {
+      width: 100%;
+      max-height: 72vh;
+      object-fit: contain;
+      background: #050403;
+      display: block;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
     @media print {
       .no-print { display: none !important; }
       .print-only { display: block !important; }
-      body { background: white !important; color: black !important; }
-    }
-    input[type="range"] {
-      accent-color: var(--primary);
+      body { background: #fff !important; color: #000 !important; }
     }
   </style>
 </head>
-<body class="bg-[var(--background)] text-[var(--foreground)] antialiased p-4 md:p-8">
+<body>
 
-  <div class="max-w-6xl mx-auto space-y-6 no-print">
+  <!-- BARRA SUPERIOR COLABORATIVA Y % DE FINALIZACIÓN -->
+  <div class="sticky-topbar no-print">
+    <div class="topbar-inner">
+      <!-- Selector de quién está editando: Tamara o Lucía -->
+      <div class="user-switcher" role="group" aria-label="Seleccionar organizadora activa">
+        <span class="user-switcher-label">Organizando como:</span>
+        <button id="btnUserTamara" type="button" class="user-btn active-tamara" onclick="setActiveUser('Tamara')">
+          👩🏽‍🪄 Tamara
+        </button>
+        <button id="btnUserLucia" type="button" class="user-btn" onclick="setActiveUser('Lucía')">
+          🧙🏼‍♀️ Lucía
+        </button>
+      </div>
 
-    <!-- CABECERA -->
-    <header class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div class="space-y-2">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--secondary)] text-[var(--secondary-foreground)] text-xs font-medium">
-            <span>⚡ Especial Comunión de Lucía · Honeydukes &amp; Gran Comedor</span>
+      <!-- Barra de Progreso Global de la Mesa -->
+      <div class="global-progress-wrap">
+        <div class="progress-header-row">
+          <span>✨ <strong>Progreso Total de la Mesa:</strong> <span id="globalProgressDetail" style="color:var(--text-muted)">0 de 0 listos</span></span>
+          <span id="globalProgressPct" class="progress-pct-badge">0% LISTO</span>
+        </div>
+        <div class="progress-track" aria-label="Porcentaje de finalización de la mesa">
+          <div id="globalProgressBar" class="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- Botones de Sincronización Colaborativa -->
+      <div class="sync-actions">
+        <button type="button" class="btn-gold" onclick="shareProgressWhatsApp()" title="Envía un enlace mágico por WhatsApp a Tamara o Lucía con todos tus checks, ideas y comentarios">
+          📲 Enviar avances por WhatsApp
+        </button>
+        <button type="button" class="btn-outline-brass" onclick="copyShareLink()" title="Copiar enlace sincronizado">
+          🔗 Copiar enlace
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="main-container no-print">
+
+    <!-- CABECERA HERO GRAN COMEDOR & HONEYDUKES -->
+    <header class="hero-card">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div>
+            <div class="hogwarts-crest-line">
+              <span>⚡ Expreso de Hogwarts · Andén 9 ¾ · Dulcería Honeydukes</span>
+            </div>
+            <h1 class="hero-title font-display">
+              Mesa Mágica de Comunión · <span>Tamara &amp; Lucía</span>
+            </h1>
+            <p class="hero-subtitle" style="margin-top:0.5rem;">
+              Centro de mando colaborativo para diseñar, comprar y montar paso a paso la mesa de chuches de Harry Potter. Explora el <strong>Layout 3D interactivo</strong>, revisa las <strong>fotos recreadas de cada zona</strong>, comenta cada detalle, añade nuevas ideas y marca qué está listo.
+            </p>
           </div>
-          <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-[var(--foreground)]">
-            Plan Maestro: Mesa de Chuches Harry Potter (Calidad/Precio)
-          </h1>
-          <p class="text-sm text-[var(--muted-foreground)] max-w-2xl">
-            Consigue el efecto de un Candy Bar profesional de 350 € gastando entre <strong class="text-[var(--foreground)]">60 € y 105 €</strong> combinando compra de golosinas al por mayor (1 kg) con trucos visuales de escenografía DIY.
-          </p>
+
+          <!-- Marcadores de Progreso Desglosados -->
+          <div class="hero-stats-grid">
+            <div class="stat-box">
+              <div class="stat-box-label">🏛️ Zonas de la Mesa</div>
+              <div id="statZonesReady" class="stat-box-value">0 / 7</div>
+              <div class="stat-box-sub">Zonas marcadas listas</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-label">🛒 Chuches y Deco</div>
+              <div id="statItemsReady" class="stat-box-value">0 / 14</div>
+              <div class="stat-box-sub">Materiales comprados</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-label">👩🏽‍🪄🧙🏼‍♀️ Reparto Equipo</div>
+              <div id="statTeamSplit" class="stat-box-value" style="font-size:1.05rem;padding-top:0.3rem;">T: 0 · L: 0</div>
+              <div class="stat-box-sub" id="statIdeasCount">Ideas y comentarios activos</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-label">🪙 Presupuesto Estimado</div>
+              <div id="totalBudgetDisplay" class="stat-box-value">74,50 €</div>
+              <div class="stat-box-sub"><span id="costPerGuestBadge">~2,10 €/inv.</span> · <strong id="totalWeightDisplay">3,4 kg</strong></div>
+            </div>
+          </div>
         </div>
 
-        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 min-w-[240px] flex flex-col justify-between">
-          <div class="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
-            <span>Presupuesto total estimado</span>
-            <span id="costPerGuestBadge" class="font-semibold text-[var(--foreground)]">~2,10 € / inv.</span>
-          </div>
-          <div class="my-1 flex items-baseline gap-2">
-            <span id="totalBudgetDisplay" class="text-3xl font-extrabold text-[var(--foreground)]">74,50 €</span>
-            <span class="text-xs text-[var(--muted-foreground)]">IVA incl. aprox.</span>
-          </div>
-          <div class="text-xs text-[var(--muted-foreground)] flex items-center justify-between border-t border-[var(--border)] pt-2 mt-1">
-            <span>Peso total de chuches:</span>
-            <strong id="totalWeightDisplay" class="text-[var(--foreground)]">3,4 kg</strong>
+        <!-- Imagen Recreación General de la Mesa -->
+        <div class="hero-visual" onclick="openLightbox('assets/mesa-completa.jpg', 'Vista General Recreada — Mesa Dulce Harry Potter en 3 Alturas (Comunión de Lucía)')">
+          <img src="assets/mesa-completa.jpg" alt="Recreación completa de la Mesa Dulce de Harry Potter para la Comunión de Lucía" />
+          <div class="hero-visual-overlay">
+            <div>
+              <span style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--gold-bright);font-weight:800;">📸 Recreación Oficial de Objetivo</span>
+              <div style="font-family:'Cinzel',serif;font-weight:700;font-size:1rem;">Diseño en 3 Alturas · Gran Comedor</div>
+            </div>
+            <button type="button" class="btn-outline-brass" style="background:rgba(11,9,7,0.85);">
+              🔍 Ampliar Foto
+            </button>
           </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-5 border-t border-[var(--border)]">
-        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5">
-          <div class="flex justify-between items-center mb-2">
-            <label for="guestSlider" class="text-xs font-semibold text-[var(--foreground)]">
-              👥 Nº de Invitados (niños + adultos)
-            </label>
-            <span id="guestCountValue" class="px-2.5 py-0.5 rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] text-xs font-bold">
-              35 inv.
-            </span>
-          </div>
-          <input id="guestSlider" type="range" min="15" max="80" step="5" value="35" class="w-full cursor-pointer" />
-          <div class="flex justify-between text-xs text-[var(--muted-foreground)] mt-1">
-            <span>15 (Íntima)</span>
-            <span>40 (Estándar)</span>
-            <span>80 (Gran fiesta)</span>
-          </div>
+      <!-- Controles de Escala de Invitados, Nivel y Casa -->
+      <div class="config-strip">
+        <div class="control-group">
+          <label for="guestSlider">
+            <span>👥 Nº de Invitados (calcula cantidades)</span>
+            <strong id="guestCountValue" style="color:var(--gold-bright)">35 inv.</strong>
+          </label>
+          <input id="guestSlider" type="range" min="15" max="80" step="5" value="35" />
         </div>
 
-        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5">
-          <label for="tierSelect" class="block text-xs font-semibold text-[var(--foreground)] mb-2">
-            ⚖️ Nivel Calidad / Precio
+        <div class="control-group">
+          <label for="tierSelect">
+            <span>⚖️ Nivel Calidad / Ahorro</span>
+            <span id="tierHint" style="font-weight:400;color:var(--text-dim);">Mayorista 1kg + DIY</span>
           </label>
-          <select id="tierSelect" class="w-full rounded-lg bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] text-sm px-3 py-1.5 focus:outline-none">
-            <option value="diy">Máximo Ahorro (Supermercado + Bazar + Reciclaje)</option>
+          <select id="tierSelect" class="select-dark">
+            <option value="diy">Modo Ahorro Máximo (Botes reciclados + Marca Blanca)</option>
             <option value="balanced" selected>Equilibrio Ideal (Bolsas 1kg Mayorista + DIY)</option>
-            <option value="premium">Gran Comedor (Con detalles extra y chocolatería)</option>
+            <option value="premium">Modo Gran Comedor (Atrezzo extra + Ferrero Original)</option>
           </select>
-          <p id="tierHint" class="text-xs text-[var(--muted-foreground)] mt-1.5">
-            Compra bolsas de 1kg (Vidal/Fini) y botes reutilizados.
-          </p>
         </div>
 
-        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5">
-          <label for="childNameInput" class="block text-xs font-semibold text-[var(--foreground)] mb-2">
-            🪄 Nombre del Protagonista (para carteles)
+        <div class="control-group">
+          <label for="childNameInput">
+            <span>🪄 Protagonista y Casa de Hogwarts</span>
           </label>
-          <div class="flex gap-2">
-            <input id="childNameInput" type="text" value="Lucía" placeholder="Ej. Mateo, Lucía..." class="w-full rounded-lg bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] text-sm px-3 py-1.5 focus:outline-none" />
-            <select id="houseSelect" aria-label="Casa de Hogwarts" class="rounded-lg bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] text-xs px-2.5 py-1.5 focus:outline-none">
+          <div style="display:flex;gap:0.45rem;">
+            <input id="childNameInput" type="text" value="Lucía" class="input-dark" placeholder="Nombre comunión" />
+            <select id="houseSelect" class="select-dark" style="max-width:145px;">
               <option value="Gryffindor">🦁 Gryffindor</option>
               <option value="Slytherin">🐍 Slytherin</option>
               <option value="Ravenclaw">🦅 Ravenclaw</option>
               <option value="Hufflepuff">🦡 Hufflepuff</option>
             </select>
           </div>
-          <p class="text-xs text-[var(--muted-foreground)] mt-1.5">
-            Actualiza automáticamente las etiquetas imprimibles.
+        </div>
+      </div>
+    </header>
+
+    <!-- NAVEGACIÓN PRINCIPAL DE PESTAÑAS -->
+    <nav class="magical-tabs" aria-label="Secciones del planificador de mesa">
+      <button type="button" data-tab="3dzones" class="magical-tab-btn active">
+        🧊 1. Layout 3D y Fotos por Zona <span id="badgeTabZones" class="tab-badge">0/7</span>
+      </button>
+      <button type="button" data-tab="shopping" class="magical-tab-btn">
+        🛒 2. Compras, Chuches y Enlaces <span id="badgeTabShopping" class="tab-badge">0/14</span>
+      </button>
+      <button type="button" data-tab="ideas" class="magical-tab-btn">
+        💡 3. Muro de Ideas y Comentarios <span id="badgeTabIdeas" class="tab-badge">3</span>
+      </button>
+      <button type="button" data-tab="labels" class="magical-tab-btn">
+        🏷️ 4. Carteles Imprimibles y Cronograma <span id="badgeTabSteps" class="tab-badge">0/8</span>
+      </button>
+    </nav>
+
+    <!-- =================================================================== -->
+    <!-- PESTAÑA 1: LAYOUT 3D INTERACTIVO + FOTOS RECREADAS DE CADA ZONA     -->
+    <!-- =================================================================== -->
+    <section id="tab-3dzones" class="tab-panel" style="display:flex;flex-direction:column;gap:1.5rem;">
+
+      <!-- Visor 3D + Inspector de Zona Activa -->
+      <div class="layout-3d-wrapper">
+        <!-- Escena 3D Three.js -->
+        <div class="canvas-3d-card">
+          <div class="canvas-3d-header">
+            <div>
+              <h2 style="font-size:1.05rem;color:var(--gold-bright);">🧊 Maqueta 3D Interactiva de la Mesa (3 Alturas + Techo)</h2>
+              <p style="font-size:0.75rem;color:var(--text-muted);">
+                Arrastra para girar 360°, usa la rueda para zoom o pulsa en cualquier zona 3D para ver su foto recreada, enlaces y comentarios.
+              </p>
+            </div>
+            <div style="display:flex;gap:0.4rem;">
+              <button type="button" id="btnToggleSpin" class="btn-outline-brass" onclick="toggle3DSpin()">
+                🔄 Giro Auto: ON
+              </button>
+              <button type="button" class="btn-outline-brass" onclick="reset3DCamera()">
+                🎯 Centrar Vista
+              </button>
+            </div>
+          </div>
+
+          <div id="table3dCanvasContainer">
+            <div class="canvas-3d-overlay-top">
+              <div class="camera-pills">
+                <button type="button" class="cam-pill active" onclick="setCameraView('overview', this)">Vista General</button>
+                <button type="button" class="cam-pill" onclick="setCameraView('ceiling', this)">🕯️ Techo Velas</button>
+                <button type="button" class="cam-pill" onclick="setCameraView('tier3', this)">📚 Nivel 3 (Fondo)</button>
+                <button type="button" class="cam-pill" onclick="setCameraView('tier2', this)">🪄 Nivel 2 (Medio)</button>
+                <button type="button" class="cam-pill" onclick="setCameraView('tier1', this)">🐸 Nivel 1 (Frente)</button>
+              </div>
+              <div style="background:rgba(11,9,7,0.82);border:1px solid var(--border-brass);padding:0.3rem 0.65rem;border-radius:var(--radius-sm);font-size:0.72rem;">
+                🟢 Verde = ¡Listo! &nbsp;|&nbsp; 🟡 Dorado = Pendiente
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones rápidos de las 7 zonas debajo del 3D -->
+          <div id="zone3DSelectorStrip" class="zone-selector-strip"></div>
+        </div>
+
+        <!-- Inspector Detallado de la Zona Seleccionada en el 3D -->
+        <aside id="zoneInspectorCard" class="inspector-card"></aside>
+      </div>
+
+      <!-- Barra de filtro de zonas -->
+      <div class="filter-bar">
+        <div>
+          <h2 style="font-size:1.1rem;color:var(--gold-bright);">📸 Todas las Zonas Recrearías de la Mesa (Paso a Paso)</h2>
+          <p style="font-size:0.76rem;color:var(--text-muted);">
+            Tamara y Lucía: podéis marcar qué zonas están listas, repartiros quién se encarga de cada rincón y dejar comentarios debajo de cada foto.
           </p>
+        </div>
+        <div class="filter-pills">
+          <button type="button" class="filter-pill active" onclick="setZoneFilter('all', this)">Todas las Zonas (7)</button>
+          <button type="button" class="filter-pill" onclick="setZoneFilter('pending', this)">⏳ Pendientes</button>
+          <button type="button" class="filter-pill" onclick="setZoneFilter('done', this)">✅ Listas</button>
+          <button type="button" class="filter-pill" onclick="setZoneFilter('Tamara', this)">👩🏽‍🪄 De Tamara</button>
+          <button type="button" class="filter-pill" onclick="setZoneFilter('Lucía', this)">🧙🏼‍♀️ De Lucía</button>
         </div>
       </div>
 
-      <nav class="flex flex-wrap gap-2 mt-5" aria-label="Secciones del planificador">
-        <button data-tab="sweets" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)] transition">
-          🍬 1. Chuches Honeydukes y Precios
-        </button>
-        <button data-tab="decor" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] transition">
-          🕯️ 2. Decoración Low-Cost y Montaje (3 Alturas)
-        </button>
-        <button data-tab="labels" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] transition">
-          🏷️ 3. Carteles Imprimibles Gratis
-        </button>
-        <button data-tab="timeline" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] transition">
-          ✅ 4. Lista de Compra y Cronograma
-        </button>
-      </nav>
-    </header>
+      <!-- Grid de las 7 Zonas con sus Fotos Recreadas, Enlaces y Comentarios -->
+      <div id="zonesCardsGrid" class="zones-grid"></div>
+    </section>
 
-    <section id="tab-sweets" class="tab-panel space-y-4">
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
+    <!-- =================================================================== -->
+    <!-- PESTAÑA 2: CATÁLOGO DE COMPRAS CON ENLACES DIRECTOS (CHUCHES + DECO)-->
+    <!-- =================================================================== -->
+    <section id="tab-shopping" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.5rem;">
+
+      <div class="filter-bar">
+        <div>
+          <h2 style="font-size:1.15rem;color:var(--gold-bright);">🛒 Lista de Compra Colaborativa con Enlaces Directos</h2>
+          <p style="font-size:0.78rem;color:var(--text-muted);">
+            Pulsa en los enlaces de compra para ir directo a cada producto o añade el enlace exacto que encontréis vosotras. Marca <strong>"✅ Ya lo tenemos"</strong> cuando esté comprado para subir el % de la mesa.
+          </p>
+        </div>
+        <div class="filter-pills">
+          <button type="button" class="filter-pill active" onclick="setShopFilter('all', this)">Todo (14)</button>
+          <button type="button" class="filter-pill" onclick="setShopFilter('pending', this)">🛒 Falta Comprar</button>
+          <button type="button" class="filter-pill" onclick="setShopFilter('done', this)">✅ Ya Comprado</button>
+          <button type="button" class="filter-pill" onclick="setShopFilter('Tamara', this)">👩🏽‍🪄 Tamara</button>
+          <button type="button" class="filter-pill" onclick="setShopFilter('Lucía', this)">🧙🏼‍♀️ Lucía</button>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="font-magical" style="font-size:1.05rem;color:var(--gold-bright);margin-bottom:0.85rem;">
+          🍬 A. Las 8 Chuches Mágicas de Honeydukes (Cantidades auto-ajustadas a los invitados)
+        </h3>
+        <div id="sweetsShoppingGrid" class="zones-grid"></div>
+      </div>
+
+      <div>
+        <h3 class="font-magical" style="font-size:1.05rem;color:var(--gold-bright);margin-bottom:0.85rem;">
+          🕯️ B. Materiales de Escenografía, Botes y Decoración (Coste Low-Cost)
+        </h3>
+        <div id="decorShoppingGrid" class="zones-grid"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- PESTAÑA 3: MURO COLABORATIVO DE NUEVAS IDEAS (TAMARA & LUCÍA)       -->
+    <!-- =================================================================== -->
+    <section id="tab-ideas" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.5rem;">
+
+      <div class="layout-3d-wrapper">
+        <!-- Formulario para que Tamara o Lucía añadan una nueva idea -->
+        <div class="canvas-3d-card" style="padding:1.5rem;gap:1rem;">
           <div>
-            <h2 class="text-lg font-bold text-[var(--foreground)]">
-              Selección de Chuches Mágicas (Máximo impacto visual por euro)
-            </h2>
-            <p class="text-xs text-[var(--muted-foreground)]">
-              Regla de oro: Nunca compres chuches con licencia oficial Harry Potter (cuestan 5 veces más). Compra el dulce equivalente a granel/supermercado y ponle la etiqueta temática. Activa o desactiva cada elemento según tu gusto:
+            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;">✨ Sala de los Menesteres · Lluvia de Ideas</span>
+            <h2 style="font-size:1.2rem;margin-top:0.2rem;">Añadir Nueva Idea o Detalle a la Mesa</h2>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">
+              ¿Se os ha ocurrido un dulce nuevo, un cartel gracioso o habéis visto algo chulo en Amazon/Shein/Tedi? Apuntadlo aquí para que las dos lo veáis, comentéis y decidáis si lo sumamos a la mesa.
             </p>
           </div>
-          <div class="flex items-center gap-2 text-xs">
-            <button id="selectAllSweetsBtn" class="px-3 py-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] hover:opacity-80 font-medium">
-              Marcar todas
+
+          <form id="newIdeaForm" onsubmit="handleCreateIdea(event)" style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;">
+            <div style="grid-column:span 2;">
+              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Título de la idea *</label>
+              <input id="ideaTitle" type="text" required class="input-dark" placeholder="Ej: Botellitas de Cerveza de Mantequilla con refresco cream soda y nata..." />
+            </div>
+
+            <div>
+              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">¿En qué zona iría?</label>
+              <select id="ideaZone" class="select-dark">
+                <option value="Nivel 3 · Fondo Alto">📚 Nivel 3 · Fondo Alto</option>
+                <option value="Nivel 2 · Zona Media">🪄 Nivel 2 · Zona Media</option>
+                <option value="Nivel 1 · Frente de Mesa">🐸 Nivel 1 · Frente de Mesa</option>
+                <option value="Techo / Pared">🕯️ Techo / Pared</option>
+                <option value="Detalles Invitados">🛍️ Detalles para Invitados</option>
+              </select>
+            </div>
+
+            <div>
+              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Coste aprox. (€)</label>
+              <input id="ideaCost" type="number" step="0.5" min="0" value="4.50" class="input-dark" />
+            </div>
+
+            <div style="grid-column:span 2;">
+              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Enlace de compra o inspiración (Amazon, AliExpress, TikTok, Pinterest...)</label>
+              <input id="ideaLink" type="url" class="input-dark" placeholder="https://www.amazon.es/..." />
+            </div>
+
+            <div style="grid-column:span 2;">
+              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Cómo hacerlo / Notas para nosotras *</label>
+              <textarea id="ideaDesc" rows="3" required class="input-dark" placeholder="Explica cómo lo montaríamos o qué materiales hacen falta..."></textarea>
+            </div>
+
+            <div style="grid-column:span 2;display:flex;justify-content:space-between;align-items:center;padding-top:0.3rem;">
+              <span style="font-size:0.76rem;color:var(--text-muted);">Se publicará firmado por: <strong id="ideaAuthorPreview" style="color:var(--gold-bright);">Tamara</strong></span>
+              <button type="submit" class="btn-gold">
+                🪄 Publicar Idea en el Muro
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Resumen de Actividad y Sincronización entre Tamara y Lucía -->
+        <div class="inspector-card" style="padding:1.5rem;gap:1rem;">
+          <div>
+            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;">🦉 Lechucería de Hogwarts</span>
+            <h2 style="font-size:1.15rem;margin-top:0.2rem;">¿Cómo trabajáis juntas Tamara y Lucía?</h2>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:0.75rem;font-size:0.8rem;color:var(--text-muted);">
+            <div style="background:rgba(11,9,7,0.65);border:1px solid var(--border-subtle);padding:0.8rem;border-radius:var(--radius-sm);">
+              <strong style="color:var(--text-main);">1. Elegid vuestro nombre arriba del todo:</strong><br/>
+              Al entrar en la web, pulsa <strong>👩🏽‍🪄 Tamara</strong> o <strong>🧙🏼‍♀️ Lucía</strong> en la barra fija superior.
+            </div>
+            <div style="background:rgba(11,9,7,0.65);border:1px solid var(--border-subtle);padding:0.8rem;border-radius:var(--radius-sm);">
+              <strong style="color:var(--text-main);">2. Comentad, añadid enlaces y marcad checks:</strong><br/>
+              Cada vez que compréis algo o terminéis una manualidad, pasadlo a <strong>"✅ ¡Listo!"</strong>. El porcentaje de arriba subirá al instante.
+            </div>
+            <div style="background:rgba(11,9,7,0.65);border:1px solid var(--border-subtle);padding:0.8rem;border-radius:var(--radius-sm);">
+              <strong style="color:var(--text-main);">3. Pulsad "📲 Enviar avances por WhatsApp":</strong><br/>
+              Genera un enlace mágico con todos tus cambios. Cuando la otra persona lo abre en su móvil, se le actualizan automáticamente todos tus comentarios, checks e ideas nuevas.
+            </div>
+          </div>
+
+          <div style="margin-top:auto;display:flex;flex-wrap:wrap;gap:0.5rem;padding-top:0.75rem;border-top:1px solid var(--border-subtle);">
+            <button type="button" class="btn-gold" onclick="shareProgressWhatsApp()">
+              📲 Compartir todo por WhatsApp
+            </button>
+            <button type="button" class="btn-outline-brass" onclick="exportBackupJSON()">
+              💾 Guardar copia (.json)
             </button>
           </div>
         </div>
-        <div id="sweetsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
-          <div class="text-xs font-semibold text-[var(--muted-foreground)]">💡 El Truco Estrella #1</div>
-          <h3 class="text-sm font-bold text-[var(--foreground)] mt-1">Snitches Doradas por 0,22 € / ud</h3>
-          <p class="text-xs text-[var(--muted-foreground)] mt-1">
-            En lugar de encargar cake-pops dorados a 2,50 € la unidad, compra cajas de bombones redondos envueltos en papel dorado (tipo Ferrero Rocher o la versión marca blanca de Lidl/Mercadona) y pégales dos alitas de cartulina dorada con una gota de silicona.
-          </p>
-        </div>
-        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
-          <div class="text-xs font-semibold text-[var(--muted-foreground)]">💡 El Truco Estrella #2</div>
-          <h3 class="text-sm font-bold text-[var(--foreground)] mt-1">Ranas de Chocolate Caseras (0,15 €)</h3>
-          <p class="text-xs text-[var(--muted-foreground)] mt-1">
-            Una rana oficial cuesta ~4,50 €. Un molde de silicona de ranas cuesta 2,20 € (AliExpress/Amazon). Con dos tabletas de chocolate con leche fundido sacas 25 ranas macizas espectaculares en 20 minutos de nevera.
-          </p>
-        </div>
-        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
-          <div class="text-xs font-semibold text-[var(--muted-foreground)]">💡 El Truco Estrella #3</div>
-          <h3 class="text-sm font-bold text-[var(--foreground)] mt-1">Relleno Visual (Cero Chuches vacías)</h3>
-          <p class="text-xs text-[var(--muted-foreground)] mt-1">
-            Para que los tarros grandes parezcan llenos hasta arriba sin comprar 3 kg extra, coloca un vaso o tubo de cartón pequeño invertido en el centro del tarro y rellena el borde exterior con las chuches.
-          </p>
-        </div>
+      <div>
+        <h3 class="font-magical" style="font-size:1.1rem;color:var(--gold-bright);margin-bottom:0.85rem;">
+          💡 Ideas Propuestas por Tamara y Lucía (Puedes aprobarlas para sumarlas al % de la mesa)
+        </h3>
+        <div id="ideasCardsGrid" class="zones-grid"></div>
       </div>
     </section>
 
-    <section id="tab-decor" class="tab-panel hidden space-y-4">
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
-        <div>
-          <h2 class="text-lg font-bold text-[var(--foreground)]">
-            Escenografía en 3 Alturas (Coste total deco: 15 € – 24 €)
-          </h2>
-          <p class="text-xs text-[var(--muted-foreground)] mt-1">
-            El secreto para que una mesa de comunión parezca sacada de una revista no es la cantidad de chuches, sino la <strong>simetría y las 3 alturas</strong>. Aquí tienes el plano exacto de colocación:
-          </p>
-        </div>
+    <!-- =================================================================== -->
+    <!-- PESTAÑA 4: CARTELES IMPRIMIBLES + CRONOGRAMA PASO A PASO            -->
+    <!-- =================================================================== -->
+    <section id="tab-labels" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.5rem;">
 
-        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-5 space-y-4">
-          <div class="text-center border-b border-[var(--border)] pb-3">
-            <span class="text-xs font-bold uppercase tracking-wider text-[var(--muted-foreground)]">
-              🕯️ Techo / Fondo Superior: 12 Velas LED flotantes con hilo de pescar + Banderín o Cartel Andén 9 ¾
-            </span>
-          </div>
-
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-[var(--foreground)]">NIVEL 3 · Fondo Elevado (Sobre pilas de libros antiguos o cajas forradas)</span>
-              <span class="text-xs text-[var(--muted-foreground)]">Altura: +20 a 30 cm</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
-                <div class="text-base font-bold">🧪 Botica de Pociones</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">
-                  3 botellas de cristal reutilizadas con agua teñida (verde, rojo, dorado) + Tarro alto de Gusanos/Babosas.
-                </p>
-              </div>
-              <div class="bg-[var(--card)] border-2 border-[var(--primary)] rounded-lg p-3 text-center">
-                <div class="text-base font-bold">🎂 Centro Focal: Tarta / Torre de Snitches</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">
-                  Soporte elevado central con la tarta o pirámide de Ferrero Rocher con alas + Sombrero Seleccionador o Lechuza Hedwig.
-                </p>
-              </div>
-              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
-                <div class="text-base font-bold">🦉 Rincón de Hedwig y Hogwarts</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">
-                  Tarro alto de Nubes blancas (pintadas como Hedwig) + Cartas de admisión de Hogwarts saliendo de una caja.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-[var(--foreground)]">NIVEL 2 · Zona Media (Botes medianos y bandejas a media altura)</span>
-              <span class="text-xs text-[var(--muted-foreground)]">Altura: +10 cm</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
-                <div class="text-sm font-bold">🪄 Varitas de Ollivanders</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">
-                  Vasos altos con Mikados / Regalices largos atados con lazo granate y dorado.
-                </p>
-              </div>
-              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
-                <div class="text-sm font-bold">🫘 Grageas de Bertie Bott</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">
-                  Bote ancho de cristal con Jelly Beans de colores + cucharón metálico o pinzas.
-                </p>
-              </div>
-              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
-                <div class="text-sm font-bold">🧹 Escobas Nimbus 2000</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">
-                  Bandeja rústica de madera/pizarra con escobitas de palito Pretzel y nube/queso.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-xs font-bold text-[var(--foreground)]">NIVEL 1 · Frente de Mesa (Al alcance de los niños más pequeños)</span>
-              <span class="text-xs text-[var(--muted-foreground)]">Ras de mesa</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
-                <div class="text-sm font-bold">🐸 Ranas de Chocolate</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">
-                  Bandeja delantera con ranas de chocolate sobre sus cromos pentagonales.
-                </p>
-              </div>
-              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
-                <div class="text-sm font-bold">🪙 Banco Gringotts</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">
-                  Monedas de chocolate doradas esparcidas sobre el mantel y en un pequeño cofre.
-                </p>
-              </div>
-              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
-                <div class="text-sm font-bold">🛍️ Bolsitas Kraft con Sello</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">
-                  Bolsitas de papel kraft (2,50 € / 50 uds) para que cada invitado se sirva sus chuches.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <h3 class="text-sm font-bold text-[var(--foreground)] mb-3">
-            Desglose de Materiales de Decoración Low-Cost
-          </h3>
-          <div id="decorListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="tab-labels" class="tab-panel hidden space-y-4">
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-4">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <!-- Cronograma Paso a Paso -->
+      <div class="canvas-3d-card" style="padding:1.5rem;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem;">
           <div>
-            <h2 class="text-lg font-bold text-[var(--foreground)]">
-              Carteles de Mesa listos para Imprimir (Ahorro: ~15 € en papelería)
-            </h2>
-            <p class="text-xs text-[var(--muted-foreground)]">
-              Truco pro: Imprímelos en folios normales o cartulina beige, recórtalos y pasa una bolsita de té húmeda por los bordes para darles aspecto de pergamino antiguo de Hogwarts.
+            <h2 style="font-size:1.15rem;color:var(--gold-bright);">📅 Cronograma de Preparación Paso a Paso (Cuenta en el % Total)</h2>
+            <p style="font-size:0.78rem;color:var(--text-muted);">
+              Id marcando cada hito conforme se acerque el día de la Comunión de Lucía.
             </p>
           </div>
-          <button id="printLabelsBtn" class="px-4 py-2.5 rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] text-xs font-bold hover:opacity-90 transition shrink-0">
-            🖨️ Imprimir Carteles Ahora
+          <span id="checklistProgressBadge" class="cam-pill active">0 / 8 pasos listos</span>
+        </div>
+        <div id="checklistStepsGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0.75rem;"></div>
+      </div>
+
+      <!-- Carteles Imprimibles Gratis -->
+      <div class="canvas-3d-card" style="padding:1.5rem;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <div>
+            <h2 style="font-size:1.15rem;color:var(--gold-bright);">🏷️ Carteles de Pergamino Listos para Imprimir Gratis</h2>
+            <p style="font-size:0.78rem;color:var(--text-muted);">
+              Truco de Tamara y Lucía: Imprimidlos en cartulina beige o folio blanco y pasad una bolsita de té húmeda por los bordes para envejecerlos.
+            </p>
+          </div>
+          <button type="button" class="btn-gold" onclick="window.print()">
+            🖨️ Imprimir los 8 Carteles de Mesa
           </button>
         </div>
-        <div id="printablePreviewGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-2"></div>
+        <div id="printablePreviewGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;"></div>
       </div>
     </section>
 
-    <section id="tab-timeline" class="tab-panel hidden space-y-4">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4">
-          <h2 class="text-lg font-bold text-[var(--foreground)]">
-            🛒 Ruta de Compra Inteligente (Dónde es más barato)
-          </h2>
-          <div class="space-y-3 text-xs">
-            <div class="p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]">
-              <div class="font-bold text-sm text-[var(--foreground)]">1. Mayoristas Online / Tiendas de Bolsas de 1 kg (Vidal, Fini, La Casa de las Golosinas)</div>
-              <p class="text-[var(--muted-foreground)] mt-1">
-                Compra aquí la base pesada: <strong>Gusanos de brillo (1 kg ~5,95 €)</strong>, <strong>Nubes blancas (1 kg ~5,50 €)</strong> y <strong>Regalices negros/rojos (1 kg ~5,90 €)</strong>. Sale un 45% más barato que en bolsitas pequeñas de supermercado.
-              </p>
-            </div>
-            <div class="p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]">
-              <div class="font-bold text-sm text-[var(--foreground)]">2. Mercadona / Lidl / Aldi (Chocolates y Snacks)</div>
-              <p class="text-[var(--muted-foreground)] mt-1">
-                Compra aquí los <strong>bombones dorados redondos</strong> (imitación Ferrero en Lidl/Mercadona a ~3,20 € la caja de 16), <strong>palitos Pretzel salados</strong> (~1,10 €), <strong>Mikado o bastones de chocolate</strong> (~1,60 €) y <strong>tabletas de chocolate fundir</strong> (~1,35 €) para las ranas.
-              </p>
-            </div>
-            <div class="p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]">
-              <div class="font-bold text-sm text-[var(--foreground)]">3. Tedi / Action / Bazar Local / AliExpress</div>
-              <p class="text-[var(--muted-foreground)] mt-1">
-                Pack de <strong>12 velas LED de té (~2,50 €)</strong>, <strong>hilo de pescar transparente (~1,00 €)</strong>, <strong>bolsitas de papel kraft (~2,00 €)</strong>, <strong>cuerda de yute (~1,00 €)</strong> y el <strong>molde de silicona de ranas (~2,20 €)</strong>.
-              </p>
-            </div>
-          </div>
-        </div>
+  </main>
 
-        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4">
-          <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold text-[var(--foreground)]">
-              📅 Checklist Paso a Paso (Sin estrés)
-            </h2>
-            <span id="checklistProgress" class="text-xs font-bold px-2.5 py-1 rounded-full bg-[var(--secondary)] text-[var(--secondary-foreground)]">
-              0 / 8 completados
-            </span>
-          </div>
-          <div id="checklistContainer" class="space-y-2"></div>
-        </div>
+  <!-- MODAL LIGHTBOX PARA VER FOTOS RECREADAS EN GRANDE -->
+  <div id="lightboxModal" class="lightbox-backdrop hidden no-print" onclick="closeLightbox(event)">
+    <div class="lightbox-modal" onclick="event.stopPropagation()">
+      <div style="padding:0.85rem 1.25rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-brass);">
+        <strong id="lightboxCaption" class="font-magical" style="color:var(--gold-bright);font-size:0.95rem;">Recreación de Zona</strong>
+        <button type="button" class="btn-outline-brass" onclick="closeLightbox()">✕ Cerrar</button>
       </div>
-    </section>
-
+      <img id="lightboxImage" src="" alt="Vista ampliada de la zona" />
+    </div>
   </div>
 
-  <div id="printOnlyArea" class="hidden print-only p-4"></div>
+  <!-- ÁREA DE IMPRESIÓN DE CARTELES -->
+  <div id="printOnlyArea" class="hidden print-only" style="padding:20px;"></div>
 
   <script>
+    // =========================================================================
+    // 1. DATOS MAESTROS: LAS 7 ZONAS DE LA MESA CON FOTOS RECREADAS Y COORDENADAS 3D
+    // =========================================================================
+    const TABLE_ZONES = [
+      {
+        id: 'zona-velas',
+        shortTitle: '🕯️ 1. Velas Flotantes y Fondo',
+        title: 'Techo y Fondo: 12 Velas Flotantes + Cartel Andén 9 ¾',
+        level: 'Techo / Fondo Superior (+1,20 m sobre la mesa)',
+        photo: 'assets/zona-velas.jpg',
+        defaultAssignee: 'Tamara',
+        position3D: { x: 0, y: 3.4, z: -1.1 },
+        cameraTarget: { pos: [0, 3.6, 4.2], look: [0, 2.9, -0.8] },
+        description: 'El efecto más mágico nada más entrar al salón. 12 velas blancas suspendidas con hilo de pescar invisible a distintas alturas sobre la mesa y el cartel del Andén 9 ¾ / Comunión de Lucía.',
+        diySteps: [
+          'Guardar 12 rollos de papel higiénico o cocina, hacer gotear silicona caliente por el borde superior imitando cera derretida y pintarlos de blanco mate.',
+          'Colocar 1 vela LED de té cálida encendida en la parte superior y pasar hilo de pescar transparente con una aguja.',
+          'Alternativa rápida (0 esfuerzo): Comprar el pack de 12 velas LED flotantes que ya vienen con mando-varita.'
+        ],
+        shopLinks: [
+          { label: '🛒 Pack 12 Velas Flotantes con Varita (Amazon)', url: 'https://www.amazon.es/s?k=velas+flotantes+harry+potter+con+varita' },
+          { label: '🛒 Banderín Andén 9 3/4 y Casas (Amazon)', url: 'https://www.amazon.es/s?k=decoracion+cumpleanos+harry+potter+anden+9+3%2F4' },
+          { label: '🧵 Hilo de pescar transparente (Amazon)', url: 'https://www.amazon.es/s?k=hilo+de+pescar+transparente+nylon' }
+        ]
+      },
+      {
+        id: 'zona-snitches',
+        shortTitle: '🟡 2. Torre Central Snitches',
+        title: 'Nivel 3 Centro: Pirámide de Snitches Doradas + Sombrero',
+        level: 'Nivel 3 · Centro Focal Elevado (+30 cm)',
+        photo: 'assets/zona-snitches.jpg',
+        defaultAssignee: 'Lucía',
+        position3D: { x: 0, y: 1.55, z: -0.75 },
+        cameraTarget: { pos: [0, 2.3, 3.1], look: [0, 1.4, -0.7] },
+        description: 'El corazón visual de la mesa. Una estructura escalonada de madera oscura coronada por el Sombrero Seleccionador y repleta de bombones dorados con alitas caladas.',
+        diySteps: [
+          'Forrar 2 o 3 cajas de distinto tamaño con papel madera/marrón oscuro (o usar un soporte de madera de 3 pisos).',
+          'Pegar un par de alitas doradas caladas sobre cada bombón redondo dorado (Ferrero Rocher o versión marca blanca Lidl/Mercadona) con una gotita de pegamento.',
+          'Colocar el cartel envejecido de "Snitches Doradas" y el Sombrero Seleccionador arriba del todo.'
+        ],
+        shopLinks: [
+          { label: '🪽 Pack 50 Alas Doradas para Snitch (Amazon)', url: 'https://www.amazon.es/s?k=alas+doradas+snitch+harry+potter+chocolate' },
+          { label: '🎩 Sombrero Seleccionador Decorativo (Amazon)', url: 'https://www.amazon.es/s?k=sombrero+seleccionador+harry+potter' },
+          { label: '🍫 Bombones Ferrero Rocher / Dorados (Amazon)', url: 'https://www.amazon.es/s?k=ferrero+rocher+caja' }
+        ]
+      },
+      {
+        id: 'zona-pociones',
+        shortTitle: '🧪 3. Botica de Pociones',
+        title: 'Nivel 3 Izquierda: Botica del Prof. Snape y Babosas',
+        level: 'Nivel 3 · Lateral Izquierdo sobre Libros (+25 cm)',
+        photo: 'assets/zona-pociones.jpg',
+        defaultAssignee: 'Tamara',
+        position3D: { x: -2.4, y: 1.35, z: -0.65 },
+        cameraTarget: { pos: [-2.6, 2.1, 2.8], look: [-2.2, 1.2, -0.6] },
+        description: 'Rincón alquímico con 3 frascos de cristal con corcho rellenos de líquidos brillantes (Poción Multijugos verde, Amortentia roja y Felix Felicis dorada) junto al tarro alto de gusanos ácidos.',
+        diySteps: [
+          'Llenar 3 botellas de cristal con agua + 1 gota de colorante alimentario (verde, rojo y amarillo) + media cucharadita de polvo nacarado comestible para el efecto remolino mágico.',
+          'Pegar las etiquetas envejecidas con té y atar cuerda de yute en el cuello del corcho.',
+          'Llenar el bote alto de cristal con 1 kg de gusanos de brillo ("Babosas de Pociones") sobre dos libros antiguos apilados.'
+        ],
+        shopLinks: [
+          { label: '🧪 Frascos de Cristal con Corcho Pociones (Amazon)', url: 'https://www.amazon.es/s?k=botellas+cristal+corcho+pociones' },
+          { label: '✨ Polvo Nacarado Comestible Dorado/Verde (Amazon)', url: 'https://www.amazon.es/s?k=polvo+nacarado+comestible+reposteria' },
+          { label: '🐛 Bolsa 1kg Gusanos Gominola Brillo (Amazon)', url: 'https://www.amazon.es/s?k=gusanos+gominola+1kg+vidal+fini' }
+        ]
+      },
+      {
+        id: 'zona-hedwig',
+        shortTitle: '🦉 4. Rincón de Hedwig y Cartas',
+        title: 'Nivel 3 Derecha: Lechucería de Hedwig y Cartas de Hogwarts',
+        level: 'Nivel 3 · Lateral Derecho sobre Libros (+25 cm)',
+        photo: 'assets/zona-hedwig.jpg',
+        defaultAssignee: 'Lucía',
+        position3D: { x: 2.4, y: 1.35, z: -0.65 },
+        cameraTarget: { pos: [2.6, 2.1, 2.8], look: [2.2, 1.2, -0.6] },
+        description: 'Tarro apotecario lleno de nubes blancas decoradas como la lechuza Hedwig junto a una jaula decorativa blanca con cartas de admisión a Hogwarts cerradas con sello de lacre rojo.',
+        diySteps: [
+          'Con un rotulador de tinta comestible negra, dibujar en 5 minutos los ojitos y las plumitas del pecho a las nubes blancas más visibles (las que pegan al cristal del bote).',
+          'Meter dentro de una jaula decorativa (o asomando de una caja vintage) varios sobres beige con el sello de lacre rojo de Hogwarts dirigidos a Lucía.'
+        ],
+        shopLinks: [
+          { label: '🖊️ Rotulador Comestible Negro Repostería (Amazon)', url: 'https://www.amazon.es/s?k=rotulador+tinta+comestible+negro' },
+          { label: '✉️ Pack Cartas Admisión Hogwarts con Lacre (Amazon)', url: 'https://www.amazon.es/s?k=cartas+hogwarts+sello+lacre' },
+          { label: '🕊️ Jaula Decorativa Vintage Blanca (Amazon)', url: 'https://www.amazon.es/s?k=jaula+decorativa+blanca+boda+comunion' }
+        ]
+      },
+      {
+        id: 'zona-varitas',
+        shortTitle: '🪄 5. Varitas y Grageas Bertie Bott',
+        title: 'Nivel 2 Izquierda/Centro: Varitas de Ollivanders y Grageas',
+        level: 'Nivel 2 · Altura Media (+12 cm)',
+        photo: 'assets/zona-varitas.jpg',
+        defaultAssignee: 'Ambas',
+        position3D: { x: -1.45, y: 0.95, z: 0.35 },
+        cameraTarget: { pos: [-1.6, 1.8, 3.2], look: [-1.3, 0.9, 0.3] },
+        description: 'Vasos altos con varitas comestibles de chocolate y perlitas doradas atadas con cinta de Gryffindor, acompañadas de la bombonera de cristal llena de Jelly Beans de todos los sabores con cucharón.',
+        diySteps: [
+          'Usar palitos largos de Pretzel o Mikado, bañar el extremo en chocolate fundido y espolvorear bolitas/estrellas doradas de azúcar.',
+          'Colocarlos de pie en un tarro con lazo granate y dorado.',
+          'Volcar 1 kg de Jelly Beans de colores en una bombonera ancha con una pala metálica pequeña para servirse.'
+        ],
+        shopLinks: [
+          { label: '🫘 Jelly Beans Grageas Colores 1kg (Amazon)', url: 'https://www.amazon.es/s?k=jelly+beans+1kg+frutas' },
+          { label: '🥄 Pala / Cucharón Metálico Candy Bar (Amazon)', url: 'https://www.amazon.es/s?k=pala+metalica+chuches+candy+bar' },
+          { label: '🎀 Cinta Granate y Dorada Gryffindor (Amazon)', url: 'https://www.amazon.es/s?k=cinta+granate+y+dorada' }
+        ]
+      },
+      {
+        id: 'zona-escobas',
+        shortTitle: '🧹 6. Escobas Nimbus 2000',
+        title: 'Nivel 2 Derecha: Bandeja de Escobas Voladoras Nimbus 2000',
+        level: 'Nivel 2 · Lateral Derecho Media Altura (+10 cm)',
+        photo: 'assets/zona-escobas.jpg',
+        defaultAssignee: 'Tamara',
+        position3D: { x: 1.55, y: 0.85, z: 0.35 },
+        cameraTarget: { pos: [1.7, 1.8, 3.2], look: [1.4, 0.8, 0.3] },
+        description: 'Bandeja rústica de madera y pizarra con las famosas escobas Nimbus 2000 dulces-saladas que vuelan de la mesa.',
+        diySteps: [
+          'Cortar lenguas de pica-pica (o regaliz plano rojo/naranja) por la mitad y hacer flecos con unas tijeras de cocina limpias.',
+          'Enrollar la tira flecada en la punta de un palito salado Pretzel y atar con una tira fina de regaliz negro o hilo dorado comestible.'
+        ],
+        shopLinks: [
+          { label: '🥨 Palitos Pretzel SaladosLargos (Amazon)', url: 'https://www.amazon.es/s?k=palitos+pretzel+salados' },
+          { label: '🍬 Lenguas Ácidas Pica-Pica 1kg (Amazon)', url: 'https://www.amazon.es/s?k=lenguas+pica+pica+1kg+vidal' },
+          { label: '🪨 Bandeja Pizarra / Madera Rústica (Amazon)', url: 'https://www.amazon.es/s?k=bandeja+pizarra+madera+rectangulares' }
+        ]
+      },
+      {
+        id: 'zona-ranas',
+        shortTitle: '🐸 7. Ranas, Gringotts y Bolsitas',
+        title: 'Nivel 1 Frente: Ranas con Cromos, Cofre Gringotts y Bolsitas Kraft',
+        level: 'Nivel 1 · Frente de Mesa (Al alcance de los niños)',
+        photo: 'assets/zona-ranas.jpg',
+        defaultAssignee: 'Lucía',
+        position3D: { x: 0, y: 0.65, z: 1.15 },
+        cameraTarget: { pos: [0, 1.6, 3.6], look: [0, 0.65, 1.0] },
+        description: 'La primera fila delantera: Ranas de chocolate macizas posadas sobre sus cromos pentagonales de magos famosos, un cofre de madera rebosante de monedas de oro de Gringotts y las bolsitas Kraft con lacre para los invitados.',
+        diySteps: [
+          'Fundir chocolate con leche al microondas (de 30 en 30 seg), rellenar el molde de silicona de ranas y meter 20 min al frigorífico.',
+          'Colocar cada rana sobre su cromo pentagonal morado/dorado en la parte frontal de la mesa.',
+          'Dejar abierto el cofre de madera con las monedas de chocolate doradas y apilar al lado las bolsitas Kraft con pegatina de lacre.'
+        ],
+        shopLinks: [
+          { label: '🐸 Molde Silicona Ranas + Cromos (Amazon)', url: 'https://www.amazon.es/s?k=molde+ranas+chocolate+harry+potter' },
+          { label: '🪙 Monedas de Chocolate Oro Gringotts (Amazon)', url: 'https://www.amazon.es/s?k=monedas+chocolate+oro+granel' },
+          { label: '🛍️ Bolsitas Kraft + Pegatinas Lacre Hogwarts (Amazon)', url: 'https://www.amazon.es/s?k=bolsas+papel+kraft+pegatinas+harry+potter' }
+        ]
+      }
+    ];
+
+    // =========================================================================
+    // 2. CATÁLOGO DE CHUCHES Y DECORACIÓN CON ENLACES DE COMPRA
+    // =========================================================================
     const SWEETS_CATALOG = [
-      { id: 'snitches', icon: '🟡', magicalName: 'Snitches Doradas del Torneo de Quidditch', realProduct: 'Bombones redondos dorados (tipo Ferrero Rocher o marca blanca Lidl/Mercadona)', diyTrick: 'Recorta alitas en cartulina dorada y pégalas sobre el envoltorio con una gotita de silicona o celo de doble cara.', unitLabel: 'cajas de 16 uds', baseQty35: 2, unitWeightKg: 0.2, priceByTier: { diy: 3.10, balanced: 3.80, premium: 5.50 }, selected: true },
-      { id: 'frogs', icon: '🐸', magicalName: 'Ranas de Chocolate de Honeydukes (+ Cromos)', realProduct: 'Chocolate con leche fundido en molde de silicona de ranas (o chocolatinas)', diyTrick: 'Funde 2 tabletas de chocolate al microondas, rellena el molde de ranas (2,20 €) y enfría 20 min. Colócalas sobre cromos pentagonales impresos.', unitLabel: 'lotes (molde + tabletas)', baseQty35: 1, unitWeightKg: 0.4, priceByTier: { diy: 4.90, balanced: 5.90, premium: 8.50 }, selected: true },
-      { id: 'beans', icon: '🫘', magicalName: 'Grageas de Todos los Sabores de Bertie Bott', realProduct: 'Jelly Beans surtidas de frutas (bolsa a granel / supermercado)', diyTrick: 'Mézclalas en un tarro de cristal ancho con una cuchara metálica y pon el cartel de advertencia: "¡Cuidado con las de sabor a cera de oído!".', unitLabel: 'bolsas de 500g', baseQty35: 2, unitWeightKg: 0.5, priceByTier: { diy: 3.50, balanced: 4.50, premium: 6.20 }, selected: true },
-      { id: 'wands', icon: '🪄', magicalName: 'Varitas Mágicas de Ollivanders', realProduct: 'Palitos Mikado / bastones de chocolate + Regalices largos negros y rojos', diyTrick: 'Baña la punta de los Mikado en chocolate blanco o miel con perlitas doradas y colócalos de pie en dos vasos altos con lazo de casa.', unitLabel: 'packs combinados', baseQty35: 2, unitWeightKg: 0.45, priceByTier: { diy: 3.20, balanced: 4.10, premium: 5.40 }, selected: true },
-      { id: 'slugs', icon: '🧪', magicalName: 'Babosas y Gusanos de Pociones (Prof. Snape)', realProduct: 'Bolsa mayorista 1 kg de gusanos de gelatina (Vidal / Fini / Trolli)', diyTrick: 'Usa un bote alto de legumbres lavado y ponle etiqueta de "Ingredientes de Pociones - Mazmorras de Hogwarts".', unitLabel: 'bolsas de 1 kg', baseQty35: 1, unitWeightKg: 1.0, priceByTier: { diy: 5.20, balanced: 5.95, premium: 7.20 }, selected: true },
-      { id: 'hedwig', icon: '🦉', magicalName: 'Lechuzas Hedwig (Mensajería de Hogwarts)', realProduct: 'Bolsa de Nubes blancas cilíndricas (Marshmallows)', diyTrick: 'Con un rotulador comestible negro (2 €) o un palillo con chocolate fundido, dibuja dos ojitos amarillos/negros y el pico en cada nube blanca.', unitLabel: 'bolsas de 500g', baseQty35: 2, unitWeightKg: 0.5, priceByTier: { diy: 1.75, balanced: 2.40, premium: 3.20 }, selected: true },
-      { id: 'brooms', icon: '🧹', magicalName: 'Escobas Voladoras Nimbus 2000', realProduct: 'Palitos salados Pretzel + lenguas de pica-pica o tiras de nube', diyTrick: 'Enrolla media lengua ácida flecada en el extremo de un palito Pretzel para dar el contraste dulce-salado que encanta a los adultos.', unitLabel: 'lotes para 30 escobas', baseQty35: 1, unitWeightKg: 0.35, priceByTier: { diy: 2.90, balanced: 3.80, premium: 4.90 }, selected: true },
-      { id: 'galleons', icon: '🪙', magicalName: 'Galeones de Oro del Banco Gringotts', realProduct: 'Mallas de monedas de chocolate con leche doradas', diyTrick: 'Espárcelas sueltas por el mantel negro/granate y dentro de una cajita de madera abierta para vestir toda la mesa sin dejar huecos.', unitLabel: 'packs de 250g', baseQty35: 2, unitWeightKg: 0.25, priceByTier: { diy: 2.50, balanced: 3.20, premium: 4.50 }, selected: true }
+      {
+        id: 'snitches',
+        icon: '🟡',
+        magicalName: 'Snitches Doradas del Torneo de Quidditch',
+        realProduct: 'Bombones redondos dorados (tipo Ferrero Rocher o versión Lidl/Mercadona)',
+        diyTrick: 'Pega dos alitas de papel dorado calado sobre cada envoltorio con una gota de silicona.',
+        unitLabel: 'cajas de 16 uds',
+        baseQty35: 2,
+        unitWeightKg: 0.2,
+        priceByTier: { diy: 3.10, balanced: 3.80, premium: 5.50 },
+        defaultAssignee: 'Lucía',
+        links: [
+          { label: '🛒 Ferrero Rocher (Amazon)', url: 'https://www.amazon.es/s?k=ferrero+rocher' },
+          { label: '🪽 Alas Doradas Snitch (Amazon)', url: 'https://www.amazon.es/s?k=alas+doradas+snitch+papel' }
+        ]
+      },
+      {
+        id: 'frogs',
+        icon: '🐸',
+        magicalName: 'Ranas de Chocolate de Honeydukes (+ Cromos)',
+        realProduct: 'Molde de silicona de ranas + 3 tabletas de chocolate con leche fundir',
+        diyTrick: 'Con un molde de 6 cavidades sacas 24 ranas espectaculares en dos tandas de 15 min de nevera.',
+        unitLabel: 'lotes (molde + choco)',
+        baseQty35: 1,
+        unitWeightKg: 0.4,
+        priceByTier: { diy: 4.90, balanced: 5.90, premium: 8.50 },
+        defaultAssignee: 'Lucía',
+        links: [
+          { label: '🐸 Molde Silicona Ranas + Cromos (Amazon)', url: 'https://www.amazon.es/s?k=molde+ranas+chocolate+harry+potter' },
+          { label: '🍫 Chocolate Fundir Repostería (Amazon)', url: 'https://www.amazon.es/s?k=chocolate+con+leche+fundir+reposteria' }
+        ]
+      },
+      {
+        id: 'beans',
+        icon: '🫘',
+        magicalName: 'Grageas de Todos los Sabores de Bertie Bott',
+        realProduct: 'Jelly Beans surtidas de colores vivos (bolsa ahorro 500g / 1kg)',
+        diyTrick: 'Sírvelas en bote de cristal ancho con pala metálica y cartel de "¡Cuidado con el sabor a cera de oído!".',
+        unitLabel: 'bolsas de 500g',
+        baseQty35: 2,
+        unitWeightKg: 0.5,
+        priceByTier: { diy: 3.50, balanced: 4.50, premium: 6.20 },
+        defaultAssignee: 'Tamara',
+        links: [
+          { label: '🫘 Jelly Beans Bolsa 1kg (Amazon)', url: 'https://www.amazon.es/s?k=jelly+beans+1kg' },
+          { label: '🍬 La Casa de las Golosinas', url: 'https://www.lacasadelasgolosinas.com/es/buscar?controller=search&s=jelly+beans' }
+        ]
+      },
+      {
+        id: 'wands',
+        icon: '🪄',
+        magicalName: 'Varitas Mágicas de Ollivanders',
+        realProduct: 'Palitos Mikado / bastones de chocolate + perlitas doradas comestibles',
+        diyTrick: 'Baña la punta en chocolate y espolvorea perlitas doradas. Átalos con cinta granate/oro.',
+        unitLabel: 'packs combinados',
+        baseQty35: 2,
+        unitWeightKg: 0.45,
+        priceByTier: { diy: 3.20, balanced: 4.10, premium: 5.40 },
+        defaultAssignee: 'Tamara',
+        links: [
+          { label: '🍫 Mikado Chocolate (Amazon)', url: 'https://www.amazon.es/s?k=mikado+chocolate' },
+          { label: '✨ Sprinkles Dorados Repostería (Amazon)', url: 'https://www.amazon.es/s?k=sprinkles+dorados+comestibles' }
+        ]
+      },
+      {
+        id: 'slugs',
+        icon: '🧪',
+        magicalName: 'Babosas y Gusanos de Pociones (Prof. Snape)',
+        realProduct: 'Bolsa mayorista 1 kg de gusanos de gelatina brillo (Vidal / Fini)',
+        diyTrick: 'Colócalos en el bote más alto junto a las 3 botellas de pociones iluminadas.',
+        unitLabel: 'bolsas de 1 kg',
+        baseQty35: 1,
+        unitWeightKg: 1.0,
+        priceByTier: { diy: 5.20, balanced: 5.95, premium: 7.20 },
+        defaultAssignee: 'Tamara',
+        links: [
+          { label: '🐛 Gusanos Brillo 1kg Vidal/Fini (Amazon)', url: 'https://www.amazon.es/s?k=gusanos+gominola+1kg+vidal' },
+          { label: '🍬 Gusanos 1kg (La Casa de las Golosinas)', url: 'https://www.lacasadelasgolosinas.com/es/buscar?controller=search&s=gusanos+1kg' }
+        ]
+      },
+      {
+        id: 'hedwig',
+        icon: '🦉',
+        magicalName: 'Lechuzas Hedwig (Mensajería de Hogwarts)',
+        realProduct: 'Bolsa de Nubes blancas cilíndricas + Rotulador comestible negro',
+        diyTrick: 'Dibuja ojitos y plumitas con el rotulador comestible en las nubes exteriores del tarro.',
+        unitLabel: 'bolsas de 500g',
+        baseQty35: 2,
+        unitWeightKg: 0.5,
+        priceByTier: { diy: 1.75, balanced: 2.40, premium: 3.20 },
+        defaultAssignee: 'Lucía',
+        links: [
+          { label: '☁️ Nubes Blancas Marshmallows 1kg (Amazon)', url: 'https://www.amazon.es/s?k=nubes+blancas+golosinas+1kg' },
+          { label: '🖊️ Rotulador Comestible Negro (Amazon)', url: 'https://www.amazon.es/s?k=rotulador+comestible+negro' }
+        ]
+      },
+      {
+        id: 'brooms',
+        icon: '🧹',
+        magicalName: 'Escobas Voladoras Nimbus 2000',
+        realProduct: 'Palitos salados Pretzel largos + lenguas ácidas pica-pica',
+        diyTrick: 'Fleca media lengua ácida en la punta del palito Pretzel para crear el cepillo de la escoba.',
+        unitLabel: 'lotes para 30 escobas',
+        baseQty35: 1,
+        unitWeightKg: 0.35,
+        priceByTier: { diy: 2.90, balanced: 3.80, premium: 4.90 },
+        defaultAssignee: 'Tamara',
+        links: [
+          { label: '🥨 Palitos Pretzel Salados (Amazon)', url: 'https://www.amazon.es/s?k=palitos+pretzel+salados' },
+          { label: '🍬 Lenguas Pica-Pica 1kg (Amazon)', url: 'https://www.amazon.es/s?k=lenguas+pica+pica+1kg' }
+        ]
+      },
+      {
+        id: 'galleons',
+        icon: '🪙',
+        magicalName: 'Galeones de Oro del Banco Gringotts',
+        realProduct: 'Mallas o bolsa de 500g de monedas de chocolate doradas',
+        diyTrick: 'Llena un pequeño cofre de madera y esparce el resto por el camino dorado del mantel.',
+        unitLabel: 'packs de 250g',
+        baseQty35: 2,
+        unitWeightKg: 0.25,
+        priceByTier: { diy: 2.50, balanced: 3.20, premium: 4.50 },
+        defaultAssignee: 'Lucía',
+        links: [
+          { label: '🪙 Monedas Chocolate Oro 500g (Amazon)', url: 'https://www.amazon.es/s?k=monedas+de+chocolate+doradas' },
+          { label: '🧰 Cofre Madera Pequeño Tesoro (Amazon)', url: 'https://www.amazon.es/s?k=cofre+madera+pequeno+pirata+monedas' }
+        ]
+      }
     ];
 
     const DECOR_ITEMS = [
-      { id: 'candles', name: '12 Velas Flotantes del Gran Comedor', howTo: 'Guarda 12 tubos de papel higiénico, haz gotear silicona caliente por el borde superior, píntalos de blanco y mete 1 vela LED de té arriba. Cuélgalas con hilo de pescar.', cost: { diy: 2.50, balanced: 3.50, premium: 9.90 }, selected: true },
-      { id: 'jars', name: 'Tarros de Botica y Cristal (8–10 recipientes)', howTo: 'En modo ahorro: recicla botes de cristal de conservas/espárragos quitando la etiqueta con agua caliente y aceite. En modo intermedio: añade 2 bomboneras de bazar.', cost: { diy: 0.00, balanced: 6.50, premium: 14.00 }, selected: true },
-      { id: 'tablecloth', name: 'Mantel Base Oscuro + Camino Dorado + Libros Antiguos', howTo: 'Mantel negro o burdeos de tela/TNT (2,50 €) + libros gordos que tengas en casa apilados para crear las 3 alturas sin gastar en soportes.', cost: { diy: 2.50, balanced: 5.50, premium: 12.00 }, selected: true },
-      { id: 'bags', name: '50 Bolsitas de Papel Kraft + Cuerda de Yute + Carteles', howTo: 'Bolsitas kraft para que los niños se lleven las chuches que sobren + etiquetas envejecidas con té.', cost: { diy: 2.50, balanced: 4.00, premium: 6.50 }, selected: true },
-      { id: 'potions', name: '3 Botellas de Pociones Iluminadas (Multijugos, Felix Felicis, Amortentia)', howTo: 'Botellas bonitas de vidrio recicladas con agua + 2 gotas de colorante alimentario (o refresco) y una pizca de mica/purpurina comestible.', cost: { diy: 1.50, balanced: 3.50, premium: 6.00 }, selected: true },
-      { id: 'props', name: 'Gafas de Harry + Bufanda Gryffindor + Jaula/Lechuza', howTo: 'Usa juguetes/disfraces que ya tengáis en casa o gafas redondas sin cristal de bazar (1,50 €) apoyadas junto a los libros.', cost: { diy: 1.50, balanced: 4.50, premium: 11.00 }, selected: true }
+      {
+        id: 'candles',
+        name: '🕯️ 12 Velas Flotantes LED + Hilo de Pescar',
+        howTo: 'Puedes comprarlas listas con varita mando a distancia o hacerlas con rollos pintados + velas de té LED.',
+        cost: { diy: 2.50, balanced: 3.50, premium: 12.90 },
+        defaultAssignee: 'Tamara',
+        links: [
+          { label: '🕯️ Pack 12 Velas Flotantes con Varita (Amazon)', url: 'https://www.amazon.es/s?k=velas+flotantes+led+harry+potter+varita' },
+          { label: '🕯️ Pack 24 Velas LED Té Baratas (Amazon)', url: 'https://www.amazon.es/s?k=velas+led+te+calidas+pack' }
+        ]
+      },
+      {
+        id: 'jars',
+        name: '🫙 Tarros de Botica y Bomboneras de Cristal (6–8 uds)',
+        howTo: 'Combina botes altos de conserva sin etiqueta con 2 o 3 bomboneras con tapa estilo botica.',
+        cost: { diy: 0.00, balanced: 6.50, premium: 14.00 },
+        defaultAssignee: 'Ambas',
+        links: [
+          { label: '🫙 Bomboneras Cristal Candy Bar (Amazon)', url: 'https://www.amazon.es/s?k=tarros+cristal+candy+bar+tapa' }
+        ]
+      },
+      {
+        id: 'tablecloth',
+        name: '🧣 Mantel Terciopelo/Burdeos + Camino Dorado + Libros Antiguos',
+        howTo: 'Mantel oscuro de base, camino de mesa dorado central y libros de tapa dura apilados para crear las 3 alturas.',
+        cost: { diy: 2.50, balanced: 5.50, premium: 12.00 },
+        defaultAssignee: 'Tamara',
+        links: [
+          { label: '✨ Camino de Mesa Dorado (Amazon)', url: 'https://www.amazon.es/s?k=camino+de+mesa+dorado+fiesta' },
+          { label: '🧣 Mantel Burdeos / Negro Fiesta (Amazon)', url: 'https://www.amazon.es/s?k=mantel+granate+rectangular+tela' }
+        ]
+      },
+      {
+        id: 'bags',
+        name: '🛍️ 50 Bolsitas Kraft + Pegatinas Sello Lacre Hogwarts',
+        howTo: 'Para que cada niño y adulto se lleve un surtido de chuches a su mesa tras el banquete.',
+        cost: { diy: 2.50, balanced: 4.00, premium: 6.50 },
+        defaultAssignee: 'Lucía',
+        links: [
+          { label: '🛍️ 50 Bolsitas Papel Kraft (Amazon)', url: 'https://www.amazon.es/s?k=bolsitas+papel+kraft+chuches+50' },
+          { label: '💮 Pegatinas Sello Lacre Hogwarts (Amazon)', url: 'https://www.amazon.es/s?k=pegatinas+sello+lacre+hogwarts' }
+        ]
+      },
+      {
+        id: 'potions',
+        name: '🧪 3 Frascos de Pociones con Corcho + Polvo Nacarado',
+        howTo: 'Botellas de cristal con tapón de corcho rellenas de agua teñida con efecto perlado mágico.',
+        cost: { diy: 1.50, balanced: 3.50, premium: 6.00 },
+        defaultAssignee: 'Tamara',
+        links: [
+          { label: '🧪 Frascos Pociones con Corcho (Amazon)', url: 'https://www.amazon.es/s?k=botellas+cristal+corcho+250ml' },
+          { label: '✨ Colorante + Nacarado Comestible (Amazon)', url: 'https://www.amazon.es/s?k=colorante+alimentario+nacarado' }
+        ]
+      },
+      {
+        id: 'props',
+        name: '👓 Atrezzo Hogwarts: Gafas de Harry, Bufanda, Cartas y Jaula',
+        howTo: 'Detalles que visten los huecos de la mesa y le dan aspecto de escaparate oficial de película.',
+        cost: { diy: 1.50, balanced: 4.50, premium: 11.00 },
+        defaultAssignee: 'Lucía',
+        links: [
+          { label: '🧣 Set Gafas + Bufanda + Varita (Amazon)', url: 'https://www.amazon.es/s?k=pack+bufanda+gafas+varita+harry+potter' },
+          { label: '🪧 Cartel Andén 9 3/4 y Decoración (Amazon)', url: 'https://www.amazon.es/s?k=decoracion+mesa+harry+potter' }
+        ]
+      }
     ];
 
     const CHECKLIST_STEPS = [
-      { id: 'c1', when: '3–4 semanas antes', text: 'Empezar a guardar botes de cristal bonitos (conservas, mermelada, salsas) y 12 tubos de cartón para las velas flotantes.' },
-      { id: 'c2', when: '3 semanas antes', text: 'Pedir el molde de silicona de ranas (~2,20 €) y las velas LED de té si se compran online.' },
-      { id: 'c3', when: '2 semanas antes', text: 'Comprar las bolsas de 1 kg de gomitas/nubes/regalices (duran meses cerradas) y las bolsitas de papel kraft.' },
-      { id: 'c4', when: '1 semana antes', text: 'Imprimir los carteles desde la pestaña 3 de esta web, recortar las alitas doradas de las Snitches y envejecer las etiquetas con una bolsita de té.' },
-      { id: 'c5', when: '3 días antes', text: 'Fundir el chocolate, hacer las Ranas de Chocolate en el molde y guardarlas en un tupper hermético en la nevera.' },
-      { id: 'c6', when: '2 días antes', text: 'Pegar las alitas doradas a los bombones Ferrero/Lidl y pintar los ojitos a las nubes de Hedwig.' },
-      { id: 'c7', when: 'Día anterior', text: 'Montar la estructura de la mesa: mantel, libros apilados en 3 alturas, botellas de pociones y botes vacíos en su sitio.' },
-      { id: 'c8', when: 'Día de la Comunión (2h antes)', text: 'Rellenar los tarros con las chuches (para que estén tiernas y brillantes), encender las velas LED y colocar las ranas de chocolate.' }
+      { id: 'c1', when: '3–4 semanas antes', text: 'Repartir zonas entre Tamara y Lucía y empezar a guardar botes de cristal bonitos.' },
+      { id: 'c2', when: '3 semanas antes', text: 'Pedir en Amazon/AliExpress el molde de ranas, las alas doradas de Snitch y las velas flotantes.' },
+      { id: 'c3', when: '2 semanas antes', text: 'Comprar las bolsas de 1 kg de gomitas/nubes/grageas (duran meses cerradas) y las bolsitas Kraft.' },
+      { id: 'c4', when: '1 semana antes', text: 'Imprimir los carteles desde la pestaña 4 y envejecer los bordes con una bolsita de té húmeda.' },
+      { id: 'c5', when: '3 días antes', text: 'Fundir el chocolate, hacer las Ranas de Chocolate en el molde y guardarlas en tupper en la nevera.' },
+      { id: 'c6', when: '2 días antes', text: 'Pegar las alitas doradas a los bombones Ferrero y pintar los ojitos a las nubes de Hedwig.' },
+      { id: 'c7', when: 'Día anterior', text: 'Dejar lista la estructura de la mesa: mantel, libros apilados en 3 alturas, pociones y carteles.' },
+      { id: 'c8', when: 'Día de la Comunión (2h antes)', text: 'Rellenar los tarros con las chuches tiernas, encender las velas LED y colocar las ranas en sus cromos.' }
     ];
 
-    let state = {
+    // =========================================================================
+    // 3. ESTADO COLABORATIVO PERSISTENTE + SINCRONIZACIÓN POR URL / WHATSAPP
+    // =========================================================================
+    const STORAGE_KEY = 'hp_comunion_lucia_collab_v2';
+
+    const DEFAULT_STATE = {
+      activeUser: 'Tamara',
       guests: 35,
       tier: 'balanced',
       childName: 'Lucía',
       house: 'Gryffindor',
-      completedSteps: JSON.parse(localStorage.getItem('hp_candybar_steps') || '["c1"]')
+      selectedZoneId: 'zona-snitches',
+      zoneFilter: 'all',
+      shopFilter: 'all',
+      // Estado de cada una de las 7 zonas: 'pending' | 'wip' | 'done'
+      zoneStatus: {
+        'zona-velas': 'pending',
+        'zona-snitches': 'pending',
+        'zona-pociones': 'done',
+        'zona-hedwig': 'pending',
+        'zona-varitas': 'pending',
+        'zona-escobas': 'pending',
+        'zona-ranas': 'pending'
+      },
+      zoneAssignees: {
+        'zona-velas': 'Tamara',
+        'zona-snitches': 'Lucía',
+        'zona-pociones': 'Tamara',
+        'zona-hedwig': 'Lucía',
+        'zona-varitas': 'Ambas',
+        'zona-escobas': 'Tamara',
+        'zona-ranas': 'Lucía'
+      },
+      // Estado de compra de chuches y decoración (true = ya comprado/listo)
+      itemPurchased: {
+        'snitches': false,
+        'frogs': true,
+        'beans': false,
+        'wands': false,
+        'slugs': true,
+        'hedwig': false,
+        'brooms': false,
+        'galleons': false,
+        'candles': false,
+        'jars': true,
+        'tablecloth': false,
+        'bags': false,
+        'potions': true,
+        'props': false
+      },
+      itemAssignees: {
+        'snitches': 'Lucía',
+        'frogs': 'Lucía',
+        'beans': 'Tamara',
+        'wands': 'Tamara',
+        'slugs': 'Tamara',
+        'hedwig': 'Lucía',
+        'brooms': 'Tamara',
+        'galleons': 'Lucía',
+        'candles': 'Tamara',
+        'jars': 'Ambas',
+        'tablecloth': 'Tamara',
+        'bags': 'Lucía',
+        'potions': 'Tamara',
+        'props': 'Lucía'
+      },
+      customShopLinks: {},
+      completedSteps: ['c1'],
+      // Comentarios por zona o item
+      comments: {
+        'zona-snitches': [
+          { id: 'cm1', author: 'Tamara', date: 'Hoy', text: 'Lucía, he visto el pack de 50 alitas doradas ya recortadas en Amazon por 4€, nos ahorra muchísimo tiempo.' },
+          { id: 'cm2', author: 'Lucía', date: 'Hoy', text: '¡Súper! Me encargo yo de pedirlas junto con los bombones y monto la pirámide central.' }
+        ],
+        'zona-pociones': [
+          { id: 'cm3', author: 'Tamara', date: 'Hoy', text: 'Ya tengo guardados 3 frascos de vidrio ideales para las pociones y libros antiguos de tapa dura.' }
+        ],
+        'zona-ranas': [
+          { id: 'cm4', author: 'Lucía', date: 'Hoy', text: 'Ya he pedido el molde de las ranas de chocolate con los cromos pentagonales incluidos 🐸✨' }
+        ]
+      },
+      // Muro de nuevas ideas colaborativas
+      ideas: [
+        {
+          id: 'idea-1',
+          title: '🍺 Botellitas de Cerveza de Mantequilla (Sin Alcohol)',
+          zone: 'Nivel 2 · Zona Media',
+          author: 'Tamara',
+          cost: 6.50,
+          link: 'https://www.amazon.es/s?k=botellas+cristal+pequenas+cerveza+mantequilla',
+          desc: 'Llenar 12 botellitas de cristal pequeñas con refresco Cream Soda o Fanta Naranja + un chorrito de sirope de caramelo y coronar con nata montada justo antes de empezar.',
+          approved: true,
+          done: false,
+          likes: 2
+        },
+        {
+          id: 'idea-2',
+          title: '🪴 Mini Macetas de Mandrágoras de Oreo y Chocolate',
+          zone: 'Nivel 1 · Frente de Mesa',
+          author: 'Lucía',
+          cost: 5.00,
+          link: 'https://www.amazon.es/s?k=mini+macetas+plastico+postres',
+          desc: 'Vasitos marrones tipo maceta rellenos de natillas de chocolate con galleta Oreo triturada por encima ("tierra") y una hojita de menta o muñequito de mandrágora.',
+          approved: true,
+          done: false,
+          likes: 2
+        },
+        {
+          id: 'idea-3',
+          title: '📸 Cartel Fotomatón "Se Busca en Azkaban" para los niños',
+          zone: 'Techo / Pared',
+          author: 'Tamara',
+          cost: 8.90,
+          link: 'https://www.amazon.es/s?k=photocall+azkaban+harry+potter',
+          desc: 'Poner al lado de la mesa de chuches un marco de cartón de "Have You Seen This Wizard?" con un par de varitas y gafas para que los invitados se hagan fotos mientras cogen chuches.',
+          approved: false,
+          done: false,
+          likes: 1
+        }
+      ]
     };
 
-    const TIER_HINTS = {
-      diy: 'Botes 100% reciclados, marca blanca de supermercado y manualidades caseras.',
-      balanced: 'Compra bolsas de 1kg mayorista (Vidal/Fini) combinadas con trucos DIY.',
-      premium: 'Incluye bomboneras compradas, Ferrero Rocher original y atrezzo extra.'
-    };
+    let state = loadState();
 
-    function formatEuro(num) {
-      return num.toFixed(2).replace('.', ',') + ' €';
+    function loadState() {
+      // 1. Primero comprobar si viene un enlace mágico compartido en el hash (#sync=...)
+      try {
+        if (window.location.hash && window.location.hash.startsWith('#sync=')) {
+          const encoded = window.location.hash.slice(6);
+          const jsonStr = decodeURIComponent(escape(atob(encoded)));
+          const incoming = JSON.parse(jsonStr);
+          const merged = Object.assign({}, DEFAULT_STATE, incoming);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+          setTimeout(() => {
+            alert('🪄 ¡Avances sincronizados correctamente! Se han cargado los últimos checks, ideas y comentarios de Tamara y Lucía.');
+          }, 300);
+          return merged;
+        }
+      } catch (err) {
+        console.warn('Error leyendo enlace sincronizado:', err);
+      }
+
+      // 2. Cargar de localStorage
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          return Object.assign({}, DEFAULT_STATE, parsed, {
+            zoneStatus: Object.assign({}, DEFAULT_STATE.zoneStatus, parsed.zoneStatus || {}),
+            zoneAssignees: Object.assign({}, DEFAULT_STATE.zoneAssignees, parsed.zoneAssignees || {}),
+            itemPurchased: Object.assign({}, DEFAULT_STATE.itemPurchased, parsed.itemPurchased || {}),
+            itemAssignees: Object.assign({}, DEFAULT_STATE.itemAssignees, parsed.itemAssignees || {}),
+            comments: Object.assign({}, DEFAULT_STATE.comments, parsed.comments || {})
+          });
+        }
+      } catch (e) {
+        console.warn('Error leyendo localStorage:', e);
+      }
+      return JSON.parse(JSON.stringify(DEFAULT_STATE));
     }
 
-    function calculateTotals() {
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {
+        console.warn('No se pudo guardar en localStorage:', e);
+      }
+    }
+
+    // =========================================================================
+    // 4. CÁLCULO DEL % DE FINALIZACIÓN DE LA MESA Y PRESUPUESTO
+    // =========================================================================
+    function formatEuro(num) {
+      return Number(num || 0).toFixed(2).replace('.', ',') + ' €';
+    }
+
+    function calculateCompletionMetrics() {
+      // 1. Zonas listas (7 zonas)
+      const totalZones = TABLE_ZONES.length;
+      const doneZones = TABLE_ZONES.filter(z => state.zoneStatus[z.id] === 'done').length;
+
+      // 2. Compras listas (8 chuches + 6 deco = 14 items)
+      const allShopIds = [...SWEETS_CATALOG.map(s => s.id), ...DECOR_ITEMS.map(d => d.id)];
+      const totalShop = allShopIds.length;
+      const doneShop = allShopIds.filter(id => !!state.itemPurchased[id]).length;
+
+      // 3. Pasos del cronograma (8 pasos)
+      const totalSteps = CHECKLIST_STEPS.length;
+      const doneSteps = state.completedSteps.length;
+
+      // 4. Ideas aprobadas por Tamara y Lucía
+      const approvedIdeas = (state.ideas || []).filter(i => i.approved);
+      const totalApprovedIdeas = approvedIdeas.length;
+      const doneApprovedIdeas = approvedIdeas.filter(i => i.done).length;
+
+      const grandTotalTasks = totalZones + totalShop + totalSteps + totalApprovedIdeas;
+      const grandDoneTasks = doneZones + doneShop + doneSteps + doneApprovedIdeas;
+      const pct = grandTotalTasks > 0 ? Math.round((grandDoneTasks / grandTotalTasks) * 100) : 0;
+
+      // Reparto entre Tamara y Lucía
+      let tamaraTotal = 0, tamaraDone = 0, luciaTotal = 0, luciaDone = 0;
+      TABLE_ZONES.forEach(z => {
+        const who = state.zoneAssignees[z.id] || z.defaultAssignee;
+        const isDone = state.zoneStatus[z.id] === 'done';
+        if (who === 'Tamara' || who === 'Ambas') { tamaraTotal++; if (isDone) tamaraDone++; }
+        if (who === 'Lucía' || who === 'Ambas') { luciaTotal++; if (isDone) luciaDone++; }
+      });
+      allShopIds.forEach(id => {
+        const who = state.itemAssignees[id] || 'Ambas';
+        const isDone = !!state.itemPurchased[id];
+        if (who === 'Tamara' || who === 'Ambas') { tamaraTotal++; if (isDone) tamaraDone++; }
+        if (who === 'Lucía' || who === 'Ambas') { luciaTotal++; if (isDone) luciaDone++; }
+      });
+
+      return {
+        pct,
+        grandTotalTasks,
+        grandDoneTasks,
+        totalZones,
+        doneZones,
+        totalShop,
+        doneShop,
+        totalSteps,
+        doneSteps,
+        tamaraTotal,
+        tamaraDone,
+        luciaTotal,
+        luciaDone
+      };
+    }
+
+    function calculateBudgetTotals() {
       const scale = state.guests / 35;
-      let sweetsCost = 0, totalWeight = 0;
+      let sweetsCost = 0;
+      let totalWeight = 0;
       SWEETS_CATALOG.forEach(item => {
-        if (!item.selected) return;
         const scaledUnits = Math.max(1, Math.round(item.baseQty35 * scale));
         sweetsCost += scaledUnits * item.priceByTier[state.tier];
         totalWeight += scaledUnits * item.unitWeightKg;
       });
       let decorCost = 0;
-      DECOR_ITEMS.forEach(d => { if (d.selected) decorCost += d.cost[state.tier]; });
-      const totalBudget = sweetsCost + decorCost;
-      return { totalBudget, perGuest: totalBudget / state.guests, totalWeight };
+      DECOR_ITEMS.forEach(d => {
+        decorCost += d.cost[state.tier];
+      });
+      let ideasCost = 0;
+      (state.ideas || []).forEach(idea => {
+        if (idea.approved) ideasCost += Number(idea.cost || 0);
+      });
+      const totalBudget = sweetsCost + decorCost + ideasCost;
+      return {
+        totalBudget,
+        perGuest: totalBudget / state.guests,
+        totalWeight
+      };
     }
 
-    function updateAll() {
-      const totals = calculateTotals();
-      document.getElementById('guestCountValue').textContent = `${state.guests} inv.`;
-      document.getElementById('totalBudgetDisplay').textContent = formatEuro(totals.totalBudget);
-      document.getElementById('costPerGuestBadge').textContent = `~${formatEuro(totals.perGuest)} / inv.`;
-      document.getElementById('totalWeightDisplay').textContent = `${totals.totalWeight.toFixed(1).replace('.', ',')} kg`;
-      document.getElementById('tierHint').textContent = TIER_HINTS[state.tier];
+    // =========================================================================
+    // 5. MOTOR 3D INTERACTIVO DE LA MESA (THREE.JS)
+    // =========================================================================
+    let scene3D, camera3D, renderer3D, tableGroup3D;
+    let zoneMeshes3D = {};
+    let candleFlames3D = [];
+    let autoSpin3D = true;
+    let isDragging3D = false;
+    let prevMouse3D = { x: 0, y: 0 };
+    let spherical3D = { theta: 0.25, phi: 1.12, radius: 6.6 };
+    let lookTarget3D = new THREE.Vector3(0, 1.35, 0);
+    let desiredSpherical3D = { theta: 0.25, phi: 1.12, radius: 6.6 };
+    let desiredLookTarget3D = new THREE.Vector3(0, 1.35, 0);
 
-      const scale = state.guests / 35;
-      const sweetsGrid = document.getElementById('sweetsGrid');
-      sweetsGrid.innerHTML = SWEETS_CATALOG.map(item => {
-        const qty = Math.max(1, Math.round(item.baseQty35 * scale));
-        const price = qty * item.priceByTier[state.tier];
-        const weightGrams = Math.round(qty * item.unitWeightKg * 1000);
-        return `
-          <div class="border border-[var(--border)] rounded-xl p-4 transition ${item.selected ? 'bg-[var(--background)]' : 'opacity-50 bg-[var(--card)]'}">
-            <div class="flex items-start justify-between gap-3">
-              <label class="flex items-start gap-3 cursor-pointer">
-                <input type="checkbox" data-sweet-id="${item.id}" ${item.selected ? 'checked' : ''} class="mt-1 h-4 w-4 rounded cursor-pointer" />
-                <div>
-                  <div class="flex items-center gap-1.5"><span>${item.icon}</span><h3 class="text-sm font-bold">${item.magicalName}</h3></div>
-                  <p class="text-xs text-[var(--muted-foreground)] mt-0.5"><strong>Qué comprar:</strong> ${item.realProduct}</p>
-                </div>
-              </label>
-              <div class="text-right shrink-0">
-                <div class="text-sm font-extrabold">${formatEuro(price)}</div>
-                <div class="text-xs text-[var(--muted-foreground)]">${qty} ${item.unitLabel} (~${weightGrams}g)</div>
-              </div>
-            </div>
-            <div class="mt-3 pt-2.5 border-t border-[var(--border)] text-xs text-[var(--muted-foreground)]">
-              <strong class="text-[var(--foreground)]">✨ Truco Calidad/Precio:</strong> ${item.diyTrick}
-            </div>
-          </div>`;
-      }).join('');
+    function init3DTableScene() {
+      const container = document.getElementById('table3dCanvasContainer');
+      if (!container || typeof THREE === 'undefined') return;
 
-      sweetsGrid.querySelectorAll('input[data-sweet-id]').forEach(cb => {
-        cb.addEventListener('change', e => {
-          const item = SWEETS_CATALOG.find(s => s.id === e.target.getAttribute('data-sweet-id'));
-          if (item) { item.selected = e.target.checked; updateAll(); }
+      const width = container.clientWidth || 720;
+      const height = container.clientHeight || 510;
+
+      scene3D = new THREE.Scene();
+      scene3D.fog = new THREE.FogExp2(0x0d0a08, 0.045);
+
+      camera3D = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
+
+      renderer3D = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer3D.setSize(width, height);
+      renderer3D.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer3D.shadowMap.enabled = true;
+      container.appendChild(renderer3D.domElement);
+
+      // Iluminación cálida del Gran Comedor de Hogwarts
+      const ambientLight = new THREE.AmbientLight(0xffeedd, 0.65);
+      scene3D.add(ambientLight);
+
+      const mainWarmLight = new THREE.PointLight(0xffbe55, 1.35, 22);
+      mainWarmLight.position.set(0, 5.2, 3.5);
+      mainWarmLight.castShadow = true;
+      scene3D.add(mainWarmLight);
+
+      const leftPotionGlow = new THREE.PointLight(0x10b981, 0.7, 6);
+      leftPotionGlow.position.set(-2.5, 2.0, -0.5);
+      scene3D.add(leftPotionGlow);
+
+      const rightWarmGlow = new THREE.PointLight(0xf59e0b, 0.7, 6);
+      rightWarmGlow.position.set(2.5, 2.0, -0.5);
+      scene3D.add(rightWarmGlow);
+
+      tableGroup3D = new THREE.Group();
+      scene3D.add(tableGroup3D);
+
+      // --- SUELO Y MESA PRINCIPAL CON MANTEL GRANATE Y CAMINO DORADO ---
+      const floorGeo = new THREE.CircleGeometry(6.2, 48);
+      const floorMat = new THREE.MeshStandardMaterial({ color: 0x15100c, roughness: 0.9 });
+      const floorMesh = new THREE.Mesh(floorGeo, floorMat);
+      floorMesh.rotation.x = -Math.PI / 2;
+      floorMesh.position.y = -1.2;
+      tableGroup3D.add(floorMesh);
+
+      // Tablero y faldón de terciopelo burdeos
+      const tableBodyGeo = new THREE.BoxGeometry(6.8, 1.55, 3.3);
+      const burgundyMat = new THREE.MeshStandardMaterial({ color: 0x561015, roughness: 0.78 });
+      const tableMesh = new THREE.Mesh(tableBodyGeo, burgundyMat);
+      tableMesh.position.set(0, -0.42, 0);
+      tableGroup3D.add(tableMesh);
+
+      // Camino central dorado de Honeydukes
+      const runnerGeo = new THREE.BoxGeometry(1.75, 1.58, 3.34);
+      const goldRunnerMat = new THREE.MeshStandardMaterial({ color: 0xc99e2c, metalness: 0.55, roughness: 0.35 });
+      const runnerMesh = new THREE.Mesh(runnerGeo, goldRunnerMat);
+      runnerMesh.position.set(0, -0.41, 0);
+      tableGroup3D.add(runnerMesh);
+
+      // --- ZONA 1: VELAS FLOTANTES Y ARCO COMUNIÓN DE LUCÍA (zona-velas) ---
+      const zVelasGroup = new THREE.Group();
+      zVelasGroup.userData = { zoneId: 'zona-velas' };
+      const candlePositions = [
+        [-2.6, 3.3, -0.9], [-1.9, 3.7, -0.2], [-1.2, 3.5, -1.1], [-0.5, 3.9, -0.4],
+        [0.5, 3.85, -0.4], [1.2, 3.45, -1.1], [1.9, 3.7, -0.2], [2.6, 3.25, -0.9],
+        [-2.2, 3.6, 0.7], [-0.9, 3.4, 0.8], [0.9, 3.45, 0.8], [2.2, 3.6, 0.7]
+      ];
+      const candleGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.52, 12);
+      const candleMat = new THREE.MeshStandardMaterial({ color: 0xfdf8ee, roughness: 0.5 });
+      const flameGeo = new THREE.SphereGeometry(0.055, 10, 10);
+      const flameMat = new THREE.MeshBasicMaterial({ color: 0xffd15c });
+
+      candlePositions.forEach(([cx, cy, cz], idx) => {
+        const cMesh = new THREE.Mesh(candleGeo, candleMat);
+        cMesh.position.set(cx, cy, cz);
+        zVelasGroup.add(cMesh);
+
+        const fMesh = new THREE.Mesh(flameGeo, flameMat);
+        fMesh.position.set(cx, cy + 0.31, cz);
+        fMesh.scale.set(0.8, 1.4, 0.8);
+        zVelasGroup.add(fMesh);
+        candleFlames3D.push({ mesh: fMesh, baseY: cy + 0.31, phase: idx * 0.9 });
+      });
+
+      // Arco cartel superior "COMUNIÓN DE LUCÍA"
+      const archBannerGeo = new THREE.BoxGeometry(2.6, 0.42, 0.08);
+      const archBannerMat = new THREE.MeshStandardMaterial({ color: 0x261c15, metalness: 0.2, roughness: 0.6 });
+      const archBanner = new THREE.Mesh(archBannerGeo, archBannerMat);
+      archBanner.position.set(0, 2.85, -1.05);
+      zVelasGroup.add(archBanner);
+      registerZoneGroup3D('zona-velas', zVelasGroup, new THREE.Vector3(0, 3.1, -0.9));
+
+      // --- ZONA 2: TORRE CENTRAL DE SNITCHES DORADAS + SOMBRERO (zona-snitches) ---
+      const zSnitchesGroup = new THREE.Group();
+      const woodMat = new THREE.MeshStandardMaterial({ color: 0x3b2618, roughness: 0.7 });
+      const tier1Box = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.36, 1.1), woodMat);
+      tier1Box.position.set(0, 0.54, -0.75);
+      const tier2Box = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.36, 0.85), woodMat);
+      tier2Box.position.set(0, 0.90, -0.75);
+      const tier3Box = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.36, 0.65), woodMat);
+      tier3Box.position.set(0, 1.26, -0.75);
+      zSnitchesGroup.add(tier1Box, tier2Box, tier3Box);
+
+      // Bombones dorados Snitches con alitas
+      const snitchGeo = new THREE.SphereGeometry(0.085, 14, 14);
+      const goldMat = new THREE.MeshStandardMaterial({ color: 0xf4c430, metalness: 0.8, roughness: 0.2 });
+      const snitchRows = [
+        { y: 0.78, z: -0.35, xs: [-0.6, -0.3, 0, 0.3, 0.6] },
+        { y: 1.14, z: -0.48, xs: [-0.42, -0.14, 0.14, 0.42] },
+        { y: 1.50, z: -0.60, xs: [-0.24, 0, 0.24] }
+      ];
+      snitchRows.forEach(row => {
+        row.xs.forEach(sx => {
+          const s = new THREE.Mesh(snitchGeo, goldMat);
+          s.position.set(sx, row.y, row.z);
+          zSnitchesGroup.add(s);
         });
       });
 
-      const decorContainer = document.getElementById('decorListContainer');
-      decorContainer.innerHTML = DECOR_ITEMS.map(item => {
-        const price = item.cost[state.tier];
+      // Sombrero Seleccionador en la cima
+      const hatBrim = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.34, 0.05, 18), new THREE.MeshStandardMaterial({ color: 0x4a3222 }));
+      hatBrim.position.set(0, 1.68, -0.75);
+      const hatCone = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.55, 16), new THREE.MeshStandardMaterial({ color: 0x4a3222 }));
+      hatCone.position.set(0, 1.96, -0.75);
+      hatCone.rotation.z = -0.15;
+      zSnitchesGroup.add(hatBrim, hatCone);
+      registerZoneGroup3D('zona-snitches', zSnitchesGroup, new THREE.Vector3(0, 2.25, -0.75));
+
+      // --- ZONA 3: BOTICA DE POCIONES DEL PROF. SNAPE (zona-pociones) ---
+      const zPocionesGroup = new THREE.Group();
+      const bookStackLeft = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.42, 1.0), new THREE.MeshStandardMaterial({ color: 0x2d1e17 }));
+      bookStackLeft.position.set(-2.35, 0.57, -0.65);
+      zPocionesGroup.add(bookStackLeft);
+
+      const potionColors = [0x10b981, 0xdc2626, 0xf59e0b];
+      potionColors.forEach((col, i) => {
+        const bottle = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.11, 0.13, 0.46, 16),
+          new THREE.MeshStandardMaterial({ color: col, roughness: 0.2, metalness: 0.3 })
+        );
+        bottle.position.set(-2.85 + i * 0.34, 1.02, -0.55);
+        zPocionesGroup.add(bottle);
+      });
+
+      // Tarro alto de Gusanos / Babosas
+      const slugJar = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.22, 0.22, 0.68, 18),
+        new THREE.MeshStandardMaterial({ color: 0x34d399, roughness: 0.25 })
+      );
+      slugJar.position.set(-1.85, 1.12, -0.72);
+      zPocionesGroup.add(slugJar);
+      registerZoneGroup3D('zona-pociones', zPocionesGroup, new THREE.Vector3(-2.35, 1.75, -0.65));
+
+      // --- ZONA 4: RINCÓN DE HEDWIG Y CARTAS DE HOGWARTS (zona-hedwig) ---
+      const zHedwigGroup = new THREE.Group();
+      const bookStackRight = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.42, 1.0), new THREE.MeshStandardMaterial({ color: 0x3a2319 }));
+      bookStackRight.position.set(2.35, 0.57, -0.65);
+      zHedwigGroup.add(bookStackRight);
+
+      // Tarro de Nubes blancas Hedwig
+      const hedwigJar = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.24, 0.24, 0.66, 18),
+        new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 })
+      );
+      hedwigJar.position.set(1.95, 1.12, -0.65);
+      zHedwigGroup.add(hedwigJar);
+
+      // Jaula blanca de Hedwig con cartas
+      const birdCage = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.28, 0.3, 0.78, 14),
+        new THREE.MeshStandardMaterial({ color: 0xe2d9c8, wireframe: true })
+      );
+      birdCage.position.set(2.68, 1.18, -0.65);
+      zHedwigGroup.add(birdCage);
+      registerZoneGroup3D('zona-hedwig', zHedwigGroup, new THREE.Vector3(2.35, 1.75, -0.65));
+
+      // --- ZONA 5: VARITAS DE OLLIVANDERS Y GRAGEAS BERTIE BOTT (zona-varitas) ---
+      const zVaritasGroup = new THREE.Group();
+      const wandGlass = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.18, 0.16, 0.52, 16),
+        new THREE.MeshStandardMaterial({ color: 0x452719 })
+      );
+      wandGlass.position.set(-1.7, 0.62, 0.32);
+      zVaritasGroup.add(wandGlass);
+
+      // Palitos varita sobresaliendo
+      for (let w = -2; w <= 2; w++) {
+        const wandStick = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.022, 0.022, 0.75, 8),
+          new THREE.MeshStandardMaterial({ color: 0x2b170e })
+        );
+        wandStick.position.set(-1.7 + w * 0.04, 0.85, 0.32);
+        wandStick.rotation.z = w * 0.09;
+        zVaritasGroup.add(wandStick);
+      }
+
+      // Tarro ancho de Grageas de Bertie Bott
+      const beansJar = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.26, 0.26, 0.52, 18),
+        new THREE.MeshStandardMaterial({ color: 0xec4899, roughness: 0.35 })
+      );
+      beansJar.position.set(-1.05, 0.62, 0.35);
+      zVaritasGroup.add(beansJar);
+      registerZoneGroup3D('zona-varitas', zVaritasGroup, new THREE.Vector3(-1.4, 1.45, 0.35));
+
+      // --- ZONA 6: BANDEJA DE ESCOBAS NIMBUS 2000 (zona-escobas) ---
+      const zEscobasGroup = new THREE.Group();
+      const slateTray = new THREE.Mesh(
+        new THREE.BoxGeometry(1.35, 0.12, 0.78),
+        new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.85 })
+      );
+      slateTray.position.set(1.55, 0.42, 0.35);
+      zEscobasGroup.add(slateTray);
+
+      for (let b = -3; b <= 3; b++) {
+        const broom = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.025, 0.04, 0.55, 8),
+          new THREE.MeshStandardMaterial({ color: 0xd97706 })
+        );
+        broom.rotation.x = Math.PI / 2;
+        broom.position.set(1.55 + b * 0.15, 0.51, 0.35);
+        zEscobasGroup.add(broom);
+      }
+      registerZoneGroup3D('zona-escobas', zEscobasGroup, new THREE.Vector3(1.55, 1.15, 0.35));
+
+      // --- ZONA 7: FRENTE DE MESA: RANAS + COFRE GRINGOTTS + BOLSITAS (zona-ranas) ---
+      const zRanasGroup = new THREE.Group();
+      // Cromos pentagonales morados/dorados con ranas en el frente
+      for (let f = -2; f <= 2; f++) {
+        const cardMesh = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.18, 0.18, 0.04, 5),
+          new THREE.MeshStandardMaterial({ color: 0x5b21b6 })
+        );
+        cardMesh.position.set(f * 0.42 - 0.5, 0.38, 1.12);
+        const frogMesh = new THREE.Mesh(
+          new THREE.SphereGeometry(0.08, 10, 10),
+          new THREE.MeshStandardMaterial({ color: 0x3e2013 })
+        );
+        frogMesh.position.set(f * 0.42 - 0.5, 0.45, 1.12);
+        zRanasGroup.add(cardMesh, frogMesh);
+      }
+
+      // Cofre Gringotts con monedas de oro
+      const chestBox = new THREE.Mesh(
+        new THREE.BoxGeometry(0.55, 0.32, 0.38),
+        new THREE.MeshStandardMaterial({ color: 0x452815 })
+      );
+      chestBox.position.set(0.95, 0.52, 1.1);
+      const goldPile = new THREE.Mesh(
+        new THREE.BoxGeometry(0.48, 0.1, 0.32),
+        goldMat
+      );
+      goldPile.position.set(0.95, 0.69, 1.1);
+      zRanasGroup.add(chestBox, goldPile);
+
+      // Bolsitas Kraft a la derecha del frente
+      for (let k = 0; k < 3; k++) {
+        const bag = new THREE.Mesh(
+          new THREE.BoxGeometry(0.24, 0.38, 0.14),
+          new THREE.MeshStandardMaterial({ color: 0xc8a97e })
+        );
+        bag.position.set(1.65 + k * 0.28, 0.55, 1.12);
+        zRanasGroup.add(bag);
+      }
+      registerZoneGroup3D('zona-ranas', zRanasGroup, new THREE.Vector3(0, 1.05, 1.15));
+
+      // Eventos de ratón / táctil y raycaster para clicar zonas 3D
+      setup3DInteractions(container);
+      update3DZoneHighlights();
+      animate3DLoop();
+    }
+
+    function registerZoneGroup3D(zoneId, group, beaconPos) {
+      group.userData.zoneId = zoneId;
+      // Esfera indicadora luminosa encima de cada zona (verde si está lista, dorada si está pendiente)
+      const beaconGeo = new THREE.OctahedronGeometry(0.14, 0);
+      const beaconMat = new THREE.MeshStandardMaterial({
+        color: 0xf2ca52,
+        emissive: 0x9a781c,
+        emissiveIntensity: 0.7,
+        metalness: 0.6,
+        roughness: 0.2
+      });
+      const beaconMesh = new THREE.Mesh(beaconGeo, beaconMat);
+      beaconMesh.position.copy(beaconPos);
+      beaconMesh.userData.zoneId = zoneId;
+      group.add(beaconMesh);
+
+      group.traverse(child => {
+        child.userData.zoneId = zoneId;
+      });
+
+      zoneMeshes3D[zoneId] = { group, beaconMesh };
+      tableGroup3D.add(group);
+    }
+
+    function update3DZoneHighlights() {
+      Object.keys(zoneMeshes3D).forEach(zoneId => {
+        const entry = zoneMeshes3D[zoneId];
+        if (!entry || !entry.beaconMesh) return;
+        const isDone = state.zoneStatus[zoneId] === 'done';
+        const isSelected = state.selectedZoneId === zoneId;
+        entry.beaconMesh.material.color.setHex(isDone ? 0x10b981 : 0xf2ca52);
+        entry.beaconMesh.material.emissive.setHex(isDone ? 0x059669 : (isSelected ? 0xf2ca52 : 0x785610));
+        entry.beaconMesh.scale.setScalar(isSelected ? 1.45 : 1.0);
+      });
+    }
+
+    function setup3DInteractions(container) {
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+      let downPos = { x: 0, y: 0 };
+
+      container.addEventListener('pointerdown', e => {
+        isDragging3D = true;
+        prevMouse3D = { x: e.clientX, y: e.clientY };
+        downPos = { x: e.clientX, y: e.clientY };
+      });
+
+      window.addEventListener('pointerup', e => {
+        if (!isDragging3D) return;
+        isDragging3D = false;
+        const dist = Math.hypot(e.clientX - downPos.x, e.clientY - downPos.y);
+        if (dist < 6 && e.target === renderer3D.domElement) {
+          const rect = renderer3D.domElement.getBoundingClientRect();
+          mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(mouse, camera3D);
+          const hits = raycaster.intersectObjects(tableGroup3D.children, true);
+          if (hits.length > 0) {
+            const zId = hits[0].object.userData.zoneId;
+            if (zId) selectZone(zId, true);
+          }
+        }
+      });
+
+      window.addEventListener('pointermove', e => {
+        if (!isDragging3D) return;
+        const dx = e.clientX - prevMouse3D.x;
+        const dy = e.clientY - prevMouse3D.y;
+        prevMouse3D = { x: e.clientX, y: e.clientY };
+        autoSpin3D = false;
+        updateSpinButtonLabel();
+        desiredSpherical3D.theta -= dx * 0.007;
+        desiredSpherical3D.phi = Math.max(0.45, Math.min(1.48, desiredSpherical3D.phi - dy * 0.006));
+      });
+
+      container.addEventListener('wheel', e => {
+        e.preventDefault();
+        desiredSpherical3D.radius = Math.max(3.2, Math.min(10.5, desiredSpherical3D.radius + e.deltaY * 0.004));
+      }, { passive: false });
+
+      window.addEventListener('resize', () => {
+        if (!renderer3D || !camera3D) return;
+        const w = container.clientWidth || 720;
+        const h = container.clientHeight || 510;
+        camera3D.aspect = w / h;
+        camera3D.updateProjectionMatrix();
+        renderer3D.setSize(w, h);
+      });
+    }
+
+    function animate3DLoop() {
+      requestAnimationFrame(animate3DLoop);
+      const t = performance.now() * 0.001;
+
+      if (autoSpin3D && !isDragging3D) {
+        desiredSpherical3D.theta += 0.0022;
+      }
+
+      // Interpolación suave de cámara
+      spherical3D.theta += (desiredSpherical3D.theta - spherical3D.theta) * 0.08;
+      spherical3D.phi += (desiredSpherical3D.phi - spherical3D.phi) * 0.08;
+      spherical3D.radius += (desiredSpherical3D.radius - spherical3D.radius) * 0.08;
+      lookTarget3D.lerp(desiredLookTarget3D, 0.08);
+
+      const x = lookTarget3D.x + spherical3D.radius * Math.sin(spherical3D.phi) * Math.sin(spherical3D.theta);
+      const y = lookTarget3D.y + spherical3D.radius * Math.cos(spherical3D.phi);
+      const z = lookTarget3D.z + spherical3D.radius * Math.sin(spherical3D.phi) * Math.cos(spherical3D.theta);
+
+      camera3D.position.set(x, y, z);
+      camera3D.lookAt(lookTarget3D);
+
+      // Animación suave de las velas flotantes y marcadores
+      candleFlames3D.forEach(f => {
+        f.mesh.position.y = f.baseY + Math.sin(t * 2.4 + f.phase) * 0.04;
+      });
+      Object.values(zoneMeshes3D).forEach(entry => {
+        if (entry.beaconMesh) {
+          entry.beaconMesh.rotation.y = t * 1.6;
+        }
+      });
+
+      renderer3D.render(scene3D, camera3D);
+    }
+
+    function toggle3DSpin() {
+      autoSpin3D = !autoSpin3D;
+      updateSpinButtonLabel();
+    }
+
+    function updateSpinButtonLabel() {
+      const btn = document.getElementById('btnToggleSpin');
+      if (btn) btn.textContent = autoSpin3D ? '🔄 Giro Auto: ON' : '⏸️ Giro Auto: OFF';
+    }
+
+    function reset3DCamera() {
+      desiredSpherical3D = { theta: 0.2, phi: 1.12, radius: 6.6 };
+      desiredLookTarget3D.set(0, 1.35, 0);
+      autoSpin3D = true;
+      updateSpinButtonLabel();
+    }
+
+    function setCameraView(preset, btnEl) {
+      document.querySelectorAll('.cam-pill').forEach(b => b.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      autoSpin3D = false;
+      updateSpinButtonLabel();
+
+      if (preset === 'overview') {
+        desiredSpherical3D = { theta: 0.15, phi: 1.12, radius: 6.6 };
+        desiredLookTarget3D.set(0, 1.35, 0);
+      } else if (preset === 'ceiling') {
+        selectZone('zona-velas', true);
+      } else if (preset === 'tier3') {
+        selectZone('zona-snitches', true);
+      } else if (preset === 'tier2') {
+        selectZone('zona-varitas', true);
+      } else if (preset === 'tier1') {
+        selectZone('zona-ranas', true);
+      }
+    }
+
+    function selectZone(zoneId, moveCamera = true) {
+      state.selectedZoneId = zoneId;
+      saveState();
+      update3DZoneHighlights();
+      render3DZoneInspector();
+      render3DSelectorStrip();
+
+      if (moveCamera) {
+        const zone = TABLE_ZONES.find(z => z.id === zoneId);
+        if (zone) {
+          autoSpin3D = false;
+          updateSpinButtonLabel();
+          desiredLookTarget3D.set(zone.position3D.x, zone.position3D.y, zone.position3D.z);
+          desiredSpherical3D.theta = zone.position3D.x * 0.18;
+          desiredSpherical3D.phi = 1.1;
+          desiredSpherical3D.radius = 4.3;
+        }
+      }
+    }
+
+    // =========================================================================
+    // 6. ACCIONES DE USUARIO: CAMBIAR ESTADO, ASIGNAR, COMENTAR, AÑADIR IDEAS
+    // =========================================================================
+    function setActiveUser(name) {
+      state.activeUser = name;
+      saveState();
+      document.getElementById('btnUserTamara').className = 'user-btn ' + (name === 'Tamara' ? 'active-tamara' : '');
+      document.getElementById('btnUserLucia').className = 'user-btn ' + (name === 'Lucía' ? 'active-lucia' : '');
+      const authorPrev = document.getElementById('ideaAuthorPreview');
+      if (authorPrev) authorPrev.textContent = name;
+      renderAll();
+    }
+
+    function toggleZoneDone(zoneId) {
+      const current = state.zoneStatus[zoneId] || 'pending';
+      state.zoneStatus[zoneId] = current === 'done' ? 'pending' : 'done';
+      saveState();
+      update3DZoneHighlights();
+      renderAll();
+    }
+
+    function setZoneAssignee(zoneId, who) {
+      state.zoneAssignees[zoneId] = who;
+      saveState();
+      renderAll();
+    }
+
+    function toggleItemPurchased(itemId) {
+      state.itemPurchased[itemId] = !state.itemPurchased[itemId];
+      saveState();
+      renderAll();
+    }
+
+    function setItemAssignee(itemId, who) {
+      state.itemAssignees[itemId] = who;
+      saveState();
+      renderAll();
+    }
+
+    function addCustomShopLink(itemId) {
+      const url = prompt('🔗 Pega aquí el enlace de compra (Amazon, AliExpress, Shein, Tedi, web...) que has encontrado:');
+      if (!url || !url.trim()) return;
+      const label = prompt('🏷️ Ponle un nombre corto al enlace (ej: "Amazon pack oferta 3,90€"):', 'Enlace guardado por ' + state.activeUser);
+      if (!state.customShopLinks[itemId]) state.customShopLinks[itemId] = [];
+      state.customShopLinks[itemId].push({
+        label: '📌 ' + (label || ('Enlace de ' + state.activeUser)),
+        url: url.trim()
+      });
+      saveState();
+      renderAll();
+    }
+
+    function addComment(targetKey, inputId) {
+      const inputEl = document.getElementById(inputId);
+      if (!inputEl) return;
+      const text = inputEl.value.trim();
+      if (!text) return;
+      if (!state.comments[targetKey]) state.comments[targetKey] = [];
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      state.comments[targetKey].push({
+        id: 'cm_' + Date.now(),
+        author: state.activeUser,
+        date: `Hoy ${timeStr}`,
+        text
+      });
+      inputEl.value = '';
+      saveState();
+      renderAll();
+    }
+
+    function deleteComment(targetKey, commentId) {
+      if (!state.comments[targetKey]) return;
+      state.comments[targetKey] = state.comments[targetKey].filter(c => c.id !== commentId);
+      saveState();
+      renderAll();
+    }
+
+    function handleCreateIdea(e) {
+      e.preventDefault();
+      const title = document.getElementById('ideaTitle').value.trim();
+      const zone = document.getElementById('ideaZone').value;
+      const cost = parseFloat(document.getElementById('ideaCost').value || '0');
+      const link = document.getElementById('ideaLink').value.trim();
+      const desc = document.getElementById('ideaDesc').value.trim();
+      if (!title || !desc) return;
+
+      state.ideas.unshift({
+        id: 'idea_' + Date.now(),
+        title,
+        zone,
+        author: state.activeUser,
+        cost,
+        link,
+        desc,
+        approved: true,
+        done: false,
+        likes: 1
+      });
+
+      document.getElementById('newIdeaForm').reset();
+      saveState();
+      renderAll();
+    }
+
+    function toggleIdeaApproved(ideaId) {
+      const idea = state.ideas.find(i => i.id === ideaId);
+      if (idea) {
+        idea.approved = !idea.approved;
+        saveState();
+        renderAll();
+      }
+    }
+
+    function toggleIdeaDone(ideaId) {
+      const idea = state.ideas.find(i => i.id === ideaId);
+      if (idea) {
+        idea.done = !idea.done;
+        if (idea.done) idea.approved = true;
+        saveState();
+        renderAll();
+      }
+    }
+
+    function likeIdea(ideaId) {
+      const idea = state.ideas.find(i => i.id === ideaId);
+      if (idea) {
+        idea.likes = (idea.likes || 0) + 1;
+        saveState();
+        renderAll();
+      }
+    }
+
+    function deleteIdea(ideaId) {
+      state.ideas = state.ideas.filter(i => i.id !== ideaId);
+      saveState();
+      renderAll();
+    }
+
+    function toggleStepDone(stepId) {
+      if (state.completedSteps.includes(stepId)) {
+        state.completedSteps = state.completedSteps.filter(id => id !== stepId);
+      } else {
+        state.completedSteps.push(stepId);
+      }
+      saveState();
+      renderAll();
+    }
+
+    function setZoneFilter(filterVal, btnEl) {
+      state.zoneFilter = filterVal;
+      if (btnEl) {
+        btnEl.parentElement.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+      }
+      renderZonesGrid();
+    }
+
+    function setShopFilter(filterVal, btnEl) {
+      state.shopFilter = filterVal;
+      if (btnEl) {
+        btnEl.parentElement.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+      }
+      renderShoppingGrids();
+    }
+
+    // =========================================================================
+    // 7. COMPARTIR AVANCES POR WHATSAPP / ENLACE SINCRONIZADO
+    // =========================================================================
+    function buildShareableSyncUrl() {
+      const jsonStr = JSON.stringify(state);
+      const base64 = btoa(unescape(encodeURIComponent(jsonStr)));
+      const baseUrl = window.location.origin + window.location.pathname;
+      return `${baseUrl}#sync=${base64}`;
+    }
+
+    function shareProgressWhatsApp() {
+      const metrics = calculateCompletionMetrics();
+      const syncUrl = buildShareableSyncUrl();
+      const otherPerson = state.activeUser === 'Tamara' ? 'Lucía' : 'Tamara';
+      const msg = `⚡ *Mesa Harry Potter (Comunión de Lucía)* ⚡\n` +
+        `¡Hola ${otherPerson}! Soy ${state.activeUser}. He actualizado nuestra web de la mesa:\n` +
+        `✅ *Progreso total:* ${metrics.pct}% completado (${metrics.doneZones}/${metrics.totalZones} zonas y ${metrics.doneShop}/${metrics.totalShop} compras listas).\n\n` +
+        `👇 Pulsa este enlace mágico para ver mis últimos comentarios, ideas y checks en tu móvil:\n${syncUrl}`;
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    function copyShareLink() {
+      const syncUrl = buildShareableSyncUrl();
+      navigator.clipboard.writeText(syncUrl).then(() => {
+        alert('🔗 ¡Enlace sincronizado copiado! Pégalo en vuestro grupo de WhatsApp para que Tamara y Lucía vean exactamente los mismos checks, ideas y comentarios.');
+      }).catch(() => {
+        prompt('Copia este enlace mágico:', syncUrl);
+      });
+    }
+
+    function exportBackupJSON() {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `mesa-harry-potter-lucia-${new Date().toISOString().slice(0,10)}.json`;
+      a.click();
+    }
+
+    // =========================================================================
+    // 8. RENDERIZADO COMPLETO DE LA INTERFAZ
+    // =========================================================================
+    function renderCommentsBlock(targetKey, inputSuffix) {
+      const list = state.comments[targetKey] || [];
+      const inputId = `commentInput_${targetKey}_${inputSuffix}`;
+      return `
+        <div class="comments-section">
+          <div style="font-size:0.73rem;font-weight:700;color:var(--text-muted);display:flex;justify-content:space-between;">
+            <span>💬 Comentarios de Tamara y Lucía (${list.length})</span>
+            <span>Escribiendo como <strong style="color:var(--gold-bright)">${state.activeUser}</strong></span>
+          </div>
+          ${list.length === 0 ? `<div style="font-size:0.73rem;color:var(--text-dim);font-style:italic;">Aún no hay comentarios en esta parte. ¡Deja una nota para organizaros!</div>` : ''}
+          ${list.map(c => `
+            <div class="comment-item ${c.author === 'Tamara' ? 'by-tamara' : 'by-lucia'}">
+              <div class="comment-meta">
+                <span class="comment-author ${c.author === 'Tamara' ? 'tamara' : 'lucia'}">
+                  ${c.author === 'Tamara' ? '👩🏽‍🪄 Tamara' : '🧙🏼‍♀️ Lucía'} · <span style="font-weight:400;color:var(--text-dim);">${c.date}</span>
+                </span>
+                <button type="button" class="comment-delete-btn" onclick="deleteComment('${targetKey}', '${c.id}')" title="Borrar comentario">✕</button>
+              </div>
+              <div style="color:var(--text-main);">${escapeHtml(c.text)}</div>
+            </div>
+          `).join('')}
+          <div class="comment-form">
+            <input id="${inputId}" type="text" class="comment-input" placeholder="Escribe un comentario o duda como ${state.activeUser}..." onkeydown="if(event.key==='Enter'){event.preventDefault();addComment('${targetKey}','${inputId}');}" />
+            <button type="button" class="comment-submit-btn" onclick="addComment('${targetKey}','${inputId}')">Enviar</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function render3DSelectorStrip() {
+      const strip = document.getElementById('zone3DSelectorStrip');
+      if (!strip) return;
+      strip.innerHTML = TABLE_ZONES.map(z => {
+        const isDone = state.zoneStatus[z.id] === 'done';
+        const isActive = state.selectedZoneId === z.id;
         return `
-          <label class="flex items-start justify-between gap-3 p-3.5 rounded-xl border border-[var(--border)] bg-[var(--background)] cursor-pointer">
-            <div class="flex items-start gap-2.5">
-              <input type="checkbox" data-decor-id="${item.id}" ${item.selected ? 'checked' : ''} class="mt-1 h-4 w-4 rounded cursor-pointer" />
+          <button type="button" class="zone-chip ${isActive ? 'active' : ''} ${isDone ? 'is-done' : ''}" onclick="selectZone('${z.id}', true)">
+            <span>${isDone ? '✅' : '⏳'}</span>
+            <span>${z.shortTitle}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function render3DZoneInspector() {
+      const card = document.getElementById('zoneInspectorCard');
+      if (!card) return;
+      const zone = TABLE_ZONES.find(z => z.id === state.selectedZoneId) || TABLE_ZONES[0];
+      const isDone = state.zoneStatus[zone.id] === 'done';
+      const who = state.zoneAssignees[zone.id] || zone.defaultAssignee;
+      const extraLinks = state.customShopLinks[zone.id] || [];
+      const allLinks = [...zone.shopLinks, ...extraLinks];
+
+      card.innerHTML = `
+        <div class="inspector-photo-wrap" onclick="openLightbox('${zone.photo}', '${escapeHtml(zone.title)}')">
+          <img src="${zone.photo}" alt="${escapeHtml(zone.title)}" />
+          <span class="inspector-photo-badge">${zone.level}</span>
+          <button type="button" class="inspector-zoom-btn">🔍 Ver foto recreada en grande</button>
+        </div>
+        <div class="inspector-body">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;">
+            <div>
+              <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:800;text-transform:uppercase;">📍 Zona seleccionada en el 3D</span>
+              <h3 class="font-magical" style="font-size:1.05rem;margin-top:0.15rem;">${zone.title}</h3>
+            </div>
+          </div>
+
+          <div class="collab-control-row">
+            <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleZoneDone('${zone.id}')">
+              ${isDone ? '✅ ¡Zona Lista!' : '⏳ Marcar Zona como Lista'}
+            </button>
+            <div style="display:flex;align-items:center;gap:0.35rem;font-size:0.74rem;">
+              <span style="color:var(--text-muted);">Encargada:</span>
+              <select class="assignee-select" onchange="setZoneAssignee('${zone.id}', this.value)">
+                <option value="Tamara" ${who === 'Tamara' ? 'selected' : ''}>👩🏽‍🪄 Tamara</option>
+                <option value="Lucía" ${who === 'Lucía' ? 'selected' : ''}>🧙🏼‍♀️ Lucía</option>
+                <option value="Ambas" ${who === 'Ambas' ? 'selected' : ''}>🤝 Ambas</option>
+              </select>
+            </div>
+          </div>
+
+          <p style="font-size:0.8rem;color:var(--text-muted);">${zone.description}</p>
+
+          <div style="background:rgba(11,9,7,0.55);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:0.7rem;">
+            <div style="font-size:0.73rem;font-weight:800;color:var(--gold-bright);margin-bottom:0.35rem;">🛠️ Cómo montarlo paso a paso:</div>
+            <ul style="padding-left:1.1rem;font-size:0.76rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.25rem;">
+              ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="shopping-links-box">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span class="shopping-links-title">🛍️ Enlaces de Compra de esta Zona:</span>
+              <button type="button" class="btn-outline-brass" style="padding:0.2rem 0.5rem;font-size:0.68rem;" onclick="addCustomShopLink('${zone.id}')">+ Añadir enlace</button>
+            </div>
+            <div class="shopping-links-list">
+              ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
+            </div>
+          </div>
+
+          ${renderCommentsBlock(zone.id, 'inspector')}
+        </div>
+      `;
+    }
+
+    function renderZonesGrid() {
+      const grid = document.getElementById('zonesCardsGrid');
+      if (!grid) return;
+
+      const filtered = TABLE_ZONES.filter(z => {
+        const isDone = state.zoneStatus[z.id] === 'done';
+        const who = state.zoneAssignees[z.id] || z.defaultAssignee;
+        if (state.zoneFilter === 'done') return isDone;
+        if (state.zoneFilter === 'pending') return !isDone;
+        if (state.zoneFilter === 'Tamara') return who === 'Tamara' || who === 'Ambas';
+        if (state.zoneFilter === 'Lucía') return who === 'Lucía' || who === 'Ambas';
+        return true;
+      });
+
+      grid.innerHTML = filtered.map(zone => {
+        const isDone = state.zoneStatus[zone.id] === 'done';
+        const who = state.zoneAssignees[zone.id] || zone.defaultAssignee;
+        const extraLinks = state.customShopLinks[zone.id] || [];
+        const allLinks = [...zone.shopLinks, ...extraLinks];
+
+        return `
+          <article class="zone-card ${isDone ? 'status-done' : ''}">
+            <div class="zone-card-photo" onclick="openLightbox('${zone.photo}', '${escapeHtml(zone.title)}')">
+              <img src="${zone.photo}" alt="${escapeHtml(zone.title)}" loading="lazy" />
+              <span class="zone-level-tag">${zone.level}</span>
+              <span class="zone-status-pill ${isDone ? 'pill-done' : 'pill-pending'}">
+                ${isDone ? '✅ ¡ZONA LISTA!' : '⏳ PENDIENTE'}
+              </span>
+            </div>
+            <div class="zone-card-content">
               <div>
-                <div class="text-xs font-bold">${item.name}</div>
-                <p class="text-xs text-[var(--muted-foreground)] mt-1">${item.howTo}</p>
+                <h3 class="font-magical" style="font-size:1.02rem;color:var(--text-main);">${zone.title}</h3>
+                <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">${zone.description}</p>
+              </div>
+
+              <div class="collab-control-row">
+                <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleZoneDone('${zone.id}')">
+                  ${isDone ? '✅ ¡Listo! (Quitar check)' : '⬜ Marcar Zona como Lista'}
+                </button>
+                <div style="display:flex;align-items:center;gap:0.35rem;font-size:0.74rem;">
+                  <span style="color:var(--text-muted);">Hace:</span>
+                  <select class="assignee-select" onchange="setZoneAssignee('${zone.id}', this.value)">
+                    <option value="Tamara" ${who === 'Tamara' ? 'selected' : ''}>👩🏽‍🪄 Tamara</option>
+                    <option value="Lucía" ${who === 'Lucía' ? 'selected' : ''}>🧙🏼‍♀️ Lucía</option>
+                    <option value="Ambas" ${who === 'Ambas' ? 'selected' : ''}>🤝 Ambas</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="background:rgba(11,9,7,0.5);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:0.65rem;">
+                <div style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);margin-bottom:0.3rem;">✨ Instrucciones rápidas:</div>
+                <ul style="padding-left:1.05rem;font-size:0.75rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.2rem;">
+                  ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+              </div>
+
+              <div class="shopping-links-box">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                  <span class="shopping-links-title">🛒 Enlaces directos de compra:</span>
+                  <button type="button" class="btn-outline-brass" style="padding:0.18rem 0.45rem;font-size:0.68rem;" onclick="addCustomShopLink('${zone.id}')">+ Añadir nuestro link</button>
+                </div>
+                <div class="shopping-links-list">
+                  ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
+                </div>
+              </div>
+
+              ${renderCommentsBlock(zone.id, 'card')}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderShoppingGrids() {
+      const scale = state.guests / 35;
+
+      const filterItemFn = (id, defaultWho) => {
+        const isDone = !!state.itemPurchased[id];
+        const who = state.itemAssignees[id] || defaultWho;
+        if (state.shopFilter === 'done') return isDone;
+        if (state.shopFilter === 'pending') return !isDone;
+        if (state.shopFilter === 'Tamara') return who === 'Tamara' || who === 'Ambas';
+        if (state.shopFilter === 'Lucía') return who === 'Lucía' || who === 'Ambas';
+        return true;
+      };
+
+      const sweetsGrid = document.getElementById('sweetsShoppingGrid');
+      if (sweetsGrid) {
+        sweetsGrid.innerHTML = SWEETS_CATALOG.filter(item => filterItemFn(item.id, item.defaultAssignee)).map(item => {
+          const isDone = !!state.itemPurchased[item.id];
+          const who = state.itemAssignees[item.id] || item.defaultAssignee;
+          const qty = Math.max(1, Math.round(item.baseQty35 * scale));
+          const price = qty * item.priceByTier[state.tier];
+          const weightGrams = Math.round(qty * item.unitWeightKg * 1000);
+          const extraLinks = state.customShopLinks[item.id] || [];
+          const allLinks = [...item.links, ...extraLinks];
+
+          return `
+            <article class="zone-card ${isDone ? 'status-done' : ''}">
+              <div class="zone-card-content">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;">
+                  <div>
+                    <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:700;">${qty} ${item.unitLabel} (~${weightGrams}g)</span>
+                    <h4 class="font-magical" style="font-size:0.98rem;margin-top:0.15rem;">${item.icon} ${item.magicalName}</h4>
+                  </div>
+                  <div style="text-align:right;shrink:0;">
+                    <div style="font-family:'Cinzel',serif;font-weight:800;font-size:1.1rem;color:var(--gold-bright);">${formatEuro(price)}</div>
+                  </div>
+                </div>
+
+                <p style="font-size:0.78rem;color:var(--text-muted);"><strong>Qué comprar:</strong> ${item.realProduct}</p>
+                <p style="font-size:0.75rem;color:var(--text-dim);"><strong>💡 Truco DIY:</strong> ${item.diyTrick}</p>
+
+                <div class="collab-control-row">
+                  <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleItemPurchased('${item.id}')">
+                    ${isDone ? '✅ Comprado / Listo' : '🛒 Marcar como Comprado'}
+                  </button>
+                  <select class="assignee-select" onchange="setItemAssignee('${item.id}', this.value)">
+                    <option value="Tamara" ${who === 'Tamara' ? 'selected' : ''}>👩🏽‍🪄 Compra Tamara</option>
+                    <option value="Lucía" ${who === 'Lucía' ? 'selected' : ''}>🧙🏼‍♀️ Compra Lucía</option>
+                    <option value="Ambas" ${who === 'Ambas' ? 'selected' : ''}>🤝 Ambas</option>
+                  </select>
+                </div>
+
+                <div class="shopping-links-box">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="shopping-links-title">🔗 Dónde comprarlo al mejor precio:</span>
+                    <button type="button" class="btn-outline-brass" style="padding:0.15rem 0.45rem;font-size:0.68rem;" onclick="addCustomShopLink('${item.id}')">+ Añadir link</button>
+                  </div>
+                  <div class="shopping-links-list">
+                    ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
+                  </div>
+                </div>
+
+                ${renderCommentsBlock(item.id, 'shop')}
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      const decorGrid = document.getElementById('decorShoppingGrid');
+      if (decorGrid) {
+        decorGrid.innerHTML = DECOR_ITEMS.filter(item => filterItemFn(item.id, item.defaultAssignee)).map(item => {
+          const isDone = !!state.itemPurchased[item.id];
+          const who = state.itemAssignees[item.id] || item.defaultAssignee;
+          const price = item.cost[state.tier];
+          const extraLinks = state.customShopLinks[item.id] || [];
+          const allLinks = [...item.links, ...extraLinks];
+
+          return `
+            <article class="zone-card ${isDone ? 'status-done' : ''}">
+              <div class="zone-card-content">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;">
+                  <h4 class="font-magical" style="font-size:0.96rem;">${item.name}</h4>
+                  <span style="font-family:'Cinzel',serif;font-weight:800;font-size:1.05rem;color:var(--gold-bright);shrink:0;">
+                    ${price === 0 ? 'GRATIS (Reciclado)' : formatEuro(price)}
+                  </span>
+                </div>
+
+                <p style="font-size:0.78rem;color:var(--text-muted);">${item.howTo}</p>
+
+                <div class="collab-control-row">
+                  <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleItemPurchased('${item.id}')">
+                    ${isDone ? '✅ Ya lo tenemos' : '🛒 Marcar como Listo'}
+                  </button>
+                  <select class="assignee-select" onchange="setItemAssignee('${item.id}', this.value)">
+                    <option value="Tamara" ${who === 'Tamara' ? 'selected' : ''}>👩🏽‍🪄 Encargada: Tamara</option>
+                    <option value="Lucía" ${who === 'Lucía' ? 'selected' : ''}>🧙🏼‍♀️ Encargada: Lucía</option>
+                    <option value="Ambas" ${who === 'Ambas' ? 'selected' : ''}>🤝 Ambas</option>
+                  </select>
+                </div>
+
+                <div class="shopping-links-box">
+                  <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span class="shopping-links-title">🔗 Enlaces de compra recomendados:</span>
+                    <button type="button" class="btn-outline-brass" style="padding:0.15rem 0.45rem;font-size:0.68rem;" onclick="addCustomShopLink('${item.id}')">+ Añadir link</button>
+                  </div>
+                  <div class="shopping-links-list">
+                    ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
+                  </div>
+                </div>
+
+                ${renderCommentsBlock(item.id, 'decor')}
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+    }
+
+    function renderIdeasSection() {
+      const grid = document.getElementById('ideasCardsGrid');
+      if (!grid) return;
+      grid.innerHTML = (state.ideas || []).map(idea => {
+        return `
+          <article class="zone-card ${idea.done ? 'status-done' : ''}">
+            <div class="zone-card-content">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;">
+                <div>
+                  <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:700;">
+                    📍 ${escapeHtml(idea.zone)} · Propuesta de ${idea.author === 'Tamara' ? '👩🏽‍🪄 Tamara' : '🧙🏼‍♀️ Lucía'}
+                  </span>
+                  <h4 class="font-magical" style="font-size:1rem;margin-top:0.2rem;">${escapeHtml(idea.title)}</h4>
+                </div>
+                <span style="font-family:'Cinzel',serif;font-weight:800;color:var(--gold-bright);shrink:0;">
+                  ${formatEuro(idea.cost)}
+                </span>
+              </div>
+
+              <p style="font-size:0.8rem;color:var(--text-muted);">${escapeHtml(idea.desc)}</p>
+
+              ${idea.link ? `
+                <div>
+                  <a href="${escapeHtml(idea.link)}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">
+                    🔗 Ver producto / inspiración en tienda ↗
+                  </a>
+                </div>
+              ` : ''}
+
+              <div class="collab-control-row">
+                <button type="button" class="status-toggle-btn ${idea.done ? 'done' : ''}" onclick="toggleIdeaDone('${idea.id}')">
+                  ${idea.done ? '✅ Idea Lista' : '⬜ Marcar Idea Lista'}
+                </button>
+                <div style="display:flex;gap:0.35rem;align-items:center;">
+                  <button type="button" class="btn-outline-brass" style="padding:0.3rem 0.55rem;font-size:0.72rem;" onclick="toggleIdeaApproved('${idea.id}')">
+                    ${idea.approved ? '⭐ Incluida en la mesa' : '➕ Incluir en la mesa'}
+                  </button>
+                  <button type="button" class="btn-outline-brass" style="padding:0.3rem 0.55rem;font-size:0.72rem;" onclick="likeIdea('${idea.id}')">
+                    ❤️ ${idea.likes || 0}
+                  </button>
+                  <button type="button" class="comment-delete-btn" onclick="deleteIdea('${idea.id}')" title="Eliminar idea">🗑️</button>
+                </div>
+              </div>
+
+              ${renderCommentsBlock(idea.id, 'idea')}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function renderLabelsAndChecklist() {
+      const checklistGrid = document.getElementById('checklistStepsGrid');
+      const badge = document.getElementById('checklistProgressBadge');
+      if (badge) badge.textContent = `${state.completedSteps.length} / ${CHECKLIST_STEPS.length} pasos listos`;
+
+      if (checklistGrid) {
+        checklistGrid.innerHTML = CHECKLIST_STEPS.map(step => {
+          const isDone = state.completedSteps.includes(step.id);
+          return `
+            <div class="collab-control-row" style="cursor:pointer;border-color:${isDone ? 'var(--emerald-done)' : 'var(--border-brass)'};" onclick="toggleStepDone('${step.id}')">
+              <div style="display:flex;align-items:flex-start;gap:0.65rem;">
+                <span style="font-size:1.05rem;">${isDone ? '✅' : '⬜'}</span>
+                <div>
+                  <div style="font-size:0.74rem;font-weight:800;color:var(--gold-bright);">${step.when}</div>
+                  <div style="font-size:0.78rem;color:var(--text-main);${isDone ? 'text-decoration:line-through;opacity:0.65;' : ''}">${step.text}</div>
+                </div>
               </div>
             </div>
-            <span class="text-xs font-extrabold shrink-0">${price === 0 ? 'GRATIS (Reciclado)' : formatEuro(price)}</span>
-          </label>`;
-      }).join('');
+          `;
+        }).join('');
+      }
 
-      decorContainer.querySelectorAll('input[data-decor-id]').forEach(cb => {
-        cb.addEventListener('change', e => {
-          const item = DECOR_ITEMS.find(d => d.id === e.target.getAttribute('data-decor-id'));
-          if (item) { item.selected = e.target.checked; updateAll(); }
-        });
-      });
-
-      const name = state.childName.trim() || 'Protagonista';
+      const name = (state.childName || 'Lucía').trim();
       const cards = [
         { badge: '⚡ EXPRESO DE HOGWARTS · ANDÉN 9 ¾', title: `La Comunión Mágica de ${name}`, subtitle: `Bienvenidos a Honeydukes · Casa ${state.house}` },
         { badge: '🏆 TORNEO DE QUIDDITCH', title: 'Snitches Doradas', subtitle: `150 puntos para ${state.house} si atrapas una` },
         { badge: '🐸 DULCERÍA HONEYDUKES', title: 'Ranas de Chocolate', subtitle: '¡Cuidado, que no den un salto antes de comerlas!' },
         { badge: '🫘 ARTÍCULOS DE BROMA Y DULCES', title: 'Grageas de Bertie Bott', subtitle: 'De todos los sabores: fresa, limón... ¿o cera de oído?' },
         { badge: '🪄 CALLEJÓN DIAGÓN · DESDE 382 a.C.', title: 'Varitas de Ollivanders', subtitle: `La varita elige al mago en la comunión de ${name}` },
-        { badge: '🧪 MAZMORRAS DE HOGWARTS', title: 'Botica del Prof. Snape', subtitle: 'Gusanos mágicos, Poción Multijugos y Felix Felicis' }
+        { badge: '🧪 MAZMORRAS DE HOGWARTS', title: 'Botica del Prof. Snape', subtitle: 'Babosas de Pociones, Multijugos y Felix Felicis' },
+        { badge: '🦉 LECHUCERÍA DE HOGWARTS', title: 'Rincón de Hedwig', subtitle: 'Mensajería urgente y cartas de admisión' },
+        { badge: '🧹 QUIDDITCH · MODELO DE CARRERA', title: 'Escobas Nimbus 2000', subtitle: 'Dulces y saladas listas para salir volando' }
       ];
-      document.getElementById('printablePreviewGrid').innerHTML = cards.map(c => `
-        <div class="border-2 border-dashed border-[var(--border)] rounded-xl p-5 bg-[var(--background)] text-center flex flex-col justify-center min-h-[150px]">
-          <div class="text-xs font-bold tracking-widest uppercase text-[var(--muted-foreground)]">${c.badge}</div>
-          <div class="text-lg font-extrabold my-1.5 font-serif">${c.title}</div>
-          <div class="text-xs italic text-[var(--muted-foreground)]">${c.subtitle}</div>
-        </div>`).join('');
 
-      document.getElementById('printOnlyArea').innerHTML = `
-        <h2 style="font-size:16px;font-weight:bold;margin-bottom:12px;">Carteles Recortables — Mesa Dulce Harry Potter (${name})</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-          ${cards.map(c => `
-            <div style="border:2px double #222;padding:20px;text-align:center;border-radius:8px;page-break-inside:avoid;">
-              <div style="font-size:12px;font-weight:bold;letter-spacing:1px;">${c.badge}</div>
-              <div style="font-size:20px;font-weight:bold;margin:8px 0;font-family:Georgia,serif;">${c.title}</div>
-              <div style="font-size:12px;font-style:italic;">${c.subtitle}</div>
-            </div>
-          `).join('')}
-        </div>`;
+      const previewGrid = document.getElementById('printablePreviewGrid');
+      if (previewGrid) {
+        previewGrid.innerHTML = cards.map(c => `
+          <div style="background:var(--bg-parchment);color:var(--text-parchment);border:3px double #5c4028;border-radius:10px;padding:1.25rem;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,0.4);">
+            <div style="font-size:0.65rem;font-weight:800;letter-spacing:0.08em;color:#6b4423;">${c.badge}</div>
+            <div class="font-magical" style="font-size:1.15rem;font-weight:800;margin:0.4rem 0;color:#23150b;">${c.title}</div>
+            <div class="font-serif-italic" style="font-size:0.88rem;color:#4a331f;">${c.subtitle}</div>
+          </div>
+        `).join('');
+      }
 
-      const checklistContainer = document.getElementById('checklistContainer');
-      document.getElementById('checklistProgress').textContent = `${state.completedSteps.length} / ${CHECKLIST_STEPS.length} completados`;
-      checklistContainer.innerHTML = CHECKLIST_STEPS.map(step => {
-        const checked = state.completedSteps.includes(step.id);
-        return `
-          <label class="flex items-start gap-3 p-3 rounded-xl border border-[var(--border)] bg-[var(--background)] cursor-pointer ${checked ? 'opacity-60' : ''}">
-            <input type="checkbox" data-step-id="${step.id}" ${checked ? 'checked' : ''} class="mt-1 h-4 w-4 rounded cursor-pointer" />
-            <div class="text-xs"><span class="font-bold">${step.when}:</span> <span class="text-[var(--muted-foreground)] ${checked ? 'line-through' : ''}">${step.text}</span></div>
-          </label>`;
-      }).join('');
-
-      checklistContainer.querySelectorAll('input[data-step-id]').forEach(cb => {
-        cb.addEventListener('change', e => {
-          const id = e.target.getAttribute('data-step-id');
-          if (e.target.checked) { if (!state.completedSteps.includes(id)) state.completedSteps.push(id); }
-          else { state.completedSteps = state.completedSteps.filter(s => s !== id); }
-          localStorage.setItem('hp_candybar_steps', JSON.stringify(state.completedSteps));
-          updateAll();
-        });
-      });
+      const printArea = document.getElementById('printOnlyArea');
+      if (printArea) {
+        printArea.innerHTML = `
+          <h2 style="font-size:18px;font-weight:bold;margin-bottom:14px;">Carteles de Mesa Harry Potter — Comunión de ${escapeHtml(name)}</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            ${cards.map(c => `
+              <div style="border:3px double #2b1d12;padding:22px;text-align:center;border-radius:8px;page-break-inside:avoid;">
+                <div style="font-size:11px;font-weight:bold;letter-spacing:1px;">${c.badge}</div>
+                <div style="font-size:21px;font-weight:bold;margin:8px 0;font-family:Georgia,serif;">${c.title}</div>
+                <div style="font-size:13px;font-style:italic;">${c.subtitle}</div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
     }
 
-    document.getElementById('guestSlider').addEventListener('input', e => { state.guests = parseInt(e.target.value, 10); updateAll(); });
-    document.getElementById('tierSelect').addEventListener('change', e => { state.tier = e.target.value; updateAll(); });
-    document.getElementById('childNameInput').addEventListener('input', e => { state.childName = e.target.value; updateAll(); });
-    document.getElementById('houseSelect').addEventListener('change', e => { state.house = e.target.value; updateAll(); });
-    document.getElementById('selectAllSweetsBtn').addEventListener('click', () => { SWEETS_CATALOG.forEach(s => s.selected = true); updateAll(); });
-    document.getElementById('printLabelsBtn').addEventListener('click', () => window.print());
+    function renderAll() {
+      const metrics = calculateCompletionMetrics();
+      const budget = calculateBudgetTotals();
 
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+      // Actualizar Barra de Progreso Global
+      document.getElementById('globalProgressPct').textContent = `${metrics.pct}% LISTO`;
+      document.getElementById('globalProgressBar').style.width = `${metrics.pct}%`;
+      document.getElementById('globalProgressDetail').textContent = `${metrics.grandDoneTasks} de ${metrics.grandTotalTasks} objetivos completados`;
+
+      // Actualizar Contadores Hero
+      document.getElementById('statZonesReady').textContent = `${metrics.doneZones} / ${metrics.totalZones}`;
+      document.getElementById('statItemsReady').textContent = `${metrics.doneShop} / ${metrics.totalShop}`;
+      document.getElementById('statTeamSplit').textContent = `Tamara: ${metrics.tamaraDone}/${metrics.tamaraTotal} · Lucía: ${metrics.luciaDone}/${metrics.luciaTotal}`;
+
+      const totalCommentsCount = Object.values(state.comments).reduce((acc, arr) => acc + (arr ? arr.length : 0), 0);
+      document.getElementById('statIdeasCount').textContent = `${(state.ideas || []).length} ideas · ${totalCommentsCount} comentarios`;
+
+      document.getElementById('totalBudgetDisplay').textContent = formatEuro(budget.totalBudget);
+      document.getElementById('costPerGuestBadge').textContent = `~${formatEuro(budget.perGuest)} / inv.`;
+      document.getElementById('totalWeightDisplay').textContent = `${budget.totalWeight.toFixed(1).replace('.', ',')} kg`;
+      document.getElementById('guestCountValue').textContent = `${state.guests} inv.`;
+
+      // Badges de las pestañas
+      document.getElementById('badgeTabZones').textContent = `${metrics.doneZones}/${metrics.totalZones}`;
+      document.getElementById('badgeTabShopping').textContent = `${metrics.doneShop}/${metrics.totalShop}`;
+      document.getElementById('badgeTabIdeas').textContent = `${(state.ideas || []).length}`;
+      document.getElementById('badgeTabSteps').textContent = `${metrics.doneSteps}/${metrics.totalSteps}`;
+
+      render3DSelectorStrip();
+      render3DZoneInspector();
+      renderZonesGrid();
+      renderShoppingGrids();
+      renderIdeasSection();
+      renderLabelsAndChecklist();
+    }
+
+    // Lightbox para ver fotos recreadas en grande
+    function openLightbox(src, caption) {
+      document.getElementById('lightboxImage').src = src;
+      document.getElementById('lightboxCaption').textContent = caption || 'Recreación de Zona';
+      document.getElementById('lightboxModal').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightboxModal').classList.add('hidden');
+    }
+
+    // Eventos de controles globales y pestañas
+    document.getElementById('guestSlider').addEventListener('input', e => {
+      state.guests = parseInt(e.target.value, 10);
+      saveState();
+      renderAll();
+    });
+
+    document.getElementById('tierSelect').addEventListener('change', e => {
+      state.tier = e.target.value;
+      saveState();
+      renderAll();
+    });
+
+    document.getElementById('childNameInput').addEventListener('input', e => {
+      state.childName = e.target.value;
+      saveState();
+      renderLabelsAndChecklist();
+    });
+
+    document.getElementById('houseSelect').addEventListener('change', e => {
+      state.house = e.target.value;
+      saveState();
+      renderLabelsAndChecklist();
+    });
+
+    document.querySelectorAll('.magical-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const target = btn.getAttribute('data-tab');
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('hidden', p.id !== `tab-${target}`));
-        document.querySelectorAll('.tab-btn').forEach(b => {
-          b.className = b === btn
-            ? 'tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)] transition'
-            : 'tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] transition';
+        document.querySelectorAll('.tab-panel').forEach(panel => {
+          panel.classList.toggle('hidden', panel.id !== `tab-${target}`);
+        });
+        document.querySelectorAll('.magical-tab-btn').forEach(b => {
+          b.classList.toggle('active', b === btn);
         });
       });
     });
 
-    updateAll();
+    // Inicialización al cargar
+    window.addEventListener('DOMContentLoaded', () => {
+      setActiveUser(state.activeUser || 'Tamara');
+      init3DTableScene();
+      renderAll();
+    });
   </script>
 </body>
 </html>
