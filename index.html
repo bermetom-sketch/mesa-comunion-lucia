@@ -1458,12 +1458,12 @@
           <div class="hero-stats-grid">
             <div class="stat-box">
               <div class="stat-box-label">🏛️ Zonas de la Mesa</div>
-              <div id="statZonesReady" class="stat-box-value">0 / 7</div>
+              <div id="statZonesReady" class="stat-box-value">0 / 9</div>
               <div class="stat-box-sub">Zonas marcadas listas</div>
             </div>
             <div class="stat-box">
               <div class="stat-box-label">🛒 Chuches y Deco</div>
-              <div id="statItemsReady" class="stat-box-value">0 / 14</div>
+              <div id="statItemsReady" class="stat-box-value">0 / 16</div>
               <div class="stat-box-sub">Materiales comprados</div>
             </div>
             <div class="stat-box">
@@ -1473,8 +1473,8 @@
             </div>
             <div class="stat-box">
               <div class="stat-box-label">🪙 Presupuesto Estimado</div>
-              <div id="totalBudgetDisplay" class="stat-box-value">74,50 €</div>
-              <div class="stat-box-sub"><span id="costPerGuestBadge">~2,10 €/inv.</span> · <strong id="totalWeightDisplay">3,4 kg</strong></div>
+              <div id="totalBudgetDisplay" class="stat-box-value">89,90 €</div>
+              <div class="stat-box-sub"><span id="costPerGuestBadge">~2,55 €/inv.</span> · <strong id="totalWeightDisplay">3,4 kg</strong></div>
             </div>
           </div>
         </div>
@@ -1485,7 +1485,7 @@
           <div class="hero-visual-overlay">
             <div>
               <span style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--gold-bright);font-weight:800;">📸 Recreación Oficial de Objetivo</span>
-              <div style="font-family:'Cinzel',serif;font-weight:700;font-size:1rem;">Diseño en 3 Alturas · Gran Comedor</div>
+              <div style="font-family:'Cinzel',serif;font-weight:700;font-size:1rem;">Diseño en 3 Alturas · 100% Embolsado + Papercraft</div>
             </div>
             <button type="button" class="btn-outline-brass" style="background:rgba(11,9,7,0.85);">
               🔍 Ampliar Foto
@@ -1536,16 +1536,16 @@
     <!-- NAVEGACIÓN PRINCIPAL DE PESTAÑAS -->
     <nav class="magical-tabs" aria-label="Secciones del planificador de mesa">
       <button type="button" data-tab="3dzones" class="magical-tab-btn active">
-        🧊 1. Layout 3D y Fotos por Zona <span id="badgeTabZones" class="tab-badge">0/7</span>
+        🧊 1. Layout 3D y Fotos por Zona <span id="badgeTabZones" class="tab-badge">0/9</span>
       </button>
       <button type="button" data-tab="shopping" class="magical-tab-btn">
-        🛒 2. Compras, Chuches y Enlaces <span id="badgeTabShopping" class="tab-badge">0/14</span>
+        🛒 2. Compras, Chuches y Enlaces <span id="badgeTabShopping" class="tab-badge">0/16</span>
       </button>
       <button type="button" data-tab="ideas" class="magical-tab-btn">
-        💡 3. Muro de Ideas y Comentarios <span id="badgeTabIdeas" class="tab-badge">3</span>
+        💡 3. Muro de Ideas y Comentarios <span id="badgeTabIdeas" class="tab-badge">2</span>
       </button>
       <button type="button" data-tab="labels" class="magical-tab-btn">
-        🏷️ 4. Carteles Imprimibles y Cronograma <span id="badgeTabSteps" class="tab-badge">0/8</span>
+        🏷️ 4. Carteles, Papercraft 3D y Cronograma <span id="badgeTabSteps" class="tab-badge">0/8</span>
       </button>
     </nav>
 
@@ -1560,7 +1560,7 @@
         <div class="canvas-3d-card">
           <div class="canvas-3d-header">
             <div>
-              <h2 style="font-size:1.05rem;color:var(--gold-bright);">🧊 Maqueta 3D Interactiva de la Mesa (3 Alturas + Techo)</h2>
+              <h2 style="font-size:1.05rem;color:var(--gold-bright);">🧊 Maqueta 3D Interactiva de la Mesa (3 Alturas + Techo + Papercraft)</h2>
               <p style="font-size:0.75rem;color:var(--text-muted);">
                 Arrastra para girar 360°, usa la rueda para zoom o pulsa en cualquier zona 3D para ver su foto recreada, enlaces y comentarios.
               </p>
@@ -1590,7 +1590,7 @@
             </div>
           </div>
 
-          <!-- Botones rápidos de las 7 zonas debajo del 3D -->
+          <!-- Botones rápidos de las 9 zonas debajo del 3D -->
           <div id="zone3DSelectorStrip" class="zone-selector-strip"></div>
         </div>
 
@@ -1601,13 +1601,13 @@
       <!-- Barra de filtro de zonas -->
       <div class="filter-bar">
         <div>
-          <h2 style="font-size:1.1rem;color:var(--gold-bright);">📸 Todas las Zonas Recrearías de la Mesa (Paso a Paso)</h2>
+          <h2 style="font-size:1.1rem;color:var(--gold-bright);">📸 Todas las Zonas Recreadas de la Mesa (100% Embolsadas + Papercraft · Paso a Paso)</h2>
           <p style="font-size:0.76rem;color:var(--text-muted);">
-            Tamara y Lucía: podéis marcar qué zonas están listas, repartiros quién se encarga de cada rincón y dejar comentarios debajo de cada foto.
+            Tamara y Lucía: podéis marcar qué zonas están listas, repartiros quién se encarga de cada rincón y dejar vuestros comentarios debajo de cada foto.
           </p>
         </div>
         <div class="filter-pills">
-          <button type="button" class="filter-pill active" onclick="setZoneFilter('all', this)">Todas las Zonas (7)</button>
+          <button type="button" class="filter-pill active" onclick="setZoneFilter('all', this)">Todas las Zonas (9)</button>
           <button type="button" class="filter-pill" onclick="setZoneFilter('pending', this)">⏳ Pendientes</button>
           <button type="button" class="filter-pill" onclick="setZoneFilter('done', this)">✅ Listas</button>
           <button type="button" class="filter-pill" onclick="setZoneFilter('Tamara', this)">👩🏽‍🪄 De Tamara</button>
@@ -1615,7 +1615,7 @@
         </div>
       </div>
 
-      <!-- Grid de las 7 Zonas con sus Fotos Recreadas, Enlaces y Comentarios -->
+      <!-- Grid de las 9 Zonas con sus Fotos Recreadas, Enlaces y Comentarios -->
       <div id="zonesCardsGrid" class="zones-grid"></div>
     </section>
 
@@ -1632,7 +1632,7 @@
           </p>
         </div>
         <div class="filter-pills">
-          <button type="button" class="filter-pill active" onclick="setShopFilter('all', this)">Todo (14)</button>
+          <button type="button" class="filter-pill active" onclick="setShopFilter('all', this)">Todo (16)</button>
           <button type="button" class="filter-pill" onclick="setShopFilter('pending', this)">🛒 Falta Comprar</button>
           <button type="button" class="filter-pill" onclick="setShopFilter('done', this)">✅ Ya Comprado</button>
           <button type="button" class="filter-pill" onclick="setShopFilter('Tamara', this)">👩🏽‍🪄 Tamara</button>
@@ -1642,14 +1642,14 @@
 
       <div>
         <h3 class="font-magical" style="font-size:1.05rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-          🍬 A. Las 8 Chuches Mágicas de Honeydukes (Cantidades auto-ajustadas a los invitados)
+          🍬 A. Las 9 Chuches y Pociones Bebibles de Honeydukes (100% Embolsadas · Auto-ajustadas a invitados)
         </h3>
         <div id="sweetsShoppingGrid" class="zones-grid"></div>
       </div>
 
       <div>
         <h3 class="font-magical" style="font-size:1.05rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-          🕯️ B. Materiales de Escenografía, Botes y Decoración (Coste Low-Cost)
+          🕯️ B. Bolsitas Celofán, Papercraft 3D, Escenografía y Decoración (Coste Low-Cost)
         </h3>
         <div id="decorShoppingGrid" class="zones-grid"></div>
       </div>
@@ -1754,7 +1754,7 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- PESTAÑA 4: CARTELES IMPRIMIBLES + CRONOGRAMA PASO A PASO            -->
+    <!-- PESTAÑA 4: CARTELES IMPRIMIBLES + PAPERCRAFT 3D + CRONOGRAMA        -->
     <!-- =================================================================== -->
     <section id="tab-labels" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.5rem;">
 
@@ -1772,18 +1772,18 @@
         <div id="checklistStepsGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0.75rem;"></div>
       </div>
 
-      <!-- Estudio de Cartelería Mágica Imprimible Estilo MinaLima -->
+      <!-- Estudio de Cartelería Mágica Imprimible Estilo MinaLima + Papercraft 3D -->
       <div class="canvas-3d-card" style="padding:1.5rem;">
         <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.15rem;">
           <div>
             <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;letter-spacing:0.08em;">
-              ✨ Imprenta Oficial del Callejón Diagón · Estilo MinaLima Prop Replica
+              ✨ Imprenta Oficial del Callejón Diagón · Estilo MinaLima &amp; Papercraft 3D Studio
             </span>
             <h2 style="font-size:1.3rem;color:var(--text-main);margin-top:0.2rem;">
-              🏷️ Estudio de Cartelería Mágica Imprimible (Alta Resolución A4)
+              🏷️ Estudio de Cartelería Mágica y Figuras Papercraft 3D (Alta Resolución A4)
             </h2>
-            <p style="font-size:0.8rem;color:var(--text-muted);max-width:780px;margin-top:0.2rem;">
-              Incluye <strong>4 colecciones completas</strong>: Carteles de Mesa con escudos grabados y lacre, Etiquetas Apotecarias para las Botellas de Pociones, <strong>Cromos Pentagonales de Magos Famosos</strong> para las Ranas de Chocolate y <strong>Billetes Dorados del Andén 9 ¾</strong>. Puedes editar cualquier texto o añadir vuestros propios carteles.
+            <p style="font-size:0.8rem;color:var(--text-muted);max-width:820px;margin-top:0.2rem;">
+              Incluye <strong>5 colecciones completas</strong>: Carteles de Mesa con escudos grabados y lacre, Etiquetas para las Cantimploras de Pociones, Cromos Pentagonales para las Ranas, Billetes del Andén 9 ¾ y <strong>Plantillas Recortables Papercraft 3D (Cubeecraft Harry, Hedwig, Caja Bertie Bott, Carta Vociferadora + 8 PDFs Oficiales Descargables)</strong>.
             </p>
           </div>
           <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
@@ -1801,11 +1801,12 @@
           <div class="control-group">
             <label for="printCollectionSelect"><span>📚 Qué colección mostrar e imprimir</span></label>
             <select id="printCollectionSelect" class="select-dark" onchange="setPrintOption('collection', this.value)">
-              <option value="all">✨ Kit Completo (Carteles + Pociones + Cromos + Billetes)</option>
-              <option value="signs">🪧 1. Solo Carteles de Mesa Grandes (8+ uds)</option>
-              <option value="potions">🧪 2. Solo Etiquetas para Botellas de Pociones (4 uds)</option>
+              <option value="all">✨ Kit Completo (Carteles + Pociones + Cromos + Billetes + Papercraft 3D)</option>
+              <option value="signs">🪧 1. Solo Carteles de Mesa Grandes (9+ uds)</option>
+              <option value="potions">🧪 2. Solo Etiquetas para Cantimploras y Pociones (4 uds)</option>
               <option value="frogs">🐸 3. Solo Cromos Pentagonales Ranas de Chocolate (4 uds)</option>
               <option value="tickets">🎫 4. Solo Billetes Expreso de Hogwarts Andén 9 ¾ (4 uds)</option>
+              <option value="papercraft">📐 5. Solo Figuras Papercraft 3D y Cajas Recortables (4 Plantillas + 8 PDFs)</option>
             </select>
           </div>
 
@@ -2017,6 +2018,31 @@
           { label: '🪙 Monedas de Chocolate Oro Gringotts (Amazon)', url: 'https://www.amazon.es/s?k=monedas+chocolate+oro+granel' },
           { label: '🛍️ Bolsitas Kraft + Pegatinas Lacre Hogwarts (Amazon)', url: 'https://www.amazon.es/s?k=bolsas+papel+kraft+pegatinas+harry+potter' }
         ]
+      },
+      {
+        id: 'zona-papercraft',
+        shortTitle: '📐 9. Figuras Papercraft 3D y Cajas',
+        title: 'Repartidas por las 3 Alturas: Figuras Papercraft 3D (Harry, Hedwig, Hermione, Howler y Cajas)',
+        level: 'Niveles 1, 2 y 3 · Escenografía 3D en Cartulina',
+        photo: 'assets/zona-papercraft.jpg',
+        defaultAssignee: 'Ambas',
+        position3D: { x: -0.55, y: 1.05, z: 0.45 },
+        cameraTarget: { pos: [-0.55, 1.85, 3.1], look: [-0.45, 0.95, 0.35] },
+        description: 'Figuras 3D tipo Cubeecraft de Harry Potter, Hermione y Hedwig posadas sobre los libros antiguos, acompañadas de la Carta Vociferadora (Howler) roja con dientes de papel y las cajitas 3D troqueladas de Grageas Bertie Bott y Ranas de Chocolate.',
+        diySteps: [
+          'Imprimir en cartulina blanca de 180–200 g (para que queden rígidas y firmes) las 4 plantillas recortables integradas en la Pestaña 4 o descargar los PDFs gratuitos enlazados aquí abajo.',
+          'Recortar por las líneas continuas (✂️), marcar los dobleces con ayuda de una regla por las líneas discontinuas (- - -) y unir las pestañas con cinta de doble cara en roller o encajando las ranuras (los Cubeecraft no necesitan ni pegamento).',
+          'Repartir las figuras 3D entre los libros del Nivel 2 y 3, poner la Carta Vociferadora abierta en la esquina delantera y usar las cajitas piramidales de Bertie Bott para meter dentro saquitos de grageas.'
+        ],
+        shopLinks: [
+          { label: '📐 Plantilla Gratis Cubeecraft Harry Potter 3D', url: 'https://www.cubeecraft.com/cubees/harry-potter' },
+          { label: '🫘 Plantilla PDF Caja 3D Grageas Bertie Bott', url: 'https://oneshetwoshe.com/bertie-botts-every-flavor-beans-diy-box-harry-potter-pdf-printable/' },
+          { label: '🐸 Plantilla PDF Caja Pentagonal 3D Rana Chocolate', url: 'https://www.designsbymissmandee.com/2018/12/chocolate-frog-box/' },
+          { label: '💌 Plantilla PDF Carta Vociferadora (Ron\'s Howler)', url: 'https://wizardryworkshop.com/downloads/rons-howler-updated-version/' },
+          { label: '🎩 Plantilla PDF Sombrero Seleccionador Origami', url: 'https://www.getawaytoday.com/travel-blog/harry-potter-origami-sorting-hat-free-printable' },
+          { label: '✨ 24 Plantillas Oficiales Harry Potter Paper Crafts', url: 'https://insighteditions.com/pages/harrypotterpapercrafts' },
+          { label: '📄 Pack Cartulina Blanca A4 200g Impresora (Amazon)', url: 'https://www.amazon.es/s?k=cartulina+blanca+a4+200g+impresora' }
+        ]
       }
     ];
 
@@ -2173,6 +2199,20 @@
 
     const DECOR_ITEMS = [
       {
+        id: 'papercraft',
+        name: '📐 Kit Figuras Papercraft 3D: Cartulina 200g + Cinta Roller + Plantillas Gratis',
+        howTo: 'Imprime las plantillas de la Pestaña 4 o los PDFs gratuitos en cartulina de 200g para montar a Harry, Hedwig, el Howler y las cajas 3D de Honeydukes.',
+        cost: { diy: 2.50, balanced: 4.50, premium: 7.50 },
+        defaultAssignee: 'Ambas',
+        links: [
+          { label: '📄 Cartulina Blanca A4 200g Impresora (Amazon)', url: 'https://www.amazon.es/s?k=cartulina+blanca+a4+200g+impresora' },
+          { label: '🎗️ Cinta Adhesiva Doble Cara en Roller Papercraft (Amazon)', url: 'https://www.amazon.es/s?k=pegamento+roller+doble+cara+manualidades' },
+          { label: '📐 Plantilla Gratis Cubeecraft Harry Potter 3D', url: 'https://www.cubeecraft.com/cubees/harry-potter' },
+          { label: '🫘 Plantilla Gratis Caja 3D Grageas Bertie Bott', url: 'https://oneshetwoshe.com/bertie-botts-every-flavor-beans-diy-box-harry-potter-pdf-printable/' },
+          { label: '🐸 Plantilla Gratis Caja Pentagonal 3D Rana Chocolate', url: 'https://www.designsbymissmandee.com/2018/12/chocolate-frog-box/' }
+        ]
+      },
+      {
         id: 'candles',
         name: '🕯️ 12 Velas Flotantes LED + Hilo de Pescar',
         howTo: 'Puedes comprarlas listas con varita mando a distancia o hacerlas con rollos pintados + velas de té LED.',
@@ -2242,12 +2282,12 @@
 
     const CHECKLIST_STEPS = [
       { id: 'c1', when: '3–4 semanas antes', text: 'Repartir zonas entre Tamara y Lucía y empezar a guardar botes de cristal bonitos.' },
-      { id: 'c2', when: '3 semanas antes', text: 'Pedir en Amazon las cantimploras de pociones bebibles, las bolsitas de celofán para embolsar todo, el molde de ranas y las velas.' },
+      { id: 'c2', when: '3 semanas antes', text: 'Pedir en Amazon las cantimploras de pociones bebibles, las bolsitas de celofán para embolsar todo, la cartulina 200g y el molde de ranas.' },
       { id: 'c3', when: '2 semanas antes', text: 'Comprar las bolsas de 1 kg de gomitas/nubes/grageas y las bebidas/chuches líquidas para las cantimploras.' },
-      { id: 'c4', when: '1 semana antes', text: 'Imprimir los carteles, etiquetas de cantimploras y cromos desde la pestaña 4.' },
-      { id: 'c5', when: '4 días antes', text: 'Embolsar individualmente las grageas, gusanos, nubes de Hedwig, varitas y escobas en sus bolsitas de celofán con lazo.' },
+      { id: 'c4', when: '1 semana antes', text: 'Imprimir en cartulina 200g los carteles, etiquetas de cantimploras y las figuras Papercraft 3D (Harry, Hedwig, Howler y cajas).' },
+      { id: 'c5', when: '4 días antes', text: 'Recortar y doblar las figuras Papercraft 3D y embolsar individualmente las grageas, gusanos, nubes de Hedwig, varitas y escobas.' },
       { id: 'c6', when: '2 días antes', text: 'Hacer las Ranas de Chocolate, meter cada una en su bolsita transparente con su cromo y pegar las alitas a las Snitches.' },
-      { id: 'c7', when: 'Día anterior', text: 'Rellenar y cerrar las cantimploras de pociones bebibles con sus etiquetas y dejar montada la estructura de 3 alturas.' },
+      { id: 'c7', when: 'Día anterior', text: 'Rellenar y cerrar las cantimploras de pociones bebibles con sus etiquetas y dejar montada la estructura de 3 alturas con las figuras Papercraft.' },
       { id: 'c8', when: 'Día de la Comunión (1h antes)', text: 'Colocar todos los paquetes embolsados y las cantimploras frías en sus zonas y encender las velas flotantes.' }
     ];
 
@@ -2262,10 +2302,10 @@
       tier: 'balanced',
       childName: 'Lucía',
       house: 'Gryffindor',
-      selectedZoneId: 'zona-cantimploras',
+      selectedZoneId: 'zona-papercraft',
       zoneFilter: 'all',
       shopFilter: 'all',
-      // Estado de cada una de las 8 zonas: 'pending' | 'wip' | 'done'
+      // Estado de cada una de las 9 zonas: 'pending' | 'wip' | 'done'
       zoneStatus: {
         'zona-velas': 'pending',
         'zona-snitches': 'pending',
@@ -2274,7 +2314,8 @@
         'zona-varitas': 'pending',
         'zona-escobas': 'pending',
         'zona-cantimploras': 'pending',
-        'zona-ranas': 'pending'
+        'zona-ranas': 'pending',
+        'zona-papercraft': 'pending'
       },
       zoneAssignees: {
         'zona-velas': 'Tamara',
@@ -2284,7 +2325,8 @@
         'zona-varitas': 'Ambas',
         'zona-escobas': 'Tamara',
         'zona-cantimploras': 'Tamara',
-        'zona-ranas': 'Lucía'
+        'zona-ranas': 'Lucía',
+        'zona-papercraft': 'Ambas'
       },
       // Estado de compra de chuches y decoración (true = ya comprado/listo)
       itemPurchased: {
@@ -2297,6 +2339,7 @@
         'hedwig': false,
         'brooms': false,
         'galleons': false,
+        'papercraft': false,
         'candles': false,
         'jars': false,
         'tablecloth': false,
@@ -2314,6 +2357,7 @@
         'hedwig': 'Lucía',
         'brooms': 'Tamara',
         'galleons': 'Lucía',
+        'papercraft': 'Ambas',
         'candles': 'Tamara',
         'jars': 'Ambas',
         'tablecloth': 'Tamara',
@@ -2813,6 +2857,93 @@
         zRanasGroup.add(bag);
       }
       registerZoneGroup3D('zona-ranas', zRanasGroup, new THREE.Vector3(0.85, 1.05, 1.15));
+
+      // --- ZONA 9: FIGURAS PAPERCRAFT 3D (CUBEECRAFT HARRY, HEDWIG, HERMIONE, HOWLER Y CAJAS) (zona-papercraft) ---
+      const zPapercraftGroup = new THREE.Group();
+      const bookBasePaper = new THREE.Mesh(
+        new THREE.BoxGeometry(1.15, 0.1, 0.56),
+        new THREE.MeshStandardMaterial({ color: 0x5c2d16, roughness: 0.75 })
+      );
+      bookBasePaper.position.set(-0.25, 0.41, 0.42);
+      zPapercraftGroup.add(bookBasePaper);
+
+      // Cubeecraft Harry Potter (Cuerpo + Cabeza + Pelo + Bufanda)
+      const harryBody = new THREE.Mesh(
+        new THREE.BoxGeometry(0.22, 0.24, 0.18),
+        new THREE.MeshStandardMaterial({ color: 0x1e1b18 })
+      );
+      harryBody.position.set(-0.55, 0.58, 0.42);
+      const harryScarf = new THREE.Mesh(
+        new THREE.BoxGeometry(0.23, 0.06, 0.19),
+        new THREE.MeshStandardMaterial({ color: 0x991b1b })
+      );
+      harryScarf.position.set(-0.55, 0.67, 0.42);
+      const harryHead = new THREE.Mesh(
+        new THREE.BoxGeometry(0.26, 0.24, 0.24),
+        new THREE.MeshStandardMaterial({ color: 0xfde68a })
+      );
+      harryHead.position.set(-0.55, 0.82, 0.42);
+      const harryHair = new THREE.Mesh(
+        new THREE.BoxGeometry(0.27, 0.09, 0.25),
+        new THREE.MeshStandardMaterial({ color: 0x1c1917 })
+      );
+      harryHair.position.set(-0.55, 0.92, 0.42);
+      zPapercraftGroup.add(harryBody, harryScarf, harryHead, harryHair);
+
+      // Cubeecraft Hedwig (Cubo blanco lechuza)
+      const hedwigCube = new THREE.Mesh(
+        new THREE.BoxGeometry(0.21, 0.25, 0.2),
+        new THREE.MeshStandardMaterial({ color: 0xf8fafc })
+      );
+      hedwigCube.position.set(-0.22, 0.58, 0.44);
+      zPapercraftGroup.add(hedwigCube);
+
+      // Cubeecraft Hermione
+      const hermioneBody = new THREE.Mesh(
+        new THREE.BoxGeometry(0.21, 0.23, 0.18),
+        new THREE.MeshStandardMaterial({ color: 0x1e1b18 })
+      );
+      hermioneBody.position.set(0.08, 0.57, 0.42);
+      const hermioneHead = new THREE.Mesh(
+        new THREE.BoxGeometry(0.25, 0.23, 0.23),
+        new THREE.MeshStandardMaterial({ color: 0xfde68a })
+      );
+      hermioneHead.position.set(0.08, 0.8, 0.42);
+      const hermioneHair = new THREE.Mesh(
+        new THREE.BoxGeometry(0.28, 0.18, 0.25),
+        new THREE.MeshStandardMaterial({ color: 0x78350f })
+      );
+      hermioneHair.position.set(0.08, 0.85, 0.4);
+      zPapercraftGroup.add(hermioneBody, hermioneHead, hermioneHair);
+
+      // Carta Vociferadora (Howler) roja con dientes blancos
+      const howlerBox = new THREE.Mesh(
+        new THREE.BoxGeometry(0.26, 0.22, 0.22),
+        new THREE.MeshStandardMaterial({ color: 0xb91c1c })
+      );
+      howlerBox.position.set(-0.78, 0.47, 0.82);
+      const howlerTeeth = new THREE.Mesh(
+        new THREE.BoxGeometry(0.22, 0.06, 0.23),
+        new THREE.MeshStandardMaterial({ color: 0xffffff })
+      );
+      howlerTeeth.position.set(-0.78, 0.51, 0.83);
+      zPapercraftGroup.add(howlerBox, howlerTeeth);
+
+      // Cajita Piramidal 3D Bertie Bott
+      const bertieBoxBody = new THREE.Mesh(
+        new THREE.BoxGeometry(0.24, 0.34, 0.24),
+        new THREE.MeshStandardMaterial({ color: 0xdc2626 })
+      );
+      bertieBoxBody.position.set(0.45, 0.53, 0.42);
+      const bertieRoof = new THREE.Mesh(
+        new THREE.ConeGeometry(0.18, 0.22, 4),
+        new THREE.MeshStandardMaterial({ color: 0xfef3c7 })
+      );
+      bertieRoof.rotation.y = Math.PI / 4;
+      bertieRoof.position.set(0.45, 0.81, 0.42);
+      zPapercraftGroup.add(bertieBoxBody, bertieRoof);
+
+      registerZoneGroup3D('zona-papercraft', zPapercraftGroup, new THREE.Vector3(-0.22, 1.32, 0.42));
 
       // Eventos de ratón / táctil y raycaster para clicar zonas 3D
       setup3DInteractions(container);
@@ -4029,6 +4160,329 @@
       `).join('');
     }
 
+    function renderPapercraftDirectoryHTML() {
+      const externalTemplates = [
+        {
+          icon: '🧙🏻‍♂️',
+          title: '1. Cubeecraft 3D: Harry Potter (Sin Pegamento)',
+          source: 'Cubeecraft Oficial · 1 hoja A4',
+          difficulty: '🟢 Muy Fácil (5 min)',
+          desc: 'Muñeco cúbico 3D de Harry con gafas, cicatriz y bufanda. Las pestañas encajan por ranuras sin necesitar ni una gota de pegamento.',
+          url: 'https://www.cubeecraft.com/cubees/harry-potter'
+        },
+        {
+          icon: '🫘',
+          title: '2. Cajita Piramidal 3D: Grageas Bertie Bott',
+          source: 'One She Two She · PDF Imprimible Gratis',
+          difficulty: '🟢 Fácil (8 min)',
+          desc: 'La caja clásica a rayas rojas y crema de Honeydukes. Imprímela en cartulina de 200g y mete dentro el saquito individual de grageas.',
+          url: 'https://oneshetwoshe.com/bertie-botts-every-flavor-beans-diy-box-harry-potter-pdf-printable/'
+        },
+        {
+          icon: '🐸',
+          title: '3. Caja Pentagonal 3D: Rana de Chocolate Oficial',
+          source: 'Designs By Miss Mandee · PDF + SVG',
+          difficulty: '🟡 Media (12 min)',
+          desc: 'El famoso estuche pentagonal azul y dorado con filigranas de Honeydukes. Incluye base y tapa abombada en 3D.',
+          url: 'https://www.designsbymissmandee.com/2018/12/chocolate-frog-box/'
+        },
+        {
+          icon: '🃏',
+          title: '4. Pack Cajas + Cromos Ranas de Chocolate',
+          source: 'The Quiet Grove · 2 PDFs Descargables',
+          difficulty: '🟢 Fácil (10 min)',
+          desc: 'Alternativa lista para imprimir en casa con las cajas pentagonales y los cromos de Dumbledore, Harry y fundadores.',
+          url: 'https://thequietgrove.com/diy-chocolate-frog-boxes-wizard-cards-with-free-printables/'
+        },
+        {
+          icon: '💌',
+          title: '5. Carta Vociferadora 3D (Ron\'s Howler)',
+          source: 'Wizardry Workshop · Plantilla + Tutorial',
+          difficulty: '🟢 Fácil (10 min)',
+          desc: 'Réplica exacta del Howler rojo de Molly Weasley con dientes blancos plegables en acordeón, lengua y cinta.',
+          url: 'https://wizardryworkshop.com/downloads/rons-howler-updated-version/'
+        },
+        {
+          icon: '🎩',
+          title: '6. Sombrero Seleccionador Origami Interactivo',
+          source: 'Get Away Today · PDF Gratis',
+          difficulty: '🟢 Muy Fácil (5 min)',
+          desc: 'Comecocos / Sombrero 3D de papiroflexia para jugar con los niños en la mesa y descubrir a qué casa de Hogwarts pertenecen.',
+          url: 'https://www.getawaytoday.com/travel-blog/harry-potter-origami-sorting-hat-free-printable'
+        },
+        {
+          icon: '🦉',
+          title: '7. 24 Plantillas Oficiales Harry Potter Paper Crafts',
+          source: 'Insight Editions · Matthew Reinhart',
+          difficulty: '🟡 Variado',
+          desc: 'Repositorio oficial del libro Harry Potter Paper Crafts & Homemade con plantillas descargables de criaturas y emblemas.',
+          url: 'https://insighteditions.com/pages/harrypotterpapercrafts'
+        },
+        {
+          icon: '💎',
+          title: '8. Escultura Low-Poly 3D Harry Potter & Sombrero',
+          source: 'Scribd · PDF Pepakura Multi-hoja',
+          difficulty: '🔴 Avanzado (45 min)',
+          desc: 'Figura poligonal grande en 3D para quienes quieran montar un busto o sombrero grande de cartulina como centro de mesa.',
+          url: 'https://www.scribd.com/document/490351800/Harry-Potter-Papercraft'
+        }
+      ];
+
+      return `
+        <div class="no-print" style="background:rgba(18,14,10,0.88);border:1px solid var(--border-brass);border-radius:var(--radius-md);padding:1.15rem;margin-bottom:1.25rem;">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0.75rem;margin-bottom:0.85rem;">
+            <div>
+              <span style="font-size:0.7rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;letter-spacing:0.08em;">🌐 Buscador de Plantillas Externas Verificadas</span>
+              <h4 class="font-magical" style="font-size:1rem;color:var(--text-main);margin-top:0.15rem;">
+                8 Templates Oficiales y Gratuitos Localizados en Internet (Descarga Directa PDF)
+              </h4>
+            </div>
+            <a href="https://www.amazon.es/s?k=cartulina+blanca+a4+200g+impresora" target="_blank" rel="noopener" class="shop-link-chip">
+              📄 Comprar Cartulina 200g A4 en Amazon ↗
+            </a>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0.75rem;">
+            ${externalTemplates.map(t => `
+              <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:0.75rem;display:flex;flex-direction:column;justify-content:space-between;gap:0.5rem;">
+                <div>
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:0.4rem;margin-bottom:0.25rem;">
+                    <span style="font-size:0.68rem;font-weight:800;color:var(--gold-bright);">${t.source}</span>
+                    <span style="font-size:0.65rem;background:rgba(242,202,82,0.12);color:var(--gold-bright);padding:0.1rem 0.4rem;border-radius:99px;">${t.difficulty}</span>
+                  </div>
+                  <div style="font-weight:800;font-size:0.84rem;color:var(--text-main);margin-bottom:0.25rem;">${t.icon} ${t.title}</div>
+                  <p style="font-size:0.73rem;color:var(--text-muted);line-height:1.35;">${t.desc}</p>
+                </div>
+                <a href="${t.url}" target="_blank" rel="noopener" class="shop-link-chip" style="justify-content:center;margin-top:0.25rem;">
+                  📥 Abrir / Descargar Plantilla PDF ↗
+                </a>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderPapercraftTemplatesHTML() {
+      const name = (state.childName || 'Lucía').trim();
+      return `
+        <!-- 1. CUBEECRAFT 3D: HARRY POTTER (CABEZA + CUERPO DESPLEGADOS) -->
+        <div class="minalima-sign-wrapper" style="background:#fffdf9;border:2px solid #3a2512;border-radius:8px;padding:12px;color:#1e1b18;page-break-inside:avoid;break-inside:avoid;">
+          <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px dashed #8c6239;padding-bottom:6px;margin-bottom:8px;">
+            <div>
+              <span style="font-family:'Cinzel',serif;font-size:0.62rem;font-weight:800;color:#7a1616;">✂️ PLANTILLA RECORTABLE 3D N.º 1 · CARTULINA 200G</span>
+              <div style="font-family:'Cinzel Decorative',serif;font-size:0.95rem;font-weight:900;color:#1a120b;">FIGURA CUBEECRAFT 3D: HARRY POTTER</div>
+            </div>
+            <span style="font-size:0.62rem;font-weight:700;background:#fef3c7;border:1px solid #d97706;padding:2px 6px;border-radius:4px;">Línea continua = Cortar · Discontinua = Doblar</span>
+          </div>
+          <svg viewBox="0 0 360 250" style="width:100%;height:auto;display:block;background:#ffffff;border:1px solid #e5dec9;">
+            <!-- Pestañas de pegado de la cabeza -->
+            <polygon points="105,15 165,15 175,28 95,28" fill="#e5e7eb" stroke="#4b5563" stroke-width="1" stroke-dasharray="3,2"/>
+            <polygon points="35,88 45,78 45,138 35,128" fill="#e5e7eb" stroke="#4b5563" stroke-width="1" stroke-dasharray="3,2"/>
+            <polygon points="225,78 235,88 235,128 225,138" fill="#e5e7eb" stroke="#4b5563" stroke-width="1" stroke-dasharray="3,2"/>
+            <!-- Cruz Desplegada Cabeza 3D (Arriba, Izquierda, Frente, Derecha, Atrás, Base) -->
+            <!-- Top (Pelo negro) -->
+            <rect x="95" y="28" width="80" height="50" fill="#1c1917" stroke="#111827" stroke-width="1.8"/>
+            <text x="135" y="56" text-anchor="middle" fill="#9ca3af" font-size="7" font-family="Cinzel,serif">PARTE SUPERIOR PELO</text>
+            <!-- Left side head -->
+            <rect x="45" y="78" width="50" height="60" fill="#fde68a" stroke="#111827" stroke-width="1.8"/>
+            <path d="M45,78 L95,78 L95,102 L45,98 Z" fill="#1c1917"/>
+            <!-- Front Face (Harry) -->
+            <rect x="95" y="78" width="80" height="60" fill="#fde68a" stroke="#111827" stroke-width="1.8" stroke-dasharray="4,3"/>
+            <path d="M95,78 L175,78 L175,98 L155,92 L135,100 L115,91 L95,98 Z" fill="#1c1917"/>
+            <!-- Cicatriz rayo -->
+            <polyline points="150,86 146,92 151,92 147,98" fill="none" stroke="#dc2626" stroke-width="1.6"/>
+            <!-- Gafas redondas -->
+            <circle cx="118" cy="110" r="11" fill="#ffffff" stroke="#111827" stroke-width="2.2"/>
+            <circle cx="152" cy="110" r="11" fill="#ffffff" stroke="#111827" stroke-width="2.2"/>
+            <line x1="129" y1="110" x2="141" y2="110" stroke="#111827" stroke-width="2"/>
+            <circle cx="118" cy="110" r="4.5" fill="#15803d"/>
+            <circle cx="152" cy="110" r="4.5" fill="#15803d"/>
+            <circle cx="118" cy="110" r="2" fill="#000"/>
+            <circle cx="152" cy="110" r="2" fill="#000"/>
+            <path d="M128,126 Q135,131 142,126" fill="none" stroke="#7c2d12" stroke-width="1.6"/>
+            <!-- Right side head -->
+            <rect x="175" y="78" width="50" height="60" fill="#fde68a" stroke="#111827" stroke-width="1.8"/>
+            <path d="M175,78 L225,78 L225,98 L175,102 Z" fill="#1c1917"/>
+            <!-- Back head -->
+            <rect x="95" y="138" width="80" height="50" fill="#1c1917" stroke="#111827" stroke-width="1.8"/>
+            <text x="135" y="166" text-anchor="middle" fill="#d1d5db" font-size="7" font-family="Cinzel,serif">NUCA · DOBLAR Y PEGAR</text>
+            <!-- Neck / Body Cube (Derecha del pliego) -->
+            <polygon points="265,42 325,42 332,54 258,54" fill="#e5e7eb" stroke="#4b5563" stroke-width="1" stroke-dasharray="3,2"/>
+            <text x="295" y="50" text-anchor="middle" fill="#374151" font-size="6" font-weight="bold">PEGAR BAJO CABEZA</text>
+            <rect x="258" y="54" width="74" height="64" fill="#1e1b18" stroke="#111827" stroke-width="1.8"/>
+            <!-- Bufanda Gryffindor -->
+            <rect x="258" y="54" width="74" height="14" fill="#991b1b"/>
+            <rect x="270" y="54" width="8" height="14" fill="#facc15"/>
+            <rect x="292" y="54" width="8" height="14" fill="#facc15"/>
+            <rect x="314" y="54" width="8" height="14" fill="#facc15"/>
+            <rect x="276" y="68" width="12" height="32" fill="#991b1b" stroke="#facc15" stroke-width="1"/>
+            <!-- Varita en mano -->
+            <line x1="315" y1="108" x2="326" y2="82" stroke="#78350f" stroke-width="3"/>
+            <circle cx="326" cy="82" r="3" fill="#facc15"/>
+            <!-- Base cuerpo -->
+            <rect x="258" y="118" width="74" height="52" fill="#27272a" stroke="#111827" stroke-width="1.8" stroke-dasharray="4,3"/>
+            <text x="295" y="146" text-anchor="middle" fill="#facc15" font-size="7.5" font-family="Cinzel,serif">ESPALDA Y LATERALES</text>
+            <polygon points="265,182 325,182 332,170 258,170" fill="#e5e7eb" stroke="#4b5563" stroke-width="1" stroke-dasharray="3,2"/>
+            <!-- Instrucción inferior -->
+            <text x="180" y="236" text-anchor="middle" fill="#5c3d1e" font-size="8.5" font-weight="bold" font-family="Cinzel,serif">
+              ✂️ 1. Recorta el contorno exterior · 2. Dobla en 90° las líneas interiores · 3. Pega el cubo de la cabeza sobre la túnica
+            </text>
+          </svg>
+        </div>
+
+        <!-- 2. CUBEECRAFT 3D: HEDWIG LA LECHUZA BLANCA MENSAJERA -->
+        <div class="minalima-sign-wrapper" style="background:#fffdf9;border:2px solid #3a2512;border-radius:8px;padding:12px;color:#1e1b18;page-break-inside:avoid;break-inside:avoid;">
+          <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px dashed #8c6239;padding-bottom:6px;margin-bottom:8px;">
+            <div>
+              <span style="font-family:'Cinzel',serif;font-size:0.62rem;font-weight:800;color:#7a1616;">✂️ PLANTILLA RECORTABLE 3D N.º 2 · CARTULINA 200G</span>
+              <div style="font-family:'Cinzel Decorative',serif;font-size:0.95rem;font-weight:900;color:#1a120b;">FIGURA CUBEECRAFT 3D: LECHUZA HEDWIG</div>
+            </div>
+            <span style="font-size:0.62rem;font-weight:700;background:#fef3c7;border:1px solid #d97706;padding:2px 6px;border-radius:4px;">Incluye Alas 3D y Carta de ${escapeHtml(name)}</span>
+          </div>
+          <svg viewBox="0 0 360 250" style="width:100%;height:auto;display:block;background:#ffffff;border:1px solid #e5dec9;">
+            <!-- Pestaña superior -->
+            <polygon points="105,14 165,14 175,26 95,26" fill="#e5e7eb" stroke="#4b5563" stroke-width="1" stroke-dasharray="3,2"/>
+            <!-- Cabeza superior blanca -->
+            <rect x="95" y="26" width="80" height="48" fill="#f8fafc" stroke="#1e293b" stroke-width="1.8"/>
+            <path d="M110,45 Q120,52 130,45 M140,45 Q150,52 160,45" fill="none" stroke="#94a3b8" stroke-width="1.4"/>
+            <!-- Ala izquierda desplegable -->
+            <polygon points="18,108 45,74 45,142 18,132" fill="#f1f5f9" stroke="#1e293b" stroke-width="1.6"/>
+            <text x="32" y="114" text-anchor="middle" fill="#475569" font-size="6" transform="rotate(-90 32,114)">ALA 3D</text>
+            <!-- Lateral izquierdo -->
+            <rect x="45" y="74" width="50" height="68" fill="#f8fafc" stroke="#1e293b" stroke-width="1.8"/>
+            <path d="M55,95 Q70,108 85,95 M55,115 Q70,128 85,115" fill="none" stroke="#64748b" stroke-width="1.5"/>
+            <!-- Frontal Hedwig -->
+            <rect x="95" y="74" width="80" height="68" fill="#ffffff" stroke="#1e293b" stroke-width="1.8" stroke-dasharray="4,3"/>
+            <circle cx="118" cy="96" r="11" fill="#f59e0b" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="152" cy="96" r="11" fill="#f59e0b" stroke="#1e293b" stroke-width="2"/>
+            <circle cx="118" cy="96" r="5" fill="#0f172a"/>
+            <circle cx="152" cy="96" r="5" fill="#0f172a"/>
+            <circle cx="116" cy="94" r="2" fill="#ffffff"/>
+            <circle cx="150" cy="94" r="2" fill="#ffffff"/>
+            <!-- Pico y plumaje pecho -->
+            <polygon points="131,103 139,103 135,113" fill="#334155"/>
+            <path d="M110,122 Q120,130 130,122 M140,122 Q150,130 160,122 M122,132 Q135,140 148,132" fill="none" stroke="#64748b" stroke-width="1.5"/>
+            <!-- Lateral derecho -->
+            <rect x="175" y="74" width="50" height="68" fill="#f8fafc" stroke="#1e293b" stroke-width="1.8"/>
+            <path d="M185,95 Q200,108 215,95 M185,115 Q200,128 215,115" fill="none" stroke="#64748b" stroke-width="1.5"/>
+            <!-- Ala derecha desplegable -->
+            <polygon points="225,74 252,108 252,132 225,142" fill="#f1f5f9" stroke="#1e293b" stroke-width="1.6"/>
+            <text x="238" y="114" text-anchor="middle" fill="#475569" font-size="6" transform="rotate(90 238,114)">ALA 3D</text>
+            <!-- Espalda / Cola -->
+            <rect x="95" y="142" width="80" height="52" fill="#f1f5f9" stroke="#1e293b" stroke-width="1.8"/>
+            <path d="M108,162 Q120,172 132,162 M138,162 Q150,172 162,162" fill="none" stroke="#475569" stroke-width="1.6"/>
+            <!-- Patitas naranjas en la base -->
+            <rect x="95" y="194" width="80" height="24" fill="#e2e8f0" stroke="#1e293b" stroke-width="1.5" stroke-dasharray="3,2"/>
+            <polygon points="112,194 126,194 119,208" fill="#f59e0b"/>
+            <polygon points="144,194 158,194 151,208" fill="#f59e0b"/>
+            <!-- Mini Carta de Hogwarts Recortable para ponerle en el pico -->
+            <rect x="268" y="64" width="76" height="52" fill="#fef3c7" stroke="#78350f" stroke-width="1.8"/>
+            <polyline points="268,64 306,92 344,64" fill="none" stroke="#78350f" stroke-width="1.5"/>
+            <circle cx="306" cy="92" r="8" fill="#991b1b" stroke="#facc15" stroke-width="1.2"/>
+            <text x="306" y="95" text-anchor="middle" fill="#fef08a" font-size="7" font-weight="bold">H</text>
+            <text x="306" y="109" text-anchor="middle" fill="#451a03" font-size="6.5" font-weight="bold">COMUNIÓN ${escapeHtml(name.toUpperCase())}</text>
+            <text x="306" y="132" text-anchor="middle" fill="#78350f" font-size="7" font-weight="bold">✂️ Carta para el pico</text>
+            <text x="180" y="236" text-anchor="middle" fill="#5c3d1e" font-size="8.5" font-weight="bold" font-family="Cinzel,serif">
+              ✂️ Recorta el cubo de Hedwig, deja las 2 alas abiertas hacia fuera y pégale la carta lacrada bajo el pico
+            </text>
+          </svg>
+        </div>
+
+        <!-- 3. CAJITA PIRAMIDAL 3D: GRAGEAS BERTIE BOTT (PARA METER BOLSITA DE GRAGEAS) -->
+        <div class="minalima-sign-wrapper" style="background:#fffdf9;border:2px solid #3a2512;border-radius:8px;padding:12px;color:#1e1b18;page-break-inside:avoid;break-inside:avoid;">
+          <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px dashed #8c6239;padding-bottom:6px;margin-bottom:8px;">
+            <div>
+              <span style="font-family:'Cinzel',serif;font-size:0.62rem;font-weight:800;color:#7a1616;">✂️ PLANTILLA RECORTABLE 3D N.º 3 · CARTULINA 200G</span>
+              <div style="font-family:'Cinzel Decorative',serif;font-size:0.95rem;font-weight:900;color:#1a120b;">CAJA PIRAMIDAL 3D: GRAGEAS BERTIE BOTT</div>
+            </div>
+            <span style="font-size:0.62rem;font-weight:700;background:#fef3c7;border:1px solid #d97706;padding:2px 6px;border-radius:4px;">Ideal para meter dentro el saquito de grageas</span>
+          </div>
+          <svg viewBox="0 0 360 250" style="width:100%;height:auto;display:block;background:#ffffff;border:1px solid #e5dec9;">
+            <defs>
+              <pattern id="bertieStripes" width="12" height="12" patternUnits="userSpaceOnUse">
+                <rect width="6" height="12" fill="#991b1b"/>
+                <rect x="6" width="6" height="12" fill="#fef3c7"/>
+              </pattern>
+            </defs>
+            <!-- 4 Paneles Laterales + Tejados Triangulares -->
+            <!-- Panel 1 -->
+            <polygon points="30,78 65,18 100,78" fill="url(#bertieStripes)" stroke="#451a03" stroke-width="1.6"/>
+            <rect x="30" y="78" width="70" height="82" fill="url(#bertieStripes)" stroke="#451a03" stroke-width="1.6" stroke-dasharray="4,2"/>
+            <rect x="37" y="94" width="56" height="48" rx="4" fill="#fef3c7" stroke="#78350f" stroke-width="1.5"/>
+            <text x="65" y="112" text-anchor="middle" fill="#991b1b" font-size="8" font-weight="900" font-family="Cinzel,serif">BERTIE</text>
+            <text x="65" y="123" text-anchor="middle" fill="#991b1b" font-size="8" font-weight="900" font-family="Cinzel,serif">BOTT'S</text>
+            <text x="65" y="135" text-anchor="middle" fill="#451a03" font-size="6" font-weight="bold">EVERY FLAVOUR</text>
+            <!-- Panel 2 -->
+            <polygon points="100,78 135,18 170,78" fill="url(#bertieStripes)" stroke="#451a03" stroke-width="1.6"/>
+            <rect x="100" y="78" width="70" height="82" fill="url(#bertieStripes)" stroke="#451a03" stroke-width="1.6" stroke-dasharray="4,2"/>
+            <ellipse cx="135" cy="118" rx="22" ry="26" fill="#1e293b" stroke="#facc15" stroke-width="2"/>
+            <circle cx="128" cy="112" r="5" fill="#22c55e"/>
+            <circle cx="142" cy="110" r="5" fill="#ec4899"/>
+            <circle cx="134" cy="124" r="5" fill="#facc15"/>
+            <circle cx="126" cy="126" r="4.5" fill="#3b82f6"/>
+            <circle cx="143" cy="123" r="4.5" fill="#ef4444"/>
+            <!-- Panel 3 -->
+            <polygon points="170,78 205,18 240,78" fill="url(#bertieStripes)" stroke="#451a03" stroke-width="1.6"/>
+            <rect x="170" y="78" width="70" height="82" fill="url(#bertieStripes)" stroke="#451a03" stroke-width="1.6" stroke-dasharray="4,2"/>
+            <rect x="177" y="94" width="56" height="48" rx="4" fill="#fef3c7" stroke="#78350f" stroke-width="1.5"/>
+            <text x="205" y="112" text-anchor="middle" fill="#991b1b" font-size="7.5" font-weight="900" font-family="Cinzel,serif">GRAGEAS</text>
+            <text x="205" y="123" text-anchor="middle" fill="#991b1b" font-size="7.5" font-weight="900" font-family="Cinzel,serif">MÁGICAS</text>
+            <text x="205" y="135" text-anchor="middle" fill="#451a03" font-size="6" font-weight="bold">HONEYDUKES</text>
+            <!-- Panel 4 -->
+            <polygon points="240,78 275,18 310,78" fill="url(#bertieStripes)" stroke="#451a03" stroke-width="1.6"/>
+            <rect x="240" y="78" width="70" height="82" fill="url(#bertieStripes)" stroke="#451a03" stroke-width="1.6" stroke-dasharray="4,2"/>
+            <!-- Pestaña lateral pegado -->
+            <polygon points="310,78 332,88 332,150 310,160" fill="#e5e7eb" stroke="#4b5563" stroke-width="1.2" stroke-dasharray="3,2"/>
+            <text x="321" y="124" text-anchor="middle" fill="#374151" font-size="6.5" font-weight="bold" transform="rotate(90 321,124)">PEGAR AQUÍ</text>
+            <!-- Base cuadrada inferior -->
+            <rect x="100" y="160" width="70" height="62" fill="#991b1b" stroke="#451a03" stroke-width="1.8"/>
+            <text x="135" y="194" text-anchor="middle" fill="#fef3c7" font-size="7.5" font-weight="bold" font-family="Cinzel,serif">BASE CUADRADA</text>
+            <text x="180" y="238" text-anchor="middle" fill="#5c3d1e" font-size="8.5" font-weight="bold" font-family="Cinzel,serif">
+              ✂️ Recorta la plantilla, pliega las 4 caras formando la caja y une los 4 triángulos superiores en pirámide
+            </text>
+          </svg>
+        </div>
+
+        <!-- 4. CARTA VOCIFERADORA 3D (HOWLER DE MOLLY WEASLEY CON DIENTES) -->
+        <div class="minalima-sign-wrapper" style="background:#fffdf9;border:2px solid #3a2512;border-radius:8px;padding:12px;color:#1e1b18;page-break-inside:avoid;break-inside:avoid;">
+          <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px dashed #8c6239;padding-bottom:6px;margin-bottom:8px;">
+            <div>
+              <span style="font-family:'Cinzel',serif;font-size:0.62rem;font-weight:800;color:#7a1616;">✂️ PLANTILLA RECORTABLE 3D N.º 4 · CARTULINA 200G</span>
+              <div style="font-family:'Cinzel Decorative',serif;font-size:0.95rem;font-weight:900;color:#1a120b;">CARTA VOCIFERADORA 3D (HOWLER DE RON)</div>
+            </div>
+            <span style="font-size:0.62rem;font-weight:700;background:#fef3c7;border:1px solid #d97706;padding:2px 6px;border-radius:4px;">Para colocar abierta en la esquina de la mesa</span>
+          </div>
+          <svg viewBox="0 0 360 250" style="width:100%;height:auto;display:block;background:#ffffff;border:1px solid #e5dec9;">
+            <!-- Sobre Rojo Abierto (Boca del Howler) -->
+            <rect x="35" y="32" width="175" height="145" rx="4" fill="#b91c1c" stroke="#450a0a" stroke-width="2"/>
+            <!-- Línea de pliegue central de la boca -->
+            <line x1="35" y1="104" x2="210" y2="104" stroke="#fca5a5" stroke-width="1.8" stroke-dasharray="5,4"/>
+            <!-- Interior oscuro de la boca -->
+            <rect x="52" y="54" width="141" height="100" rx="6" fill="#450a0a" stroke="#facc15" stroke-width="1.5"/>
+            <!-- Dientes superiores en zigzag -->
+            <polygon points="55,54 72,76 89,54 106,76 123,54 140,76 157,54 174,76 190,54" fill="#ffffff" stroke="#1e293b" stroke-width="1.2"/>
+            <!-- Dientes inferiores en zigzag -->
+            <polygon points="55,154 72,132 89,154 106,132 123,154 140,132 157,154 174,132 190,154" fill="#ffffff" stroke="#1e293b" stroke-width="1.2"/>
+            <!-- Texto cómico dentro de la boca -->
+            <text x="122" y="100" text-anchor="middle" fill="#fef08a" font-size="8.5" font-weight="bold" font-family="Cinzel,serif">¡RONALD WEASLEY!</text>
+            <text x="122" y="114" text-anchor="middle" fill="#fecaca" font-size="7" font-family="Cinzel,serif">¡FELIZ COMUNIÓN ${escapeHtml(name.toUpperCase())}!</text>
+            <!-- Lengua 3D Recortable a la derecha -->
+            <path d="M245,45 L315,45 L315,125 Q280,165 245,125 Z" fill="#ef4444" stroke="#7f1d1d" stroke-width="2"/>
+            <line x1="280" y1="55" x2="280" y2="125" stroke="#991b1b" stroke-width="2"/>
+            <rect x="245" y="30" width="70" height="15" fill="#e5e7eb" stroke="#4b5563" stroke-width="1.2" stroke-dasharray="3,2"/>
+            <text x="280" y="40" text-anchor="middle" fill="#1f2937" font-size="6.5" font-weight="bold">PEGAR EN CENTRO BOCA</text>
+            <text x="280" y="95" text-anchor="middle" fill="#fef2f2" font-size="8" font-weight="bold" font-family="Cinzel,serif">LENGUA 3D</text>
+            <!-- Sello Lacre Dorado Recortable -->
+            <circle cx="280" cy="182" r="22" fill="#991b1b" stroke="#facc15" stroke-width="2.5"/>
+            <text x="280" y="188" text-anchor="middle" fill="#fef08a" font-size="16" font-weight="900" font-family="Cinzel Decorative,serif">M</text>
+            <text x="180" y="236" text-anchor="middle" fill="#5c3d1e" font-size="8.5" font-weight="bold" font-family="Cinzel,serif">
+              ✂️ Dobla el sobre rojo en V por la mitad, riza la lengua con un lápiz y pégala asomando entre los dientes
+            </text>
+          </svg>
+        </div>
+      `;
+    }
+
     function renderLabelsAndChecklist() {
       const checklistGrid = document.getElementById('checklistStepsGrid');
       const badge = document.getElementById('checklistProgressBadge');
@@ -4085,7 +4539,7 @@
         previewSectionsHTML += `
           <div>
             <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-              🧪 B. Etiquetas Apotecarias para pegar en las Botellas de Pociones (4 etiquetas recortables)
+              🧪 B. Etiquetas Apotecarias para pegar en Cantimploras y Botellas de Pociones (4 etiquetas recortables)
             </h3>
             <div class="print-cards-showcase">${potionsHTML}</div>
           </div>
@@ -4127,8 +4581,28 @@
           </div>
         `;
         printSheetSectionsHTML += `
-          <div>
+          <div style="margin-bottom:18px;">
             <div class="print-sheet-grid">${ticketsHTML}</div>
+          </div>
+        `;
+      }
+
+      // 5. Figuras Papercraft 3D Recortables + Directorio de Plantillas PDF
+      if (collection === 'all' || collection === 'papercraft') {
+        const papercraftDirectoryHTML = renderPapercraftDirectoryHTML();
+        const papercraftNetsHTML = renderPapercraftTemplatesHTML();
+        previewSectionsHTML += `
+          <div>
+            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
+              📐 E. Figuras Papercraft 3D y Cajas Recortables (8 PDFs Externos + 4 Plantillas A4 Listas para Imprimir)
+            </h3>
+            ${papercraftDirectoryHTML}
+            <div class="print-cards-showcase">${papercraftNetsHTML}</div>
+          </div>
+        `;
+        printSheetSectionsHTML += `
+          <div>
+            <div class="print-sheet-grid">${papercraftNetsHTML}</div>
           </div>
         `;
       }
