@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planificador Mesa de Chuches Harry Potter — Comunión de Lucía</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --background: #0f1117;
+      --foreground: #f8fafc;
+      --card: #181b24;
+      --border: #2a2f3d;
+      --muted-foreground: #94a3b8;
+      --primary: #d97706;
+      --primary-foreground: #ffffff;
+      --secondary: #262b38;
+      --secondary-foreground: #e2e8f0;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      body { background: white !important; color: black !important; }
+    }
+    input[type="range"] {
+      accent-color: var(--primary);
+    }
+  </style>
+</head>
+<body class="bg-[var(--background)] text-[var(--foreground)] antialiased p-4 md:p-8">
+
+  <div class="max-w-6xl mx-auto space-y-6 no-print">
+
+    <!-- CABECERA -->
+    <header class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="space-y-2">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--secondary)] text-[var(--secondary-foreground)] text-xs font-medium">
+            <span>⚡ Especial Comunión de Lucía · Honeydukes &amp; Gran Comedor</span>
+          </div>
+          <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-[var(--foreground)]">
+            Plan Maestro: Mesa de Chuches Harry Potter (Calidad/Precio)
+          </h1>
+          <p class="text-sm text-[var(--muted-foreground)] max-w-2xl">
+            Consigue el efecto de un Candy Bar profesional de 350 € gastando entre <strong class="text-[var(--foreground)]">60 € y 105 €</strong> combinando compra de golosinas al por mayor (1 kg) con trucos visuales de escenografía DIY.
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-4 min-w-[240px] flex flex-col justify-between">
+          <div class="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
+            <span>Presupuesto total estimado</span>
+            <span id="costPerGuestBadge" class="font-semibold text-[var(--foreground)]">~2,10 € / inv.</span>
+          </div>
+          <div class="my-1 flex items-baseline gap-2">
+            <span id="totalBudgetDisplay" class="text-3xl font-extrabold text-[var(--foreground)]">74,50 €</span>
+            <span class="text-xs text-[var(--muted-foreground)]">IVA incl. aprox.</span>
+          </div>
+          <div class="text-xs text-[var(--muted-foreground)] flex items-center justify-between border-t border-[var(--border)] pt-2 mt-1">
+            <span>Peso total de chuches:</span>
+            <strong id="totalWeightDisplay" class="text-[var(--foreground)]">3,4 kg</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-5 border-t border-[var(--border)]">
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5">
+          <div class="flex justify-between items-center mb-2">
+            <label for="guestSlider" class="text-xs font-semibold text-[var(--foreground)]">
+              👥 Nº de Invitados (niños + adultos)
+            </label>
+            <span id="guestCountValue" class="px-2.5 py-0.5 rounded-md bg-[var(--primary)] text-[var(--primary-foreground)] text-xs font-bold">
+              35 inv.
+            </span>
+          </div>
+          <input id="guestSlider" type="range" min="15" max="80" step="5" value="35" class="w-full cursor-pointer" />
+          <div class="flex justify-between text-xs text-[var(--muted-foreground)] mt-1">
+            <span>15 (Íntima)</span>
+            <span>40 (Estándar)</span>
+            <span>80 (Gran fiesta)</span>
+          </div>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5">
+          <label for="tierSelect" class="block text-xs font-semibold text-[var(--foreground)] mb-2">
+            ⚖️ Nivel Calidad / Precio
+          </label>
+          <select id="tierSelect" class="w-full rounded-lg bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] text-sm px-3 py-1.5 focus:outline-none">
+            <option value="diy">Máximo Ahorro (Supermercado + Bazar + Reciclaje)</option>
+            <option value="balanced" selected>Equilibrio Ideal (Bolsas 1kg Mayorista + DIY)</option>
+            <option value="premium">Gran Comedor (Con detalles extra y chocolatería)</option>
+          </select>
+          <p id="tierHint" class="text-xs text-[var(--muted-foreground)] mt-1.5">
+            Compra bolsas de 1kg (Vidal/Fini) y botes reutilizados.
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5">
+          <label for="childNameInput" class="block text-xs font-semibold text-[var(--foreground)] mb-2">
+            🪄 Nombre del Protagonista (para carteles)
+          </label>
+          <div class="flex gap-2">
+            <input id="childNameInput" type="text" value="Lucía" placeholder="Ej. Mateo, Lucía..." class="w-full rounded-lg bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] text-sm px-3 py-1.5 focus:outline-none" />
+            <select id="houseSelect" aria-label="Casa de Hogwarts" class="rounded-lg bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] text-xs px-2.5 py-1.5 focus:outline-none">
+              <option value="Gryffindor">🦁 Gryffindor</option>
+              <option value="Slytherin">🐍 Slytherin</option>
+              <option value="Ravenclaw">🦅 Ravenclaw</option>
+              <option value="Hufflepuff">🦡 Hufflepuff</option>
+            </select>
+          </div>
+          <p class="text-xs text-[var(--muted-foreground)] mt-1.5">
+            Actualiza automáticamente las etiquetas imprimibles.
+          </p>
+        </div>
+      </div>
+
+      <nav class="flex flex-wrap gap-2 mt-5" aria-label="Secciones del planificador">
+        <button data-tab="sweets" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)] transition">
+          🍬 1. Chuches Honeydukes y Precios
+        </button>
+        <button data-tab="decor" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] transition">
+          🕯️ 2. Decoración Low-Cost y Montaje (3 Alturas)
+        </button>
+        <button data-tab="labels" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] transition">
+          🏷️ 3. Carteles Imprimibles Gratis
+        </button>
+        <button data-tab="timeline" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] transition">
+          ✅ 4. Lista de Compra y Cronograma
+        </button>
+      </nav>
+    </header>
+
+    <section id="tab-sweets" class="tab-panel space-y-4">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 class="text-lg font-bold text-[var(--foreground)]">
+              Selección de Chuches Mágicas (Máximo impacto visual por euro)
+            </h2>
+            <p class="text-xs text-[var(--muted-foreground)]">
+              Regla de oro: Nunca compres chuches con licencia oficial Harry Potter (cuestan 5 veces más). Compra el dulce equivalente a granel/supermercado y ponle la etiqueta temática. Activa o desactiva cada elemento según tu gusto:
+            </p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <button id="selectAllSweetsBtn" class="px-3 py-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] hover:opacity-80 font-medium">
+              Marcar todas
+            </button>
+          </div>
+        </div>
+        <div id="sweetsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
+          <div class="text-xs font-semibold text-[var(--muted-foreground)]">💡 El Truco Estrella #1</div>
+          <h3 class="text-sm font-bold text-[var(--foreground)] mt-1">Snitches Doradas por 0,22 € / ud</h3>
+          <p class="text-xs text-[var(--muted-foreground)] mt-1">
+            En lugar de encargar cake-pops dorados a 2,50 € la unidad, compra cajas de bombones redondos envueltos en papel dorado (tipo Ferrero Rocher o la versión marca blanca de Lidl/Mercadona) y pégales dos alitas de cartulina dorada con una gota de silicona.
+          </p>
+        </div>
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
+          <div class="text-xs font-semibold text-[var(--muted-foreground)]">💡 El Truco Estrella #2</div>
+          <h3 class="text-sm font-bold text-[var(--foreground)] mt-1">Ranas de Chocolate Caseras (0,15 €)</h3>
+          <p class="text-xs text-[var(--muted-foreground)] mt-1">
+            Una rana oficial cuesta ~4,50 €. Un molde de silicona de ranas cuesta 2,20 € (AliExpress/Amazon). Con dos tabletas de chocolate con leche fundido sacas 25 ranas macizas espectaculares en 20 minutos de nevera.
+          </p>
+        </div>
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-4">
+          <div class="text-xs font-semibold text-[var(--muted-foreground)]">💡 El Truco Estrella #3</div>
+          <h3 class="text-sm font-bold text-[var(--foreground)] mt-1">Relleno Visual (Cero Chuches vacías)</h3>
+          <p class="text-xs text-[var(--muted-foreground)] mt-1">
+            Para que los tarros grandes parezcan llenos hasta arriba sin comprar 3 kg extra, coloca un vaso o tubo de cartón pequeño invertido en el centro del tarro y rellena el borde exterior con las chuches.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-decor" class="tab-panel hidden space-y-4">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
+        <div>
+          <h2 class="text-lg font-bold text-[var(--foreground)]">
+            Escenografía en 3 Alturas (Coste total deco: 15 € – 24 €)
+          </h2>
+          <p class="text-xs text-[var(--muted-foreground)] mt-1">
+            El secreto para que una mesa de comunión parezca sacada de una revista no es la cantidad de chuches, sino la <strong>simetría y las 3 alturas</strong>. Aquí tienes el plano exacto de colocación:
+          </p>
+        </div>
+
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-5 space-y-4">
+          <div class="text-center border-b border-[var(--border)] pb-3">
+            <span class="text-xs font-bold uppercase tracking-wider text-[var(--muted-foreground)]">
+              🕯️ Techo / Fondo Superior: 12 Velas LED flotantes con hilo de pescar + Banderín o Cartel Andén 9 ¾
+            </span>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-[var(--foreground)]">NIVEL 3 · Fondo Elevado (Sobre pilas de libros antiguos o cajas forradas)</span>
+              <span class="text-xs text-[var(--muted-foreground)]">Altura: +20 a 30 cm</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
+                <div class="text-base font-bold">🧪 Botica de Pociones</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">
+                  3 botellas de cristal reutilizadas con agua teñida (verde, rojo, dorado) + Tarro alto de Gusanos/Babosas.
+                </p>
+              </div>
+              <div class="bg-[var(--card)] border-2 border-[var(--primary)] rounded-lg p-3 text-center">
+                <div class="text-base font-bold">🎂 Centro Focal: Tarta / Torre de Snitches</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">
+                  Soporte elevado central con la tarta o pirámide de Ferrero Rocher con alas + Sombrero Seleccionador o Lechuza Hedwig.
+                </p>
+              </div>
+              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
+                <div class="text-base font-bold">🦉 Rincón de Hedwig y Hogwarts</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">
+                  Tarro alto de Nubes blancas (pintadas como Hedwig) + Cartas de admisión de Hogwarts saliendo de una caja.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-[var(--foreground)]">NIVEL 2 · Zona Media (Botes medianos y bandejas a media altura)</span>
+              <span class="text-xs text-[var(--muted-foreground)]">Altura: +10 cm</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
+                <div class="text-sm font-bold">🪄 Varitas de Ollivanders</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">
+                  Vasos altos con Mikados / Regalices largos atados con lazo granate y dorado.
+                </p>
+              </div>
+              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
+                <div class="text-sm font-bold">🫘 Grageas de Bertie Bott</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">
+                  Bote ancho de cristal con Jelly Beans de colores + cucharón metálico o pinzas.
+                </p>
+              </div>
+              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
+                <div class="text-sm font-bold">🧹 Escobas Nimbus 2000</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">
+                  Bandeja rústica de madera/pizarra con escobitas de palito Pretzel y nube/queso.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-[var(--foreground)]">NIVEL 1 · Frente de Mesa (Al alcance de los niños más pequeños)</span>
+              <span class="text-xs text-[var(--muted-foreground)]">Ras de mesa</span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
+                <div class="text-sm font-bold">🐸 Ranas de Chocolate</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">
+                  Bandeja delantera con ranas de chocolate sobre sus cromos pentagonales.
+                </p>
+              </div>
+              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
+                <div class="text-sm font-bold">🪙 Banco Gringotts</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">
+                  Monedas de chocolate doradas esparcidas sobre el mantel y en un pequeño cofre.
+                </p>
+              </div>
+              <div class="bg-[var(--card)] border border-[var(--border)] rounded-lg p-3 text-center">
+                <div class="text-sm font-bold">🛍️ Bolsitas Kraft con Sello</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">
+                  Bolsitas de papel kraft (2,50 € / 50 uds) para que cada invitado se sirva sus chuches.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-bold text-[var(--foreground)] mb-3">
+            Desglose de Materiales de Decoración Low-Cost
+          </h3>
+          <div id="decorListContainer" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-labels" class="tab-panel hidden space-y-4">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-lg font-bold text-[var(--foreground)]">
+              Carteles de Mesa listos para Imprimir (Ahorro: ~15 € en papelería)
+            </h2>
+            <p class="text-xs text-[var(--muted-foreground)]">
+              Truco pro: Imprímelos en folios normales o cartulina beige, recórtalos y pasa una bolsita de té húmeda por los bordes para darles aspecto de pergamino antiguo de Hogwarts.
+            </p>
+          </div>
+          <button id="printLabelsBtn" class="px-4 py-2.5 rounded-xl bg-[var(--primary)] text-[var(--primary-foreground)] text-xs font-bold hover:opacity-90 transition shrink-0">
+            🖨️ Imprimir Carteles Ahora
+          </button>
+        </div>
+        <div id="printablePreviewGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-2"></div>
+      </div>
+    </section>
+
+    <section id="tab-timeline" class="tab-panel hidden space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4">
+          <h2 class="text-lg font-bold text-[var(--foreground)]">
+            🛒 Ruta de Compra Inteligente (Dónde es más barato)
+          </h2>
+          <div class="space-y-3 text-xs">
+            <div class="p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+              <div class="font-bold text-sm text-[var(--foreground)]">1. Mayoristas Online / Tiendas de Bolsas de 1 kg (Vidal, Fini, La Casa de las Golosinas)</div>
+              <p class="text-[var(--muted-foreground)] mt-1">
+                Compra aquí la base pesada: <strong>Gusanos de brillo (1 kg ~5,95 €)</strong>, <strong>Nubes blancas (1 kg ~5,50 €)</strong> y <strong>Regalices negros/rojos (1 kg ~5,90 €)</strong>. Sale un 45% más barato que en bolsitas pequeñas de supermercado.
+              </p>
+            </div>
+            <div class="p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+              <div class="font-bold text-sm text-[var(--foreground)]">2. Mercadona / Lidl / Aldi (Chocolates y Snacks)</div>
+              <p class="text-[var(--muted-foreground)] mt-1">
+                Compra aquí los <strong>bombones dorados redondos</strong> (imitación Ferrero en Lidl/Mercadona a ~3,20 € la caja de 16), <strong>palitos Pretzel salados</strong> (~1,10 €), <strong>Mikado o bastones de chocolate</strong> (~1,60 €) y <strong>tabletas de chocolate fundir</strong> (~1,35 €) para las ranas.
+              </p>
+            </div>
+            <div class="p-3 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+              <div class="font-bold text-sm text-[var(--foreground)]">3. Tedi / Action / Bazar Local / AliExpress</div>
+              <p class="text-[var(--muted-foreground)] mt-1">
+                Pack de <strong>12 velas LED de té (~2,50 €)</strong>, <strong>hilo de pescar transparente (~1,00 €)</strong>, <strong>bolsitas de papel kraft (~2,00 €)</strong>, <strong>cuerda de yute (~1,00 €)</strong> y el <strong>molde de silicona de ranas (~2,20 €)</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-5 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-bold text-[var(--foreground)]">
+              📅 Checklist Paso a Paso (Sin estrés)
+            </h2>
+            <span id="checklistProgress" class="text-xs font-bold px-2.5 py-1 rounded-full bg-[var(--secondary)] text-[var(--secondary-foreground)]">
+              0 / 8 completados
+            </span>
+          </div>
+          <div id="checklistContainer" class="space-y-2"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="printOnlyArea" class="hidden print-only p-4"></div>
+
+  <script>
+    const SWEETS_CATALOG = [
+      { id: 'snitches', icon: '🟡', magicalName: 'Snitches Doradas del Torneo de Quidditch', realProduct: 'Bombones redondos dorados (tipo Ferrero Rocher o marca blanca Lidl/Mercadona)', diyTrick: 'Recorta alitas en cartulina dorada y pégalas sobre el envoltorio con una gotita de silicona o celo de doble cara.', unitLabel: 'cajas de 16 uds', baseQty35: 2, unitWeightKg: 0.2, priceByTier: { diy: 3.10, balanced: 3.80, premium: 5.50 }, selected: true },
+      { id: 'frogs', icon: '🐸', magicalName: 'Ranas de Chocolate de Honeydukes (+ Cromos)', realProduct: 'Chocolate con leche fundido en molde de silicona de ranas (o chocolatinas)', diyTrick: 'Funde 2 tabletas de chocolate al microondas, rellena el molde de ranas (2,20 €) y enfría 20 min. Colócalas sobre cromos pentagonales impresos.', unitLabel: 'lotes (molde + tabletas)', baseQty35: 1, unitWeightKg: 0.4, priceByTier: { diy: 4.90, balanced: 5.90, premium: 8.50 }, selected: true },
+      { id: 'beans', icon: '🫘', magicalName: 'Grageas de Todos los Sabores de Bertie Bott', realProduct: 'Jelly Beans surtidas de frutas (bolsa a granel / supermercado)', diyTrick: 'Mézclalas en un tarro de cristal ancho con una cuchara metálica y pon el cartel de advertencia: "¡Cuidado con las de sabor a cera de oído!".', unitLabel: 'bolsas de 500g', baseQty35: 2, unitWeightKg: 0.5, priceByTier: { diy: 3.50, balanced: 4.50, premium: 6.20 }, selected: true },
+      { id: 'wands', icon: '🪄', magicalName: 'Varitas Mágicas de Ollivanders', realProduct: 'Palitos Mikado / bastones de chocolate + Regalices largos negros y rojos', diyTrick: 'Baña la punta de los Mikado en chocolate blanco o miel con perlitas doradas y colócalos de pie en dos vasos altos con lazo de casa.', unitLabel: 'packs combinados', baseQty35: 2, unitWeightKg: 0.45, priceByTier: { diy: 3.20, balanced: 4.10, premium: 5.40 }, selected: true },
+      { id: 'slugs', icon: '🧪', magicalName: 'Babosas y Gusanos de Pociones (Prof. Snape)', realProduct: 'Bolsa mayorista 1 kg de gusanos de gelatina (Vidal / Fini / Trolli)', diyTrick: 'Usa un bote alto de legumbres lavado y ponle etiqueta de "Ingredientes de Pociones - Mazmorras de Hogwarts".', unitLabel: 'bolsas de 1 kg', baseQty35: 1, unitWeightKg: 1.0, priceByTier: { diy: 5.20, balanced: 5.95, premium: 7.20 }, selected: true },
+      { id: 'hedwig', icon: '🦉', magicalName: 'Lechuzas Hedwig (Mensajería de Hogwarts)', realProduct: 'Bolsa de Nubes blancas cilíndricas (Marshmallows)', diyTrick: 'Con un rotulador comestible negro (2 €) o un palillo con chocolate fundido, dibuja dos ojitos amarillos/negros y el pico en cada nube blanca.', unitLabel: 'bolsas de 500g', baseQty35: 2, unitWeightKg: 0.5, priceByTier: { diy: 1.75, balanced: 2.40, premium: 3.20 }, selected: true },
+      { id: 'brooms', icon: '🧹', magicalName: 'Escobas Voladoras Nimbus 2000', realProduct: 'Palitos salados Pretzel + lenguas de pica-pica o tiras de nube', diyTrick: 'Enrolla media lengua ácida flecada en el extremo de un palito Pretzel para dar el contraste dulce-salado que encanta a los adultos.', unitLabel: 'lotes para 30 escobas', baseQty35: 1, unitWeightKg: 0.35, priceByTier: { diy: 2.90, balanced: 3.80, premium: 4.90 }, selected: true },
+      { id: 'galleons', icon: '🪙', magicalName: 'Galeones de Oro del Banco Gringotts', realProduct: 'Mallas de monedas de chocolate con leche doradas', diyTrick: 'Espárcelas sueltas por el mantel negro/granate y dentro de una cajita de madera abierta para vestir toda la mesa sin dejar huecos.', unitLabel: 'packs de 250g', baseQty35: 2, unitWeightKg: 0.25, priceByTier: { diy: 2.50, balanced: 3.20, premium: 4.50 }, selected: true }
+    ];
+
+    const DECOR_ITEMS = [
+      { id: 'candles', name: '12 Velas Flotantes del Gran Comedor', howTo: 'Guarda 12 tubos de papel higiénico, haz gotear silicona caliente por el borde superior, píntalos de blanco y mete 1 vela LED de té arriba. Cuélgalas con hilo de pescar.', cost: { diy: 2.50, balanced: 3.50, premium: 9.90 }, selected: true },
+      { id: 'jars', name: 'Tarros de Botica y Cristal (8–10 recipientes)', howTo: 'En modo ahorro: recicla botes de cristal de conservas/espárragos quitando la etiqueta con agua caliente y aceite. En modo intermedio: añade 2 bomboneras de bazar.', cost: { diy: 0.00, balanced: 6.50, premium: 14.00 }, selected: true },
+      { id: 'tablecloth', name: 'Mantel Base Oscuro + Camino Dorado + Libros Antiguos', howTo: 'Mantel negro o burdeos de tela/TNT (2,50 €) + libros gordos que tengas en casa apilados para crear las 3 alturas sin gastar en soportes.', cost: { diy: 2.50, balanced: 5.50, premium: 12.00 }, selected: true },
+      { id: 'bags', name: '50 Bolsitas de Papel Kraft + Cuerda de Yute + Carteles', howTo: 'Bolsitas kraft para que los niños se lleven las chuches que sobren + etiquetas envejecidas con té.', cost: { diy: 2.50, balanced: 4.00, premium: 6.50 }, selected: true },
+      { id: 'potions', name: '3 Botellas de Pociones Iluminadas (Multijugos, Felix Felicis, Amortentia)', howTo: 'Botellas bonitas de vidrio recicladas con agua + 2 gotas de colorante alimentario (o refresco) y una pizca de mica/purpurina comestible.', cost: { diy: 1.50, balanced: 3.50, premium: 6.00 }, selected: true },
+      { id: 'props', name: 'Gafas de Harry + Bufanda Gryffindor + Jaula/Lechuza', howTo: 'Usa juguetes/disfraces que ya tengáis en casa o gafas redondas sin cristal de bazar (1,50 €) apoyadas junto a los libros.', cost: { diy: 1.50, balanced: 4.50, premium: 11.00 }, selected: true }
+    ];
+
+    const CHECKLIST_STEPS = [
+      { id: 'c1', when: '3–4 semanas antes', text: 'Empezar a guardar botes de cristal bonitos (conservas, mermelada, salsas) y 12 tubos de cartón para las velas flotantes.' },
+      { id: 'c2', when: '3 semanas antes', text: 'Pedir el molde de silicona de ranas (~2,20 €) y las velas LED de té si se compran online.' },
+      { id: 'c3', when: '2 semanas antes', text: 'Comprar las bolsas de 1 kg de gomitas/nubes/regalices (duran meses cerradas) y las bolsitas de papel kraft.' },
+      { id: 'c4', when: '1 semana antes', text: 'Imprimir los carteles desde la pestaña 3 de esta web, recortar las alitas doradas de las Snitches y envejecer las etiquetas con una bolsita de té.' },
+      { id: 'c5', when: '3 días antes', text: 'Fundir el chocolate, hacer las Ranas de Chocolate en el molde y guardarlas en un tupper hermético en la nevera.' },
+      { id: 'c6', when: '2 días antes', text: 'Pegar las alitas doradas a los bombones Ferrero/Lidl y pintar los ojitos a las nubes de Hedwig.' },
+      { id: 'c7', when: 'Día anterior', text: 'Montar la estructura de la mesa: mantel, libros apilados en 3 alturas, botellas de pociones y botes vacíos en su sitio.' },
+      { id: 'c8', when: 'Día de la Comunión (2h antes)', text: 'Rellenar los tarros con las chuches (para que estén tiernas y brillantes), encender las velas LED y colocar las ranas de chocolate.' }
+    ];
+
+    let state = {
+      guests: 35,
+      tier: 'balanced',
+      childName: 'Lucía',
+      house: 'Gryffindor',
+      completedSteps: JSON.parse(localStorage.getItem('hp_candybar_steps') || '["c1"]')
+    };
+
+    const TIER_HINTS = {
+      diy: 'Botes 100% reciclados, marca blanca de supermercado y manualidades caseras.',
+      balanced: 'Compra bolsas de 1kg mayorista (Vidal/Fini) combinadas con trucos DIY.',
+      premium: 'Incluye bomboneras compradas, Ferrero Rocher original y atrezzo extra.'
+    };
+
+    function formatEuro(num) {
+      return num.toFixed(2).replace('.', ',') + ' €';
+    }
+
+    function calculateTotals() {
+      const scale = state.guests / 35;
+      let sweetsCost = 0, totalWeight = 0;
+      SWEETS_CATALOG.forEach(item => {
+        if (!item.selected) return;
+        const scaledUnits = Math.max(1, Math.round(item.baseQty35 * scale));
+        sweetsCost += scaledUnits * item.priceByTier[state.tier];
+        totalWeight += scaledUnits * item.unitWeightKg;
+      });
+      let decorCost = 0;
+      DECOR_ITEMS.forEach(d => { if (d.selected) decorCost += d.cost[state.tier]; });
+      const totalBudget = sweetsCost + decorCost;
+      return { totalBudget, perGuest: totalBudget / state.guests, totalWeight };
+    }
+
+    function updateAll() {
+      const totals = calculateTotals();
+      document.getElementById('guestCountValue').textContent = `${state.guests} inv.`;
+      document.getElementById('totalBudgetDisplay').textContent = formatEuro(totals.totalBudget);
+      document.getElementById('costPerGuestBadge').textContent = `~${formatEuro(totals.perGuest)} / inv.`;
+      document.getElementById('totalWeightDisplay').textContent = `${totals.totalWeight.toFixed(1).replace('.', ',')} kg`;
+      document.getElementById('tierHint').textContent = TIER_HINTS[state.tier];
+
+      const scale = state.guests / 35;
+      const sweetsGrid = document.getElementById('sweetsGrid');
+      sweetsGrid.innerHTML = SWEETS_CATALOG.map(item => {
+        const qty = Math.max(1, Math.round(item.baseQty35 * scale));
+        const price = qty * item.priceByTier[state.tier];
+        const weightGrams = Math.round(qty * item.unitWeightKg * 1000);
+        return `
+          <div class="border border-[var(--border)] rounded-xl p-4 transition ${item.selected ? 'bg-[var(--background)]' : 'opacity-50 bg-[var(--card)]'}">
+            <div class="flex items-start justify-between gap-3">
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" data-sweet-id="${item.id}" ${item.selected ? 'checked' : ''} class="mt-1 h-4 w-4 rounded cursor-pointer" />
+                <div>
+                  <div class="flex items-center gap-1.5"><span>${item.icon}</span><h3 class="text-sm font-bold">${item.magicalName}</h3></div>
+                  <p class="text-xs text-[var(--muted-foreground)] mt-0.5"><strong>Qué comprar:</strong> ${item.realProduct}</p>
+                </div>
+              </label>
+              <div class="text-right shrink-0">
+                <div class="text-sm font-extrabold">${formatEuro(price)}</div>
+                <div class="text-xs text-[var(--muted-foreground)]">${qty} ${item.unitLabel} (~${weightGrams}g)</div>
+              </div>
+            </div>
+            <div class="mt-3 pt-2.5 border-t border-[var(--border)] text-xs text-[var(--muted-foreground)]">
+              <strong class="text-[var(--foreground)]">✨ Truco Calidad/Precio:</strong> ${item.diyTrick}
+            </div>
+          </div>`;
+      }).join('');
+
+      sweetsGrid.querySelectorAll('input[data-sweet-id]').forEach(cb => {
+        cb.addEventListener('change', e => {
+          const item = SWEETS_CATALOG.find(s => s.id === e.target.getAttribute('data-sweet-id'));
+          if (item) { item.selected = e.target.checked; updateAll(); }
+        });
+      });
+
+      const decorContainer = document.getElementById('decorListContainer');
+      decorContainer.innerHTML = DECOR_ITEMS.map(item => {
+        const price = item.cost[state.tier];
+        return `
+          <label class="flex items-start justify-between gap-3 p-3.5 rounded-xl border border-[var(--border)] bg-[var(--background)] cursor-pointer">
+            <div class="flex items-start gap-2.5">
+              <input type="checkbox" data-decor-id="${item.id}" ${item.selected ? 'checked' : ''} class="mt-1 h-4 w-4 rounded cursor-pointer" />
+              <div>
+                <div class="text-xs font-bold">${item.name}</div>
+                <p class="text-xs text-[var(--muted-foreground)] mt-1">${item.howTo}</p>
+              </div>
+            </div>
+            <span class="text-xs font-extrabold shrink-0">${price === 0 ? 'GRATIS (Reciclado)' : formatEuro(price)}</span>
+          </label>`;
+      }).join('');
+
+      decorContainer.querySelectorAll('input[data-decor-id]').forEach(cb => {
+        cb.addEventListener('change', e => {
+          const item = DECOR_ITEMS.find(d => d.id === e.target.getAttribute('data-decor-id'));
+          if (item) { item.selected = e.target.checked; updateAll(); }
+        });
+      });
+
+      const name = state.childName.trim() || 'Protagonista';
+      const cards = [
+        { badge: '⚡ EXPRESO DE HOGWARTS · ANDÉN 9 ¾', title: `La Comunión Mágica de ${name}`, subtitle: `Bienvenidos a Honeydukes · Casa ${state.house}` },
+        { badge: '🏆 TORNEO DE QUIDDITCH', title: 'Snitches Doradas', subtitle: `150 puntos para ${state.house} si atrapas una` },
+        { badge: '🐸 DULCERÍA HONEYDUKES', title: 'Ranas de Chocolate', subtitle: '¡Cuidado, que no den un salto antes de comerlas!' },
+        { badge: '🫘 ARTÍCULOS DE BROMA Y DULCES', title: 'Grageas de Bertie Bott', subtitle: 'De todos los sabores: fresa, limón... ¿o cera de oído?' },
+        { badge: '🪄 CALLEJÓN DIAGÓN · DESDE 382 a.C.', title: 'Varitas de Ollivanders', subtitle: `La varita elige al mago en la comunión de ${name}` },
+        { badge: '🧪 MAZMORRAS DE HOGWARTS', title: 'Botica del Prof. Snape', subtitle: 'Gusanos mágicos, Poción Multijugos y Felix Felicis' }
+      ];
+      document.getElementById('printablePreviewGrid').innerHTML = cards.map(c => `
+        <div class="border-2 border-dashed border-[var(--border)] rounded-xl p-5 bg-[var(--background)] text-center flex flex-col justify-center min-h-[150px]">
+          <div class="text-xs font-bold tracking-widest uppercase text-[var(--muted-foreground)]">${c.badge}</div>
+          <div class="text-lg font-extrabold my-1.5 font-serif">${c.title}</div>
+          <div class="text-xs italic text-[var(--muted-foreground)]">${c.subtitle}</div>
+        </div>`).join('');
+
+      document.getElementById('printOnlyArea').innerHTML = `
+        <h2 style="font-size:16px;font-weight:bold;margin-bottom:12px;">Carteles Recortables — Mesa Dulce Harry Potter (${name})</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          ${cards.map(c => `
+            <div style="border:2px double #222;padding:20px;text-align:center;border-radius:8px;page-break-inside:avoid;">
+              <div style="font-size:12px;font-weight:bold;letter-spacing:1px;">${c.badge}</div>
+              <div style="font-size:20px;font-weight:bold;margin:8px 0;font-family:Georgia,serif;">${c.title}</div>
+              <div style="font-size:12px;font-style:italic;">${c.subtitle}</div>
+            </div>
+          `).join('')}
+        </div>`;
+
+      const checklistContainer = document.getElementById('checklistContainer');
+      document.getElementById('checklistProgress').textContent = `${state.completedSteps.length} / ${CHECKLIST_STEPS.length} completados`;
+      checklistContainer.innerHTML = CHECKLIST_STEPS.map(step => {
+        const checked = state.completedSteps.includes(step.id);
+        return `
+          <label class="flex items-start gap-3 p-3 rounded-xl border border-[var(--border)] bg-[var(--background)] cursor-pointer ${checked ? 'opacity-60' : ''}">
+            <input type="checkbox" data-step-id="${step.id}" ${checked ? 'checked' : ''} class="mt-1 h-4 w-4 rounded cursor-pointer" />
+            <div class="text-xs"><span class="font-bold">${step.when}:</span> <span class="text-[var(--muted-foreground)] ${checked ? 'line-through' : ''}">${step.text}</span></div>
+          </label>`;
+      }).join('');
+
+      checklistContainer.querySelectorAll('input[data-step-id]').forEach(cb => {
+        cb.addEventListener('change', e => {
+          const id = e.target.getAttribute('data-step-id');
+          if (e.target.checked) { if (!state.completedSteps.includes(id)) state.completedSteps.push(id); }
+          else { state.completedSteps = state.completedSteps.filter(s => s !== id); }
+          localStorage.setItem('hp_candybar_steps', JSON.stringify(state.completedSteps));
+          updateAll();
+        });
+      });
+    }
+
+    document.getElementById('guestSlider').addEventListener('input', e => { state.guests = parseInt(e.target.value, 10); updateAll(); });
+    document.getElementById('tierSelect').addEventListener('change', e => { state.tier = e.target.value; updateAll(); });
+    document.getElementById('childNameInput').addEventListener('input', e => { state.childName = e.target.value; updateAll(); });
+    document.getElementById('houseSelect').addEventListener('change', e => { state.house = e.target.value; updateAll(); });
+    document.getElementById('selectAllSweetsBtn').addEventListener('click', () => { SWEETS_CATALOG.forEach(s => s.selected = true); updateAll(); });
+    document.getElementById('printLabelsBtn').addEventListener('click', () => window.print());
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-tab');
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('hidden', p.id !== `tab-${target}`));
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.className = b === btn
+            ? 'tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--primary)] text-[var(--primary-foreground)] transition'
+            : 'tab-btn px-4 py-2 rounded-xl text-xs font-semibold bg-[var(--secondary)] text-[var(--secondary-foreground)] transition';
+        });
+      });
+    });
+
+    updateAll();
+  </script>
+</body>
+</html>
