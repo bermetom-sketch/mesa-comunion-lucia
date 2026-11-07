@@ -2043,6 +2043,30 @@
           { label: '✨ 24 Plantillas Oficiales Harry Potter Paper Crafts', url: 'https://insighteditions.com/pages/harrypotterpapercrafts' },
           { label: '📄 Pack Cartulina Blanca A4 200g Impresora (Amazon)', url: 'https://www.amazon.es/s?k=cartulina+blanca+a4+200g+impresora' }
         ]
+      },
+      {
+        id: 'zona-jaulas-cactus',
+        shortTitle: '🌵 10. Jaulas con Mini Cactus (Regalo)',
+        title: 'Regalo para Invitados: Jaulas Papercraft 3D de Hedwig / Herbología con Mini Cactus',
+        level: 'Nivel 1 · Detalle Recuerdo para los Invitados',
+        photo: 'assets/zona-jaulas-cactus.jpg',
+        defaultAssignee: 'Tamara',
+        position3D: { x: 1.95, y: 0.72, z: 1.18 },
+        cameraTarget: { pos: [1.95, 1.55, 3.45], look: [1.75, 0.7, 1.05] },
+        description: 'Jaulas 3D de cartulina estilo Harry Potter (inspiradas en la jaula de Hedwig y el Invernadero de Herbología de Hogwarts, donde cultivan la Mimbulus Mimbletonia de Neville) con un mini cactus natural de Ø 5,5 cm dentro, cerrado arriba con lazo burdeos/oro y etiqueta personalizada de recuerdo para los invitados.',
+        diySteps: [
+          'Imprimir en cartulina gruesa de 220–250 g (color crema/pergamino, kraft o negra con detalles dorados) la Plantilla Recortable N.º 5 de la Pestaña 4 ("Jaula 3D de Hedwig / Herbología para Mini Cactus") o descargar el molde PDF/SVG de Birdcage Favor Box (base de 6x6 cm y 12,5 cm de alto, medida exacta para macetitas estándar de Ø 5,5 cm).',
+          'Vaciar con cúter o tijera fina las ventanas góticas laterales y las ranuras de los barrotes superiores, pegar la pared lateral formando el prisma cuadrado/hexagonal, envolver la macetita del mini cactus con un trocito de tela de saco (yute) y meter el cactus dentro.',
+          'Juntar los 4 arcos superiores de la cúpula de la jaula sin pegarlos (pasando una cinta granate y dorada por los agujeros superiores junto con la etiqueta colgante "Comunión de Lucía · Invernadero de Hogwarts") para que cada invitado pueda desatar el lazo en casa y sacar su cactus fácilmente.'
+        ],
+        shopLinks: [
+          { label: '🌵 Pack 20/35 Mini Cactus Naturales Ø 5,5 cm para Eventos (Amazon)', url: 'https://www.amazon.es/s?k=pack+mini+cactus+naturales+eventos+regalo+5.5cm' },
+          { label: '📐 Plantilla PDF/SVG Jaula 3D Favor Box 55x55x120mm (Etsy)', url: 'https://www.etsy.com/uk/listing/1704001844/birdcage-favour-box-tall-digital' },
+          { label: '📐 Plantilla PDF/SVG Birdcage Favor Box (DesignBundles)', url: 'https://designbundles.net/cuttinglinestore/1887688-birdcage-box-template-wedding-favor-box-svg' },
+          { label: '⚡ Opción Rápida Sin Recortar: Pack 50 Jaulas Cartulina Troqueladas Láser (Amazon)', url: 'https://www.amazon.es/s?k=cajas+regalo+forma+jaula+pajaros+papel+boda+comunion' },
+          { label: '📄 Cartulina Crema/Kraft 250g A4 para Jaulas (Amazon)', url: 'https://www.amazon.es/s?k=cartulina+250g+a4+crema+kraft' },
+          { label: '🎀 Cinta Yute + Cinta Raso Granate y Oro (Amazon)', url: 'https://www.amazon.es/s?k=rollo+arpillera+yute+macetas+cinta+granate' }
+        ]
       }
     ];
 
@@ -2199,6 +2223,19 @@
 
     const DECOR_ITEMS = [
       {
+        id: 'jaulas-cactus',
+        name: '🌵 Kit Regalo Invitados: Mini Cactus Ø 5,5 cm + Jaulas Papercraft 3D Hedwig / Herbología',
+        howTo: 'Imprime la plantilla N.º 5 de Jaula 3D en cartulina de 250g (o usa cajas-jaula troqueladas a láser), envuelve la macetita del cactus en tela de yute y cierra la cúpula con lazo granate/oro y la etiqueta del Invernadero de Hogwarts.',
+        cost: { diy: 19.90, balanced: 26.90, premium: 34.90 },
+        defaultAssignee: 'Tamara',
+        links: [
+          { label: '🌵 Pack 20/35 Mini Cactus Naturales Ø 5,5 cm (Amazon)', url: 'https://www.amazon.es/s?k=pack+mini+cactus+naturales+eventos+regalo+5.5cm' },
+          { label: '⚡ Opción Sin Recortar: Pack 50 Cajas-Jaula Troqueladas Láser (Amazon)', url: 'https://www.amazon.es/s?k=cajas+regalo+forma+jaula+pajaros+papel+boda+comunion' },
+          { label: '📐 Plantilla PDF/SVG Birdcage Favor Box 55x55x120mm (Etsy)', url: 'https://www.etsy.com/uk/listing/1704001844/birdcage-favour-box-tall-digital' },
+          { label: '📄 Cartulina Crema/Kraft 250g A4 para Jaulas (Amazon)', url: 'https://www.amazon.es/s?k=cartulina+250g+a4+crema+kraft' }
+        ]
+      },
+      {
         id: 'papercraft',
         name: '📐 Kit Figuras Papercraft 3D: Cartulina 200g + Cinta Roller + Plantillas Gratis',
         howTo: 'Imprime las plantillas de la Pestaña 4 o los PDFs gratuitos en cartulina de 200g para montar a Harry, Hedwig, el Howler y las cajas 3D de Honeydukes.',
@@ -2281,14 +2318,14 @@
     ];
 
     const CHECKLIST_STEPS = [
-      { id: 'c1', when: '3–4 semanas antes', text: 'Lucía revisa las 9 zonas en la web, marca sus favoritas (😍) y deja sus comentarios; Tamara empieza a guardar botes de cristal bonitos.' },
-      { id: 'c2', when: '3 semanas antes', text: 'Tamara pide en Amazon las cantimploras de pociones bebibles, las bolsitas de celofán para embolsar todo, la cartulina 200g y el molde de ranas.' },
-      { id: 'c3', when: '2 semanas antes', text: 'Tamara compra las bolsas de 1 kg de gomitas/nubes/grageas y las bebidas/chuches líquidas para las cantimploras.' },
-      { id: 'c4', when: '1 semana antes', text: 'Tamara imprime en cartulina 200g los carteles, etiquetas de cantimploras y las figuras Papercraft 3D (Harry, Hedwig, Howler y cajas).' },
-      { id: 'c5', when: '4 días antes', text: 'Tamara recorta y dobla las figuras Papercraft 3D y embolsa individualmente las grageas, gusanos, nubes de Hedwig, varitas y escobas.' },
-      { id: 'c6', when: '2 días antes', text: 'Tamara hace las Ranas de Chocolate, mete cada una en su bolsita transparente con su cromo y pega las alitas a las Snitches.' },
+      { id: 'c1', when: '3–4 semanas antes', text: 'Lucía revisa las 10 zonas en la web, marca sus favoritas (😍) y deja sus comentarios; Tamara empieza a guardar botes de cristal bonitos.' },
+      { id: 'c2', when: '3 semanas antes', text: 'Tamara pide en Amazon las cantimploras de pociones bebibles, las bolsitas de celofán para embolsar todo, la cartulina 200–250g y el molde de ranas.' },
+      { id: 'c3', when: '2 semanas antes', text: 'Tamara encarga el lote de Mini Cactus naturales Ø 5,5 cm para los regalos de invitados y compra las bolsas de 1 kg de gomitas/nubes/grageas.' },
+      { id: 'c4', when: '1 semana antes', text: 'Tamara imprime en cartulina los carteles, etiquetas de cantimploras, las figuras Papercraft 3D y las Jaulas 3D de Hedwig/Herbología para los cactus.' },
+      { id: 'c5', when: '4 días antes', text: 'Tamara recorta y monta las Jaulas Papercraft 3D de regalo y las figuras de mesa, y embolsa individualmente grageas, gusanos, nubes, varitas y escobas.' },
+      { id: 'c6', when: '2 días antes', text: 'Tamara mete cada Mini Cactus dentro de su Jaula Papercraft cerrando el lazo superior con su etiqueta, y hace y embolsa las Ranas de Chocolate.' },
       { id: 'c7', when: 'Día anterior', text: 'Tamara rellena y cierra las cantimploras de pociones bebibles con sus etiquetas y deja montada la estructura de 3 alturas con las figuras Papercraft.' },
-      { id: 'c8', when: 'Día de la Comunión (1h antes)', text: 'Tamara coloca todos los paquetes embolsados y las cantimploras frías en sus zonas y enciende las velas flotantes.' }
+      { id: 'c8', when: 'Día de la Comunión (1h antes)', text: 'Tamara coloca todos los paquetes embolsados, las cantimploras frías y la zona de Jaulas con Mini Cactus para los invitados y enciende las velas.' }
     ];
 
     // =========================================================================
@@ -2302,10 +2339,10 @@
       tier: 'balanced',
       childName: 'Lucía',
       house: 'Gryffindor',
-      selectedZoneId: 'zona-papercraft',
+      selectedZoneId: 'zona-jaulas-cactus',
       zoneFilter: 'all',
       shopFilter: 'all',
-      // Estado de cada una de las 9 zonas (montaje por Tamara): 'pending' | 'done'
+      // Estado de cada una de las 10 zonas (montaje por Tamara): 'pending' | 'done'
       zoneStatus: {
         'zona-velas': 'pending',
         'zona-snitches': 'pending',
@@ -2315,7 +2352,8 @@
         'zona-escobas': 'pending',
         'zona-cantimploras': 'pending',
         'zona-ranas': 'pending',
-        'zona-papercraft': 'pending'
+        'zona-papercraft': 'pending',
+        'zona-jaulas-cactus': 'pending'
       },
       // Valoración / opinión de Lucía sobre cada zona: 'love' | 'idea' | 'pending'
       zoneAssignees: {
@@ -2327,7 +2365,8 @@
         'zona-escobas': 'love',
         'zona-cantimploras': 'love',
         'zona-ranas': 'love',
-        'zona-papercraft': 'love'
+        'zona-papercraft': 'love',
+        'zona-jaulas-cactus': 'love'
       },
       // Estado de compra de chuches y decoración por Tamara (true = ya comprado/listo)
       itemPurchased: {
@@ -2340,6 +2379,7 @@
         'hedwig': false,
         'brooms': false,
         'galleons': false,
+        'jaulas-cactus': false,
         'papercraft': false,
         'candles': false,
         'jars': false,
@@ -2359,6 +2399,7 @@
         'hedwig': 'love',
         'brooms': 'love',
         'galleons': 'love',
+        'jaulas-cactus': 'love',
         'papercraft': 'love',
         'candles': 'love',
         'jars': 'love',
@@ -2953,6 +2994,42 @@
       zPapercraftGroup.add(bertieBoxBody, bertieRoof);
 
       registerZoneGroup3D('zona-papercraft', zPapercraftGroup, new THREE.Vector3(-0.22, 1.32, 0.42));
+
+      // ZONA 10: JAULAS PAPERCRAFT 3D CON MINI CACTUS DE REGALO PARA INVITADOS
+      const zJaulasGroup = new THREE.Group();
+      const cageGoldMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.5, roughness: 0.35, wireframe: true });
+      const cageParchMat = new THREE.MeshStandardMaterial({ color: 0xf3e5ab, roughness: 0.8 });
+      const potTerraMat = new THREE.MeshStandardMaterial({ color: 0xb45309, roughness: 0.85 });
+      const cactusGreenMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.65 });
+      const ribbonRedMat = new THREE.MeshStandardMaterial({ color: 0x991b1b, roughness: 0.5 });
+
+      [
+        { x: 1.72, z: 1.24 },
+        { x: 2.02, z: 1.18 },
+        { x: 1.88, z: 0.96 }
+      ].forEach(pos => {
+        // Base de cartulina de la jaula
+        const baseMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.05, 6), cageParchMat);
+        baseMesh.position.set(pos.x, 0.39, pos.z);
+        // Macetita terracota + yute
+        const potMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.085, 0.065, 0.12, 12), potTerraMat);
+        potMesh.position.set(pos.x, 0.46, pos.z);
+        // Mini cactus redondo acanalado dentro
+        const cactusMesh = new THREE.Mesh(new THREE.SphereGeometry(0.075, 10, 8), cactusGreenMat);
+        cactusMesh.scale.set(1, 1.25, 1);
+        cactusMesh.position.set(pos.x, 0.55, pos.z);
+        // Cuerpo calado de la jaula papercraft
+        const cageBody = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.28, 6, 1, true), cageGoldMat);
+        cageBody.position.set(pos.x, 0.55, pos.z);
+        // Cúpula arqueada superior
+        const cageDome = new THREE.Mesh(new THREE.ConeGeometry(0.13, 0.16, 6), cageGoldMat);
+        cageDome.position.set(pos.x, 0.77, pos.z);
+        // Lazo granate superior
+        const ribbonTop = new THREE.Mesh(new THREE.SphereGeometry(0.038, 8, 8), ribbonRedMat);
+        ribbonTop.position.set(pos.x, 0.86, pos.z);
+        zJaulasGroup.add(baseMesh, potMesh, cactusMesh, cageBody, cageDome, ribbonTop);
+      });
+      registerZoneGroup3D('zona-jaulas-cactus', zJaulasGroup, new THREE.Vector3(1.9, 1.12, 1.15));
 
       // Eventos de ratón / táctil y raycaster para clicar zonas 3D
       setup3DInteractions(container);
@@ -4177,8 +4254,32 @@
     function renderPapercraftDirectoryHTML() {
       const externalTemplates = [
         {
+          icon: '🌵',
+          title: '1. Jaula 3D Alta para Mini Cactus (Birdcage Favor Box 55x55x120mm)',
+          source: 'Etsy · PDF + SVG (Medida Maceta Ø 5,5 cm)',
+          difficulty: '🟢 Fácil (10 min)',
+          desc: 'Plantilla digital de caja-jaula alta (5,5 x 5,5 x 12 cm), medida exacta para meter dentro una macetita estándar de mini cactus y cerrarla arriba con lazo.',
+          url: 'https://www.etsy.com/uk/listing/1704001844/birdcage-favour-box-tall-digital'
+        },
+        {
+          icon: '🦉',
+          title: '2. Plantilla Caja-Jaula Vintage Calada (Birdcage Box Template)',
+          source: 'DesignBundles · PDF, SVG y PNG en 1 hoja A4',
+          difficulty: '🟡 Media (12 min)',
+          desc: 'Jaula de cartulina con cúpula calada de barrotes (7 x 4,6 x 11,1 cm) que sale de 1 sola hoja A4 de cartulina de 220–250g.',
+          url: 'https://designbundles.net/cuttinglinestore/1887688-birdcage-box-template-wedding-favor-box-svg'
+        },
+        {
+          icon: '⚡',
+          title: '3. Opción Sin Recortar: Pack 50 Jaulas Troqueladas a Láser con Cinta',
+          source: 'Amazon · Cartulina Nacarada / Kraft Lista',
+          difficulty: '🟢 Express (15 seg/ud)',
+          desc: 'Si Tamara prefiere no recortar a mano 35 jaulas: vienen ya troqueladas a láser listas para doblar en segundos, meter el mini cactus y atar el lazo.',
+          url: 'https://www.amazon.es/s?k=cajas+regalo+forma+jaula+pajaros+papel+boda+comunion'
+        },
+        {
           icon: '🧙🏻‍♂️',
-          title: '1. Cubeecraft 3D: Harry Potter (Sin Pegamento)',
+          title: '4. Cubeecraft 3D: Harry Potter (Sin Pegamento)',
           source: 'Cubeecraft Oficial · 1 hoja A4',
           difficulty: '🟢 Muy Fácil (5 min)',
           desc: 'Muñeco cúbico 3D de Harry con gafas, cicatriz y bufanda. Las pestañas encajan por ranuras sin necesitar ni una gota de pegamento.',
@@ -4186,7 +4287,7 @@
         },
         {
           icon: '🫘',
-          title: '2. Cajita Piramidal 3D: Grageas Bertie Bott',
+          title: '5. Cajita Piramidal 3D: Grageas Bertie Bott',
           source: 'One She Two She · PDF Imprimible Gratis',
           difficulty: '🟢 Fácil (8 min)',
           desc: 'La caja clásica a rayas rojas y crema de Honeydukes. Imprímela en cartulina de 200g y mete dentro el saquito individual de grageas.',
@@ -4194,7 +4295,7 @@
         },
         {
           icon: '🐸',
-          title: '3. Caja Pentagonal 3D: Rana de Chocolate Oficial',
+          title: '6. Caja Pentagonal 3D: Rana de Chocolate Oficial',
           source: 'Designs By Miss Mandee · PDF + SVG',
           difficulty: '🟡 Media (12 min)',
           desc: 'El famoso estuche pentagonal azul y dorado con filigranas de Honeydukes. Incluye base y tapa abombada en 3D.',
@@ -4202,7 +4303,7 @@
         },
         {
           icon: '🃏',
-          title: '4. Pack Cajas + Cromos Ranas de Chocolate',
+          title: '7. Pack Cajas + Cromos Ranas de Chocolate',
           source: 'The Quiet Grove · 2 PDFs Descargables',
           difficulty: '🟢 Fácil (10 min)',
           desc: 'Alternativa lista para imprimir en casa con las cajas pentagonales y los cromos de Dumbledore, Harry y fundadores.',
@@ -4210,7 +4311,7 @@
         },
         {
           icon: '💌',
-          title: '5. Carta Vociferadora 3D (Ron\'s Howler)',
+          title: '8. Carta Vociferadora 3D (Ron\'s Howler)',
           source: 'Wizardry Workshop · Plantilla + Tutorial',
           difficulty: '🟢 Fácil (10 min)',
           desc: 'Réplica exacta del Howler rojo de Molly Weasley con dientes blancos plegables en acordeón, lengua y cinta.',
@@ -4218,7 +4319,7 @@
         },
         {
           icon: '🎩',
-          title: '6. Sombrero Seleccionador Origami Interactivo',
+          title: '9. Sombrero Seleccionador Origami Interactivo',
           source: 'Get Away Today · PDF Gratis',
           difficulty: '🟢 Muy Fácil (5 min)',
           desc: 'Comecocos / Sombrero 3D de papiroflexia para jugar con los niños en la mesa y descubrir a qué casa de Hogwarts pertenecen.',
@@ -4226,7 +4327,7 @@
         },
         {
           icon: '🦉',
-          title: '7. 24 Plantillas Oficiales Harry Potter Paper Crafts',
+          title: '10. 24 Plantillas Oficiales Harry Potter Paper Crafts',
           source: 'Insight Editions · Matthew Reinhart',
           difficulty: '🟡 Variado',
           desc: 'Repositorio oficial del libro Harry Potter Paper Crafts & Homemade con plantillas descargables de criaturas y emblemas.',
@@ -4234,7 +4335,7 @@
         },
         {
           icon: '💎',
-          title: '8. Escultura Low-Poly 3D Harry Potter & Sombrero',
+          title: '11. Escultura Low-Poly 3D Harry Potter & Sombrero',
           source: 'Scribd · PDF Pepakura Multi-hoja',
           difficulty: '🔴 Avanzado (45 min)',
           desc: 'Figura poligonal grande en 3D para quienes quieran montar un busto o sombrero grande de cartulina como centro de mesa.',
@@ -4246,13 +4347,13 @@
         <div class="no-print" style="background:rgba(18,14,10,0.88);border:1px solid var(--border-brass);border-radius:var(--radius-md);padding:1.15rem;margin-bottom:1.25rem;">
           <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0.75rem;margin-bottom:0.85rem;">
             <div>
-              <span style="font-size:0.7rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;letter-spacing:0.08em;">🌐 Buscador de Plantillas Externas Verificadas</span>
+              <span style="font-size:0.7rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;letter-spacing:0.08em;">🌐 Buscador de Plantillas Papercraft (Incluye Jaulas 3D para Mini Cactus)</span>
               <h4 class="font-magical" style="font-size:1rem;color:var(--text-main);margin-top:0.15rem;">
-                8 Templates Oficiales y Gratuitos Localizados en Internet (Descarga Directa PDF)
+                11 Templates Verificados en Internet (Jaulas de Cactus, Cubeecraft, Cajas Honeydukes y Howler)
               </h4>
             </div>
-            <a href="https://www.amazon.es/s?k=cartulina+blanca+a4+200g+impresora" target="_blank" rel="noopener" class="shop-link-chip">
-              📄 Comprar Cartulina 200g A4 en Amazon ↗
+            <a href="https://www.amazon.es/s?k=pack+mini+cactus+naturales+eventos+regalo+5.5cm" target="_blank" rel="noopener" class="shop-link-chip">
+              🌵 Ver Lotes de Mini Cactus Ø 5,5 cm en Amazon ↗
             </a>
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0.75rem;">
@@ -4267,7 +4368,7 @@
                   <p style="font-size:0.73rem;color:var(--text-muted);line-height:1.35;">${t.desc}</p>
                 </div>
                 <a href="${t.url}" target="_blank" rel="noopener" class="shop-link-chip" style="justify-content:center;margin-top:0.25rem;">
-                  📥 Abrir / Descargar Plantilla PDF ↗
+                  📥 Abrir Plantilla / Enlace ↗
                 </a>
               </div>
             `).join('')}
@@ -4494,6 +4595,114 @@
             </text>
           </svg>
         </div>
+
+        <!-- 5. JAULA 3D DE HEDWIG / INVERNADERO DE HERBOLOGÍA PARA MINI CACTUS DE REGALO (MACETA Ø 5,5 CM) -->
+        <div class="minalima-sign-wrapper" style="background:#fffdf9;border:2px solid #3a2512;border-radius:8px;padding:12px;color:#1e1b18;page-break-inside:avoid;break-inside:avoid;">
+          <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px dashed #8c6239;padding-bottom:6px;margin-bottom:8px;">
+            <div>
+              <span style="font-family:'Cinzel',serif;font-size:0.62rem;font-weight:800;color:#15803d;">🌵 PLANTILLA RECORTABLE 3D N.º 5 · CARTULINA 220–250G</span>
+              <div style="font-family:'Cinzel Decorative',serif;font-size:0.92rem;font-weight:900;color:#1a120b;">JAULA 3D HEDWIG / HERBOLOGÍA PARA MINI CACTUS (REGALO INVITADOS)</div>
+            </div>
+            <span style="font-size:0.62rem;font-weight:700;background:#dcfce7;border:1px solid #16a34a;color:#14532d;padding:2px 6px;border-radius:4px;">Medida Maceta Ø 5,5 cm + 2 Etiquetas</span>
+          </div>
+          <svg viewBox="0 0 360 265" style="width:100%;height:auto;display:block;background:#ffffff;border:1px solid #e5dec9;">
+            <!-- 4 ARCOS DE CÚPULA CON BARROTES CALADOS + AGUJERO SUPERIOR PARA LAZO -->
+            <!-- Arco 1 -->
+            <path d="M22,78 Q44,12 66,78 Z" fill="#f3e5ab" stroke="#3a2512" stroke-width="1.6"/>
+            <path d="M32,74 Q44,30 56,74 Z" fill="#ffffff" stroke="#8c6239" stroke-width="1" stroke-dasharray="2,1"/>
+            <line x1="44" y1="22" x2="44" y2="78" stroke="#3a2512" stroke-width="2.2"/>
+            <circle cx="44" cy="18" r="3.2" fill="#ffffff" stroke="#7a1616" stroke-width="1.4"/>
+            <!-- Arco 2 -->
+            <path d="M66,78 Q88,12 110,78 Z" fill="#f3e5ab" stroke="#3a2512" stroke-width="1.6"/>
+            <path d="M76,74 Q88,30 100,74 Z" fill="#ffffff" stroke="#8c6239" stroke-width="1" stroke-dasharray="2,1"/>
+            <line x1="88" y1="22" x2="88" y2="78" stroke="#3a2512" stroke-width="2.2"/>
+            <circle cx="88" cy="18" r="3.2" fill="#ffffff" stroke="#7a1616" stroke-width="1.4"/>
+            <!-- Arco 3 -->
+            <path d="M110,78 Q132,12 154,78 Z" fill="#f3e5ab" stroke="#3a2512" stroke-width="1.6"/>
+            <path d="M120,74 Q132,30 144,74 Z" fill="#ffffff" stroke="#8c6239" stroke-width="1" stroke-dasharray="2,1"/>
+            <line x1="132" y1="22" x2="132" y2="78" stroke="#3a2512" stroke-width="2.2"/>
+            <circle cx="132" cy="18" r="3.2" fill="#ffffff" stroke="#7a1616" stroke-width="1.4"/>
+            <!-- Arco 4 -->
+            <path d="M154,78 Q176,12 198,78 Z" fill="#f3e5ab" stroke="#3a2512" stroke-width="1.6"/>
+            <path d="M164,74 Q176,30 188,74 Z" fill="#ffffff" stroke="#8c6239" stroke-width="1" stroke-dasharray="2,1"/>
+            <line x1="176" y1="22" x2="176" y2="78" stroke="#3a2512" stroke-width="2.2"/>
+            <circle cx="176" cy="18" r="3.2" fill="#ffffff" stroke="#7a1616" stroke-width="1.4"/>
+
+            <!-- 4 PAREDES DE LA JAULA (60mm ANCHO ESCALADO) CON VENTANAS GÓTICAS CALADAS PARA VER EL CACTUS -->
+            <!-- Pared 1 -->
+            <rect x="22" y="78" width="44" height="86" fill="#f5ebd1" stroke="#3a2512" stroke-width="1.7" stroke-dasharray="4,2"/>
+            <rect x="22" y="78" width="44" height="8" fill="#271c15"/>
+            <path d="M29,150 L29,104 Q44,88 59,104 L59,150 Z" fill="#ffffff" stroke="#3a2512" stroke-width="1.5"/>
+            <text x="44" y="126" text-anchor="middle" fill="#6b7280" font-size="5.5" font-weight="bold">VACIAR</text>
+            <text x="44" y="134" text-anchor="middle" fill="#6b7280" font-size="5.5" font-weight="bold">VENTANA</text>
+            <text x="44" y="160" text-anchor="middle" fill="#7a1616" font-size="5.2" font-weight="bold" font-family="Cinzel,serif">HERBOLOGY</text>
+
+            <!-- Pared 2 (Con dibujo orientativo del Mini Cactus interior) -->
+            <rect x="66" y="78" width="44" height="86" fill="#f5ebd1" stroke="#3a2512" stroke-width="1.7" stroke-dasharray="4,2"/>
+            <rect x="66" y="78" width="44" height="8" fill="#271c15"/>
+            <path d="M73,150 L73,104 Q88,88 103,104 L103,150 Z" fill="#ffffff" stroke="#3a2512" stroke-width="1.5"/>
+            <!-- Silueta punteada orientativa del cactus que va dentro -->
+            <ellipse cx="88" cy="122" rx="9" ry="12" fill="#dcfce7" stroke="#15803d" stroke-width="1" stroke-dasharray="2,2"/>
+            <polygon points="79,132 97,132 94,148 82,148" fill="#fed7aa" stroke="#9a3412" stroke-width="1" stroke-dasharray="2,2"/>
+            <text x="88" y="124" text-anchor="middle" fill="#14532d" font-size="5" font-weight="bold">CACTUS</text>
+            <text x="88" y="160" text-anchor="middle" fill="#7a1616" font-size="5.2" font-weight="bold" font-family="Cinzel,serif">HOGWARTS</text>
+
+            <!-- Pared 3 -->
+            <rect x="110" y="78" width="44" height="86" fill="#f5ebd1" stroke="#3a2512" stroke-width="1.7" stroke-dasharray="4,2"/>
+            <rect x="110" y="78" width="44" height="8" fill="#271c15"/>
+            <path d="M117,150 L117,104 Q132,88 147,104 L147,150 Z" fill="#ffffff" stroke="#3a2512" stroke-width="1.5"/>
+            <text x="132" y="126" text-anchor="middle" fill="#6b7280" font-size="5.5" font-weight="bold">VACIAR</text>
+            <text x="132" y="134" text-anchor="middle" fill="#6b7280" font-size="5.5" font-weight="bold">VENTANA</text>
+            <text x="132" y="160" text-anchor="middle" fill="#7a1616" font-size="5.2" font-weight="bold" font-family="Cinzel,serif">HEDWIG</text>
+
+            <!-- Pared 4 -->
+            <rect x="154" y="78" width="44" height="86" fill="#f5ebd1" stroke="#3a2512" stroke-width="1.7" stroke-dasharray="4,2"/>
+            <rect x="154" y="78" width="44" height="8" fill="#271c15"/>
+            <path d="M161,150 L161,104 Q176,88 191,104 L191,150 Z" fill="#ffffff" stroke="#3a2512" stroke-width="1.5"/>
+            <text x="176" y="126" text-anchor="middle" fill="#6b7280" font-size="5.5" font-weight="bold">VACIAR</text>
+            <text x="176" y="134" text-anchor="middle" fill="#6b7280" font-size="5.5" font-weight="bold">VENTANA</text>
+            <text x="176" y="160" text-anchor="middle" fill="#7a1616" font-size="5.2" font-weight="bold" font-family="Cinzel,serif">${escapeHtml(name.toUpperCase())}</text>
+
+            <!-- Pestaña lateral de pegado -->
+            <polygon points="198,78 214,86 214,156 198,164" fill="#e5e7eb" stroke="#4b5563" stroke-width="1.1" stroke-dasharray="3,2"/>
+            <text x="206" y="122" text-anchor="middle" fill="#374151" font-size="5.8" font-weight="bold" transform="rotate(90 206,122)">PEGAR LATERAL</text>
+
+            <!-- Base Cuadrada Inferior (6x6 cm) + 3 Solapas de Base -->
+            <polygon points="22,164 66,164 58,182 30,182" fill="#e5e7eb" stroke="#4b5563" stroke-width="1" stroke-dasharray="3,2"/>
+            <rect x="66" y="164" width="44" height="44" fill="#271c15" stroke="#3a2512" stroke-width="1.7"/>
+            <text x="88" y="185" text-anchor="middle" fill="#facc15" font-size="6.2" font-weight="bold" font-family="Cinzel,serif">BASE 6x6 CM</text>
+            <text x="88" y="195" text-anchor="middle" fill="#fde68a" font-size="5.2">(MACETA Ø 5,5 CM)</text>
+            <polygon points="110,164 154,164 146,182 118,182" fill="#e5e7eb" stroke="#4b5563" stroke-width="1" stroke-dasharray="3,2"/>
+            <polygon points="154,164 198,164 190,182 162,182" fill="#e5e7eb" stroke="#4b5563" stroke-width="1" stroke-dasharray="3,2"/>
+
+            <!-- 2 ETIQUETAS COLGANTES DE RECUERDO PARA ATAR EN EL LAZO SUPERIOR DE LA JAULA -->
+            <!-- Etiqueta Colgante 1 -->
+            <polygon points="242,26 276,14 310,26 310,112 242,112" fill="#f5ebd1" stroke="#3a2512" stroke-width="1.8"/>
+            <circle cx="276" cy="24" r="3.5" fill="#ffffff" stroke="#7a1616" stroke-width="1.4"/>
+            <text x="276" y="42" text-anchor="middle" fill="#7a1616" font-size="6.2" font-weight="900" font-family="Cinzel,serif">INVERNADERO N.º 3</text>
+            <text x="276" y="52" text-anchor="middle" fill="#3a2512" font-size="5.5" font-weight="bold">HOGWARTS HERBOLOGY</text>
+            <line x1="252" y1="57" x2="300" y2="57" stroke="#8c6239" stroke-width="1"/>
+            <text x="276" y="70" text-anchor="middle" fill="#14532d" font-size="6.8" font-weight="900" font-family="Cinzel,serif">MIMBULUS</text>
+            <text x="276" y="79" text-anchor="middle" fill="#14532d" font-size="6.2" font-weight="900" font-family="Cinzel,serif">MIMBLETONIA</text>
+            <text x="276" y="93" text-anchor="middle" fill="#7a1616" font-size="6.5" font-weight="bold" font-family="Cinzel,serif">Comunión de ${escapeHtml(name)}</text>
+            <text x="276" y="104" text-anchor="middle" fill="#5c3d1e" font-size="5.3" font-style="italic">Gracias por acompañarnos</text>
+
+            <!-- Etiqueta Colgante 2 -->
+            <polygon points="242,134 276,122 310,134 310,218 242,218" fill="#f5ebd1" stroke="#3a2512" stroke-width="1.8"/>
+            <circle cx="276" cy="132" r="3.5" fill="#ffffff" stroke="#7a1616" stroke-width="1.4"/>
+            <text x="276" y="150" text-anchor="middle" fill="#7a1616" font-size="6.2" font-weight="900" font-family="Cinzel,serif">LECHUCERÍA REAL</text>
+            <text x="276" y="160" text-anchor="middle" fill="#3a2512" font-size="5.5" font-weight="bold">JAULA DE HEDWIG</text>
+            <line x1="252" y1="165" x2="300" y2="165" stroke="#8c6239" stroke-width="1"/>
+            <text x="276" y="179" text-anchor="middle" fill="#14532d" font-size="6.8" font-weight="900" font-family="Cinzel,serif">CACTUS MÁGICO</text>
+            <text x="276" y="189" text-anchor="middle" fill="#3a2512" font-size="5.5" font-weight="bold">Cuidado Mágico Fácil</text>
+            <text x="276" y="201" text-anchor="middle" fill="#7a1616" font-size="6.5" font-weight="bold" font-family="Cinzel,serif">Comunión de ${escapeHtml(name)}</text>
+            <text x="276" y="211" text-anchor="middle" fill="#5c3d1e" font-size="5.3" font-style="italic">Recuerdo de un día mágico</text>
+
+            <text x="180" y="248" text-anchor="middle" fill="#14532d" font-size="8" font-weight="bold" font-family="Cinzel,serif">
+              ✂️ 1. Vacía las 4 ventanas blancas · 2. Pega el lateral y la base · 3. Mete el Mini Cactus Ø 5,5cm y ata los 4 arcos arriba con cinta y etiqueta
+            </text>
+          </svg>
+        </div>
       `;
     }
 
@@ -4608,7 +4817,7 @@
         previewSectionsHTML += `
           <div>
             <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-              📐 E. Figuras Papercraft 3D y Cajas Recortables (8 PDFs Externos + 4 Plantillas A4 Listas para Imprimir)
+              📐 E. Figuras Papercraft 3D, Jaula para Mini Cactus y Cajas Recortables (11 Templates Externos + 5 Plantillas A4 Listas para Imprimir)
             </h3>
             ${papercraftDirectoryHTML}
             <div class="print-cards-showcase">${papercraftNetsHTML}</div>
