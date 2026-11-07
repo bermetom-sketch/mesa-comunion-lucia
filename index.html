@@ -1402,21 +1402,21 @@
   <!-- BARRA SUPERIOR COLABORATIVA Y % DE FINALIZACIÓN -->
   <div class="sticky-topbar no-print">
     <div class="topbar-inner">
-      <!-- Selector de quién está editando: Tamara o Lucía -->
-      <div class="user-switcher" role="group" aria-label="Seleccionar organizadora activa">
-        <span class="user-switcher-label">Organizando como:</span>
-        <button id="btnUserTamara" type="button" class="user-btn active-tamara" onclick="setActiveUser('Tamara')">
-          👩🏽‍🪄 Tamara
+      <!-- Selector de rol activo: Tamara (Hace la mesa) o Lucía (Opina) -->
+      <div class="user-switcher" role="group" aria-label="Seleccionar modo de uso">
+        <span class="user-switcher-label">Viendo como:</span>
+        <button id="btnUserTamara" type="button" class="user-btn active-tamara" onclick="setActiveUser('Tamara')" title="Tamara: Se encarga de comprar, preparar y montar la mesa">
+          👩🏽‍🪄 Tamara (Hace la mesa)
         </button>
-        <button id="btnUserLucia" type="button" class="user-btn" onclick="setActiveUser('Lucía')">
-          🧙🏼‍♀️ Lucía
+        <button id="btnUserLucia" type="button" class="user-btn" onclick="setActiveUser('Lucía')" title="Lucía: Da su opinión, vota qué le gusta y aporta ideas">
+          🧙🏼‍♀️ Lucía (Opina)
         </button>
       </div>
 
       <!-- Barra de Progreso Global de la Mesa -->
       <div class="global-progress-wrap">
         <div class="progress-header-row">
-          <span>✨ <strong>Progreso Total de la Mesa:</strong> <span id="globalProgressDetail" style="color:var(--text-muted)">0 de 0 listos</span></span>
+          <span>✨ <strong>Progreso de Tamara en la Mesa:</strong> <span id="globalProgressDetail" style="color:var(--text-muted)">0 de 0 listos</span></span>
           <span id="globalProgressPct" class="progress-pct-badge">0% LISTO</span>
         </div>
         <div class="progress-track" aria-label="Porcentaje de finalización de la mesa">
@@ -1426,8 +1426,8 @@
 
       <!-- Botones de Sincronización Colaborativa -->
       <div class="sync-actions">
-        <button type="button" class="btn-gold" onclick="shareProgressWhatsApp()" title="Envía un enlace mágico por WhatsApp a Tamara o Lucía con todos tus checks, ideas y comentarios">
-          📲 Enviar avances por WhatsApp
+        <button type="button" class="btn-gold" onclick="shareProgressWhatsApp()" title="Envía un enlace mágico por WhatsApp con tus últimos checks, opiniones o comentarios">
+          📲 Enviar avances / opiniones por WhatsApp
         </button>
         <button type="button" class="btn-outline-brass" onclick="copyShareLink()" title="Copiar enlace sincronizado">
           🔗 Copiar enlace
@@ -1447,28 +1447,28 @@
               <span>⚡ Expreso de Hogwarts · Andén 9 ¾ · Dulcería Honeydukes</span>
             </div>
             <h1 class="hero-title font-display">
-              Mesa Mágica de Comunión · <span>Tamara &amp; Lucía</span>
+              Mesa Mágica de Comunión · <span>Creada por Tamara</span>
             </h1>
             <p class="hero-subtitle" style="margin-top:0.5rem;">
-              Centro de mando colaborativo para diseñar, comprar y montar paso a paso la mesa de chuches de Harry Potter. Explora el <strong>Layout 3D interactivo</strong>, revisa las <strong>fotos recreadas de cada zona</strong>, comenta cada detalle, añade nuevas ideas y marca qué está listo.
+              Centro de mando para que <strong>Tamara</strong> diseñe, compre y monte paso a paso toda la mesa de chuches de Harry Potter (con enlaces directos y el % de avance), y para que <strong>Lucía</strong> pueda ver el <strong>Layout 3D y las fotos recreadas</strong>, dar su opinión en cada zona (<em>😍 ¡Me encanta!</em> o <em>💡 Sugerencia</em>), comentar y proponer ideas.
             </p>
           </div>
 
           <!-- Marcadores de Progreso Desglosados -->
           <div class="hero-stats-grid">
             <div class="stat-box">
-              <div class="stat-box-label">🏛️ Zonas de la Mesa</div>
+              <div class="stat-box-label">🏛️ Montaje (Tamara)</div>
               <div id="statZonesReady" class="stat-box-value">0 / 9</div>
-              <div class="stat-box-sub">Zonas marcadas listas</div>
+              <div class="stat-box-sub">Zonas listas por Tamara</div>
             </div>
             <div class="stat-box">
-              <div class="stat-box-label">🛒 Chuches y Deco</div>
+              <div class="stat-box-label">🛒 Compras (Tamara)</div>
               <div id="statItemsReady" class="stat-box-value">0 / 16</div>
               <div class="stat-box-sub">Materiales comprados</div>
             </div>
             <div class="stat-box">
-              <div class="stat-box-label">👩🏽‍🪄🧙🏼‍♀️ Reparto Equipo</div>
-              <div id="statTeamSplit" class="stat-box-value" style="font-size:1.05rem;padding-top:0.3rem;">T: 0 · L: 0</div>
+              <div class="stat-box-label">🧙🏼‍♀️ Opinión de Lucía</div>
+              <div id="statTeamSplit" class="stat-box-value" style="font-size:1.05rem;padding-top:0.3rem;">😍 0 / 9 zonas</div>
               <div class="stat-box-sub" id="statIdeasCount">Ideas y comentarios activos</div>
             </div>
             <div class="stat-box">
@@ -1539,10 +1539,10 @@
         🧊 1. Layout 3D y Fotos por Zona <span id="badgeTabZones" class="tab-badge">0/9</span>
       </button>
       <button type="button" data-tab="shopping" class="magical-tab-btn">
-        🛒 2. Compras, Chuches y Enlaces <span id="badgeTabShopping" class="tab-badge">0/16</span>
+        🛒 2. Compras de Tamara y Enlaces <span id="badgeTabShopping" class="tab-badge">0/16</span>
       </button>
       <button type="button" data-tab="ideas" class="magical-tab-btn">
-        💡 3. Muro de Ideas y Comentarios <span id="badgeTabIdeas" class="tab-badge">2</span>
+        💡 3. Muro de Ideas y Opiniones <span id="badgeTabIdeas" class="tab-badge">2</span>
       </button>
       <button type="button" data-tab="labels" class="magical-tab-btn">
         🏷️ 4. Carteles, Papercraft 3D y Cronograma <span id="badgeTabSteps" class="tab-badge">0/8</span>
@@ -1562,7 +1562,7 @@
             <div>
               <h2 style="font-size:1.05rem;color:var(--gold-bright);">🧊 Maqueta 3D Interactiva de la Mesa (3 Alturas + Techo + Papercraft)</h2>
               <p style="font-size:0.75rem;color:var(--text-muted);">
-                Arrastra para girar 360°, usa la rueda para zoom o pulsa en cualquier zona 3D para ver su foto recreada, enlaces y comentarios.
+                Arrastra para girar 360°, usa la rueda para zoom o pulsa en cualquier zona 3D para ver su foto recreada, enlaces de compra para Tamara y opiniones de Lucía.
               </p>
             </div>
             <div style="display:flex;gap:0.4rem;">
@@ -1585,7 +1585,7 @@
                 <button type="button" class="cam-pill" onclick="setCameraView('tier1', this)">🐸 Nivel 1 (Frente)</button>
               </div>
               <div style="background:rgba(11,9,7,0.82);border:1px solid var(--border-brass);padding:0.3rem 0.65rem;border-radius:var(--radius-sm);font-size:0.72rem;">
-                🟢 Verde = ¡Listo! &nbsp;|&nbsp; 🟡 Dorado = Pendiente
+                🟢 Verde = ¡Listo por Tamara! &nbsp;|&nbsp; 🟡 Dorado = En preparación
               </div>
             </div>
           </div>
@@ -1601,17 +1601,17 @@
       <!-- Barra de filtro de zonas -->
       <div class="filter-bar">
         <div>
-          <h2 style="font-size:1.1rem;color:var(--gold-bright);">📸 Todas las Zonas Recreadas de la Mesa (100% Embolsadas + Papercraft · Paso a Paso)</h2>
+          <h2 style="font-size:1.1rem;color:var(--gold-bright);">📸 Las 9 Zonas Recreadas de la Mesa (Montaje de Tamara + Opinión de Lucía)</h2>
           <p style="font-size:0.76rem;color:var(--text-muted);">
-            Tamara y Lucía: podéis marcar qué zonas están listas, repartiros quién se encarga de cada rincón y dejar vuestros comentarios debajo de cada foto.
+            <strong>👩🏽‍🪄 Tamara:</strong> Marca cada zona cuando la tengas lista y usa las instrucciones paso a paso. &nbsp;|&nbsp; <strong>🧙🏼‍♀️ Lucía:</strong> Indica qué te parece cada zona (<em>😍 ¡Me encanta!</em> o <em>💡 Sugerencia</em>) y deja tus comentarios abajo.
           </p>
         </div>
         <div class="filter-pills">
           <button type="button" class="filter-pill active" onclick="setZoneFilter('all', this)">Todas las Zonas (9)</button>
-          <button type="button" class="filter-pill" onclick="setZoneFilter('pending', this)">⏳ Pendientes</button>
-          <button type="button" class="filter-pill" onclick="setZoneFilter('done', this)">✅ Listas</button>
-          <button type="button" class="filter-pill" onclick="setZoneFilter('Tamara', this)">👩🏽‍🪄 De Tamara</button>
-          <button type="button" class="filter-pill" onclick="setZoneFilter('Lucía', this)">🧙🏼‍♀️ De Lucía</button>
+          <button type="button" class="filter-pill" onclick="setZoneFilter('pending', this)">⏳ Pendientes de Tamara</button>
+          <button type="button" class="filter-pill" onclick="setZoneFilter('done', this)">✅ Listas por Tamara</button>
+          <button type="button" class="filter-pill" onclick="setZoneFilter('love', this)">😍 Favoritas de Lucía</button>
+          <button type="button" class="filter-pill" onclick="setZoneFilter('commented', this)">💬 Con Comentarios</button>
         </div>
       </div>
 
@@ -1626,17 +1626,17 @@
 
       <div class="filter-bar">
         <div>
-          <h2 style="font-size:1.15rem;color:var(--gold-bright);">🛒 Lista de Compra Colaborativa con Enlaces Directos</h2>
+          <h2 style="font-size:1.15rem;color:var(--gold-bright);">🛒 Lista de Compras de Tamara con Enlaces Directos (y Opinión de Lucía)</h2>
           <p style="font-size:0.78rem;color:var(--text-muted);">
-            Pulsa en los enlaces de compra para ir directo a cada producto o añade el enlace exacto que encontréis vosotras. Marca <strong>"✅ Ya lo tenemos"</strong> cuando esté comprado para subir el % de la mesa.
+            <strong>👩🏽‍🪄 Tamara:</strong> Pulsa en los enlaces para ir directa a cada producto y marca <strong>"✅ Comprado"</strong> cuando lo tengas. &nbsp;|&nbsp; <strong>🧙🏼‍♀️ Lucía:</strong> Puedes votar tus chuches favoritas o dejar comentarios y sugerencias en cualquiera de ellas.
           </p>
         </div>
         <div class="filter-pills">
           <button type="button" class="filter-pill active" onclick="setShopFilter('all', this)">Todo (16)</button>
-          <button type="button" class="filter-pill" onclick="setShopFilter('pending', this)">🛒 Falta Comprar</button>
+          <button type="button" class="filter-pill" onclick="setShopFilter('pending', this)">🛒 Falta Comprar (Tamara)</button>
           <button type="button" class="filter-pill" onclick="setShopFilter('done', this)">✅ Ya Comprado</button>
-          <button type="button" class="filter-pill" onclick="setShopFilter('Tamara', this)">👩🏽‍🪄 Tamara</button>
-          <button type="button" class="filter-pill" onclick="setShopFilter('Lucía', this)">🧙🏼‍♀️ Lucía</button>
+          <button type="button" class="filter-pill" onclick="setShopFilter('love', this)">😍 Favoritos de Lucía</button>
+          <button type="button" class="filter-pill" onclick="setShopFilter('commented', this)">💬 Con Comentarios</button>
         </div>
       </div>
 
@@ -1656,29 +1656,29 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- PESTAÑA 3: MURO COLABORATIVO DE NUEVAS IDEAS (TAMARA & LUCÍA)       -->
+    <!-- PESTAÑA 3: MURO DE NUEVAS IDEAS Y SUGERENCIAS (TAMARA & LUCÍA)      -->
     <!-- =================================================================== -->
     <section id="tab-ideas" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.5rem;">
 
       <div class="layout-3d-wrapper">
-        <!-- Formulario para que Tamara o Lucía añadan una nueva idea -->
+        <!-- Formulario para que Lucía o Tamara añadan una nueva idea -->
         <div class="canvas-3d-card" style="padding:1.5rem;gap:1rem;">
           <div>
-            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;">✨ Sala de los Menesteres · Lluvia de Ideas</span>
-            <h2 style="font-size:1.2rem;margin-top:0.2rem;">Añadir Nueva Idea o Detalle a la Mesa</h2>
+            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;">✨ Sala de los Menesteres · Buzón de Ideas y Sugerencias</span>
+            <h2 style="font-size:1.2rem;margin-top:0.2rem;">Proponer Nueva Idea o Detalle para la Mesa</h2>
             <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">
-              ¿Se os ha ocurrido un dulce nuevo, un cartel gracioso o habéis visto algo chulo en Amazon/Shein/Tedi? Apuntadlo aquí para que las dos lo veáis, comentéis y decidáis si lo sumamos a la mesa.
+              <strong>🧙🏼‍♀️ Lucía:</strong> Si has visto algún detalle chulo en Pinterest/TikTok/Amazon o se te ocurre una idea para la mesa, apúntala aquí para que <strong>Tamara</strong> la vea y decida si la incorpora al montaje.
             </p>
           </div>
 
           <form id="newIdeaForm" onsubmit="handleCreateIdea(event)" style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;">
             <div style="grid-column:span 2;">
-              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Título de la idea *</label>
-              <input id="ideaTitle" type="text" required class="input-dark" placeholder="Ej: Botellitas de Cerveza de Mantequilla con refresco cream soda y nata..." />
+              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Título de la idea o sugerencia *</label>
+              <input id="ideaTitle" type="text" required class="input-dark" placeholder="Ej: Botellitas de Cerveza de Mantequilla / Poner una bufanda de Gryffindor..." />
             </div>
 
             <div>
-              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">¿En qué zona iría?</label>
+              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">¿En qué zona quedaría bien?</label>
               <select id="ideaZone" class="select-dark">
                 <option value="Nivel 3 · Fondo Alto">📚 Nivel 3 · Fondo Alto</option>
                 <option value="Nivel 2 · Zona Media">🪄 Nivel 2 · Zona Media</option>
@@ -1699,8 +1699,8 @@
             </div>
 
             <div style="grid-column:span 2;">
-              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Cómo hacerlo / Notas para nosotras *</label>
-              <textarea id="ideaDesc" rows="3" required class="input-dark" placeholder="Explica cómo lo montaríamos o qué materiales hacen falta..."></textarea>
+              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Explicación o sugerencia para Tamara *</label>
+              <textarea id="ideaDesc" rows="3" required class="input-dark" placeholder="Explica qué te gustaría o cómo quedaría en la mesa..."></textarea>
             </div>
 
             <div style="grid-column:span 2;display:flex;justify-content:space-between;align-items:center;padding-top:0.3rem;">
@@ -1712,31 +1712,31 @@
           </form>
         </div>
 
-        <!-- Resumen de Actividad y Sincronización entre Tamara y Lucía -->
+        <!-- Explicación clara de los roles: Tamara hace la mesa y Lucía opina -->
         <div class="inspector-card" style="padding:1.5rem;gap:1rem;">
           <div>
-            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;">🦉 Lechucería de Hogwarts</span>
-            <h2 style="font-size:1.15rem;margin-top:0.2rem;">¿Cómo trabajáis juntas Tamara y Lucía?</h2>
+            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;">🦉 Lechucería de Hogwarts · Roles del Equipo</span>
+            <h2 style="font-size:1.15rem;margin-top:0.2rem;">👩🏽‍🪄 Tamara monta la mesa · 🧙🏼‍♀️ Lucía opina</h2>
           </div>
 
           <div style="display:flex;flex-direction:column;gap:0.75rem;font-size:0.8rem;color:var(--text-muted);">
             <div style="background:rgba(11,9,7,0.65);border:1px solid var(--border-subtle);padding:0.8rem;border-radius:var(--radius-sm);">
-              <strong style="color:var(--text-main);">1. Elegid vuestro nombre arriba del todo:</strong><br/>
-              Al entrar en la web, pulsa <strong>👩🏽‍🪄 Tamara</strong> o <strong>🧙🏼‍♀️ Lucía</strong> en la barra fija superior.
+              <strong style="color:var(--gold-bright);">👩🏽‍🪄 Tamara (Creadora y Montaje de la Mesa):</strong><br/>
+              Se encarga de hacer toda la mesa: utiliza los enlaces directos de compra, imprime los carteles y el papercraft 3D, embolsa las chuches y va marcando cada zona y material como <strong>"✅ ¡Listo!"</strong> para ver subir el % de finalización.
             </div>
             <div style="background:rgba(11,9,7,0.65);border:1px solid var(--border-subtle);padding:0.8rem;border-radius:var(--radius-sm);">
-              <strong style="color:var(--text-main);">2. Comentad, añadid enlaces y marcad checks:</strong><br/>
-              Cada vez que compréis algo o terminéis una manualidad, pasadlo a <strong>"✅ ¡Listo!"</strong>. El porcentaje de arriba subirá al instante.
+              <strong style="color:#c084fc;">🧙🏼‍♀️ Lucía (Opinión, Visto Bueno e Ideas):</strong><br/>
+              Selecciona arriba <strong>"🧙🏼‍♀️ Lucía (Opina)"</strong>, explora el 3D y las fotos, marca en cada zona su valoración (<strong>😍 ¡Me encanta!</strong> o <strong>💡 Tengo sugerencia</strong>), deja comentarios y propone ideas nuevas en este muro.
             </div>
             <div style="background:rgba(11,9,7,0.65);border:1px solid var(--border-subtle);padding:0.8rem;border-radius:var(--radius-sm);">
-              <strong style="color:var(--text-main);">3. Pulsad "📲 Enviar avances por WhatsApp":</strong><br/>
-              Genera un enlace mágico con todos tus cambios. Cuando la otra persona lo abre en su móvil, se le actualizan automáticamente todos tus comentarios, checks e ideas nuevas.
+              <strong style="color:var(--text-main);">📲 Sincronización por WhatsApp:</strong><br/>
+              Cuando Lucía termine de dejar sus opiniones o Tamara marque avances, pulsad arriba en <strong>"📲 Enviar avances / opiniones por WhatsApp"</strong> para mandaros el enlace actualizado.
             </div>
           </div>
 
           <div style="margin-top:auto;display:flex;flex-wrap:wrap;gap:0.5rem;padding-top:0.75rem;border-top:1px solid var(--border-subtle);">
             <button type="button" class="btn-gold" onclick="shareProgressWhatsApp()">
-              📲 Compartir todo por WhatsApp
+              📲 Compartir por WhatsApp
             </button>
             <button type="button" class="btn-outline-brass" onclick="exportBackupJSON()">
               💾 Guardar copia (.json)
@@ -1747,7 +1747,7 @@
 
       <div>
         <h3 class="font-magical" style="font-size:1.1rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-          💡 Ideas Propuestas por Tamara y Lucía (Puedes aprobarlas para sumarlas al % de la mesa)
+          💡 Ideas y Sugerencias para la Mesa (Tamara puede aprobarlas y marcarlas cuando estén listas)
         </h3>
         <div id="ideasCardsGrid" class="zones-grid"></div>
       </div>
@@ -2281,14 +2281,14 @@
     ];
 
     const CHECKLIST_STEPS = [
-      { id: 'c1', when: '3–4 semanas antes', text: 'Repartir zonas entre Tamara y Lucía y empezar a guardar botes de cristal bonitos.' },
-      { id: 'c2', when: '3 semanas antes', text: 'Pedir en Amazon las cantimploras de pociones bebibles, las bolsitas de celofán para embolsar todo, la cartulina 200g y el molde de ranas.' },
-      { id: 'c3', when: '2 semanas antes', text: 'Comprar las bolsas de 1 kg de gomitas/nubes/grageas y las bebidas/chuches líquidas para las cantimploras.' },
-      { id: 'c4', when: '1 semana antes', text: 'Imprimir en cartulina 200g los carteles, etiquetas de cantimploras y las figuras Papercraft 3D (Harry, Hedwig, Howler y cajas).' },
-      { id: 'c5', when: '4 días antes', text: 'Recortar y doblar las figuras Papercraft 3D y embolsar individualmente las grageas, gusanos, nubes de Hedwig, varitas y escobas.' },
-      { id: 'c6', when: '2 días antes', text: 'Hacer las Ranas de Chocolate, meter cada una en su bolsita transparente con su cromo y pegar las alitas a las Snitches.' },
-      { id: 'c7', when: 'Día anterior', text: 'Rellenar y cerrar las cantimploras de pociones bebibles con sus etiquetas y dejar montada la estructura de 3 alturas con las figuras Papercraft.' },
-      { id: 'c8', when: 'Día de la Comunión (1h antes)', text: 'Colocar todos los paquetes embolsados y las cantimploras frías en sus zonas y encender las velas flotantes.' }
+      { id: 'c1', when: '3–4 semanas antes', text: 'Lucía revisa las 9 zonas en la web, marca sus favoritas (😍) y deja sus comentarios; Tamara empieza a guardar botes de cristal bonitos.' },
+      { id: 'c2', when: '3 semanas antes', text: 'Tamara pide en Amazon las cantimploras de pociones bebibles, las bolsitas de celofán para embolsar todo, la cartulina 200g y el molde de ranas.' },
+      { id: 'c3', when: '2 semanas antes', text: 'Tamara compra las bolsas de 1 kg de gomitas/nubes/grageas y las bebidas/chuches líquidas para las cantimploras.' },
+      { id: 'c4', when: '1 semana antes', text: 'Tamara imprime en cartulina 200g los carteles, etiquetas de cantimploras y las figuras Papercraft 3D (Harry, Hedwig, Howler y cajas).' },
+      { id: 'c5', when: '4 días antes', text: 'Tamara recorta y dobla las figuras Papercraft 3D y embolsa individualmente las grageas, gusanos, nubes de Hedwig, varitas y escobas.' },
+      { id: 'c6', when: '2 días antes', text: 'Tamara hace las Ranas de Chocolate, mete cada una en su bolsita transparente con su cromo y pega las alitas a las Snitches.' },
+      { id: 'c7', when: 'Día anterior', text: 'Tamara rellena y cierra las cantimploras de pociones bebibles con sus etiquetas y deja montada la estructura de 3 alturas con las figuras Papercraft.' },
+      { id: 'c8', when: 'Día de la Comunión (1h antes)', text: 'Tamara coloca todos los paquetes embolsados y las cantimploras frías en sus zonas y enciende las velas flotantes.' }
     ];
 
     // =========================================================================
@@ -2305,7 +2305,7 @@
       selectedZoneId: 'zona-papercraft',
       zoneFilter: 'all',
       shopFilter: 'all',
-      // Estado de cada una de las 9 zonas: 'pending' | 'wip' | 'done'
+      // Estado de cada una de las 9 zonas (montaje por Tamara): 'pending' | 'done'
       zoneStatus: {
         'zona-velas': 'pending',
         'zona-snitches': 'pending',
@@ -2317,18 +2317,19 @@
         'zona-ranas': 'pending',
         'zona-papercraft': 'pending'
       },
+      // Valoración / opinión de Lucía sobre cada zona: 'love' | 'idea' | 'pending'
       zoneAssignees: {
-        'zona-velas': 'Tamara',
-        'zona-snitches': 'Lucía',
-        'zona-pociones': 'Tamara',
-        'zona-hedwig': 'Lucía',
-        'zona-varitas': 'Ambas',
-        'zona-escobas': 'Tamara',
-        'zona-cantimploras': 'Tamara',
-        'zona-ranas': 'Lucía',
-        'zona-papercraft': 'Ambas'
+        'zona-velas': 'love',
+        'zona-snitches': 'love',
+        'zona-pociones': 'love',
+        'zona-hedwig': 'love',
+        'zona-varitas': 'love',
+        'zona-escobas': 'love',
+        'zona-cantimploras': 'love',
+        'zona-ranas': 'love',
+        'zona-papercraft': 'love'
       },
-      // Estado de compra de chuches y decoración (true = ya comprado/listo)
+      // Estado de compra de chuches y decoración por Tamara (true = ya comprado/listo)
       itemPurchased: {
         'cantimploras': false,
         'snitches': false,
@@ -2347,23 +2348,24 @@
         'potions': false,
         'props': false
       },
+      // Valoración / opinión de Lucía sobre cada artículo de compra: 'love' | 'idea' | 'pending'
       itemAssignees: {
-        'cantimploras': 'Tamara',
-        'snitches': 'Lucía',
-        'frogs': 'Lucía',
-        'beans': 'Tamara',
-        'wands': 'Tamara',
-        'slugs': 'Tamara',
-        'hedwig': 'Lucía',
-        'brooms': 'Tamara',
-        'galleons': 'Lucía',
-        'papercraft': 'Ambas',
-        'candles': 'Tamara',
-        'jars': 'Ambas',
-        'tablecloth': 'Tamara',
-        'bags': 'Lucía',
-        'potions': 'Tamara',
-        'props': 'Lucía'
+        'cantimploras': 'love',
+        'snitches': 'love',
+        'frogs': 'love',
+        'beans': 'love',
+        'wands': 'love',
+        'slugs': 'love',
+        'hedwig': 'love',
+        'brooms': 'love',
+        'galleons': 'love',
+        'papercraft': 'love',
+        'candles': 'love',
+        'jars': 'love',
+        'tablecloth': 'love',
+        'bags': 'love',
+        'potions': 'love',
+        'props': 'love'
       },
       customShopLinks: {},
       completedSteps: [],
@@ -2375,10 +2377,10 @@
           id: 'idea-1',
           title: '🍺 Botellitas de Cerveza de Mantequilla (Sin Alcohol)',
           zone: 'Nivel 2 · Zona Media',
-          author: 'Tamara',
+          author: 'Lucía',
           cost: 6.50,
           link: 'https://www.amazon.es/s?k=botellas+cristal+pequenas+cerveza+mantequilla',
-          desc: 'Llenar 12 botellitas pequeñas cerradas con refresco Cream Soda o Fanta Naranja + un chorrito de sirope de caramelo.',
+          desc: 'Idea para Tamara: llenar 12 botellitas pequeñas cerradas con refresco Cream Soda o Fanta Naranja + un chorrito de sirope de caramelo.',
           approved: true,
           done: false,
           likes: 2
@@ -2400,6 +2402,20 @@
 
     let state = loadState();
 
+    function normalizeOpinionMap(mapObj, defaultMap) {
+      const result = Object.assign({}, defaultMap);
+      if (!mapObj || typeof mapObj !== 'object') return result;
+      Object.keys(mapObj).forEach(k => {
+        const val = mapObj[k];
+        if (val === 'love' || val === 'idea' || val === 'pending') {
+          result[k] = val;
+        } else {
+          result[k] = 'love';
+        }
+      });
+      return result;
+    }
+
     function stripLegacyDemoComments(commentsObj) {
       if (!commentsObj || typeof commentsObj !== 'object') return {};
       const demoIds = new Set(['cm1', 'cm2', 'cm3', 'cm4']);
@@ -2419,11 +2435,13 @@
           const jsonStr = decodeURIComponent(escape(atob(encoded)));
           const incoming = JSON.parse(jsonStr);
           incoming.comments = stripLegacyDemoComments(incoming.comments);
+          incoming.zoneAssignees = normalizeOpinionMap(incoming.zoneAssignees, DEFAULT_STATE.zoneAssignees);
+          incoming.itemAssignees = normalizeOpinionMap(incoming.itemAssignees, DEFAULT_STATE.itemAssignees);
           const merged = Object.assign({}, DEFAULT_STATE, incoming);
           localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
           history.replaceState(null, '', window.location.pathname + window.location.search);
           setTimeout(() => {
-            alert('🪄 ¡Avances sincronizados correctamente! Se han cargado los últimos checks, ideas y comentarios de Tamara y Lucía.');
+            alert('🪄 ¡Avances sincronizados correctamente! Se han cargado los últimos checks de Tamara y las opiniones/ideas de Lucía.');
           }, 300);
           return merged;
         }
@@ -2438,9 +2456,9 @@
           const parsed = JSON.parse(raw);
           return Object.assign({}, DEFAULT_STATE, parsed, {
             zoneStatus: Object.assign({}, DEFAULT_STATE.zoneStatus, parsed.zoneStatus || {}),
-            zoneAssignees: Object.assign({}, DEFAULT_STATE.zoneAssignees, parsed.zoneAssignees || {}),
+            zoneAssignees: normalizeOpinionMap(parsed.zoneAssignees, DEFAULT_STATE.zoneAssignees),
             itemPurchased: Object.assign({}, DEFAULT_STATE.itemPurchased, parsed.itemPurchased || {}),
-            itemAssignees: Object.assign({}, DEFAULT_STATE.itemAssignees, parsed.itemAssignees || {}),
+            itemAssignees: normalizeOpinionMap(parsed.itemAssignees, DEFAULT_STATE.itemAssignees),
             comments: stripLegacyDemoComments(parsed.comments)
           });
         }
@@ -2459,27 +2477,27 @@
     }
 
     // =========================================================================
-    // 4. CÁLCULO DEL % DE FINALIZACIÓN DE LA MESA Y PRESUPUESTO
+    // 4. CÁLCULO DEL % DE FINALIZACIÓN DE LA MESA (TAMARA) Y VALORACIÓN (LUCÍA)
     // =========================================================================
     function formatEuro(num) {
       return Number(num || 0).toFixed(2).replace('.', ',') + ' €';
     }
 
     function calculateCompletionMetrics() {
-      // 1. Zonas listas (8 zonas)
+      // 1. Zonas listas por Tamara (9 zonas)
       const totalZones = TABLE_ZONES.length;
       const doneZones = TABLE_ZONES.filter(z => state.zoneStatus[z.id] === 'done').length;
 
-      // 2. Compras listas (9 chuches + 6 deco = 15 items)
+      // 2. Compras listas por Tamara (10 chuches + 6 deco = 16 items)
       const allShopIds = [...SWEETS_CATALOG.map(s => s.id), ...DECOR_ITEMS.map(d => d.id)];
       const totalShop = allShopIds.length;
       const doneShop = allShopIds.filter(id => !!state.itemPurchased[id]).length;
 
-      // 3. Pasos del cronograma (8 pasos)
+      // 3. Pasos del cronograma de Tamara (8 pasos)
       const totalSteps = CHECKLIST_STEPS.length;
       const doneSteps = state.completedSteps.length;
 
-      // 4. Ideas aprobadas por Tamara y Lucía
+      // 4. Ideas aprobadas para incluir en la mesa
       const approvedIdeas = (state.ideas || []).filter(i => i.approved);
       const totalApprovedIdeas = approvedIdeas.length;
       const doneApprovedIdeas = approvedIdeas.filter(i => i.done).length;
@@ -2488,19 +2506,12 @@
       const grandDoneTasks = doneZones + doneShop + doneSteps + doneApprovedIdeas;
       const pct = grandTotalTasks > 0 ? Math.round((grandDoneTasks / grandTotalTasks) * 100) : 0;
 
-      // Reparto entre Tamara y Lucía
-      let tamaraTotal = 0, tamaraDone = 0, luciaTotal = 0, luciaDone = 0;
+      // Valoraciones de Lucía en las zonas
+      let lovedZones = 0, ideaZones = 0;
       TABLE_ZONES.forEach(z => {
-        const who = state.zoneAssignees[z.id] || z.defaultAssignee;
-        const isDone = state.zoneStatus[z.id] === 'done';
-        if (who === 'Tamara' || who === 'Ambas') { tamaraTotal++; if (isDone) tamaraDone++; }
-        if (who === 'Lucía' || who === 'Ambas') { luciaTotal++; if (isDone) luciaDone++; }
-      });
-      allShopIds.forEach(id => {
-        const who = state.itemAssignees[id] || 'Ambas';
-        const isDone = !!state.itemPurchased[id];
-        if (who === 'Tamara' || who === 'Ambas') { tamaraTotal++; if (isDone) tamaraDone++; }
-        if (who === 'Lucía' || who === 'Ambas') { luciaTotal++; if (isDone) luciaDone++; }
+        const op = state.zoneAssignees[z.id] || 'love';
+        if (op === 'love') lovedZones++;
+        if (op === 'idea') ideaZones++;
       });
 
       return {
@@ -2513,10 +2524,8 @@
         doneShop,
         totalSteps,
         doneSteps,
-        tamaraTotal,
-        tamaraDone,
-        luciaTotal,
-        luciaDone
+        lovedZones,
+        ideaZones
       };
     }
 
@@ -3344,18 +3353,21 @@
     function renderCommentsBlock(targetKey, inputSuffix) {
       const list = state.comments[targetKey] || [];
       const inputId = `commentInput_${targetKey}_${inputSuffix}`;
+      const placeholderText = state.activeUser === 'Lucía'
+        ? 'Escribe aquí tu opinión o sugerencia como Lucía...'
+        : 'Escribe una nota de montaje o respuesta como Tamara...';
       return `
         <div class="comments-section">
           <div style="font-size:0.73rem;font-weight:700;color:var(--text-muted);display:flex;justify-content:space-between;">
-            <span>💬 Comentarios de Tamara y Lucía (${list.length})</span>
+            <span>💬 Opiniones de Lucía y notas de Tamara (${list.length})</span>
             <span>Escribiendo como <strong style="color:var(--gold-bright)">${state.activeUser}</strong></span>
           </div>
-          ${list.length === 0 ? `<div style="font-size:0.73rem;color:var(--text-dim);font-style:italic;">Aún no hay comentarios en esta parte. ¡Deja una nota para organizaros!</div>` : ''}
+          ${list.length === 0 ? `<div style="font-size:0.73rem;color:var(--text-dim);font-style:italic;">Aún no hay comentarios aquí. ¡Lucía puede dejar su opinión o sugerencia sobre esta parte!</div>` : ''}
           ${list.map(c => `
             <div class="comment-item ${c.author === 'Tamara' ? 'by-tamara' : 'by-lucia'}">
               <div class="comment-meta">
                 <span class="comment-author ${c.author === 'Tamara' ? 'tamara' : 'lucia'}">
-                  ${c.author === 'Tamara' ? '👩🏽‍🪄 Tamara' : '🧙🏼‍♀️ Lucía'} · <span style="font-weight:400;color:var(--text-dim);">${c.date}</span>
+                  ${c.author === 'Tamara' ? '👩🏽‍🪄 Tamara (Montaje)' : '🧙🏼‍♀️ Lucía (Opinión)'} · <span style="font-weight:400;color:var(--text-dim);">${c.date}</span>
                 </span>
                 <button type="button" class="comment-delete-btn" onclick="deleteComment('${targetKey}', '${c.id}')" title="Borrar comentario">✕</button>
               </div>
@@ -3363,7 +3375,7 @@
             </div>
           `).join('')}
           <div class="comment-form">
-            <input id="${inputId}" type="text" class="comment-input" placeholder="Escribe un comentario o duda como ${state.activeUser}..." onkeydown="if(event.key==='Enter'){event.preventDefault();addComment('${targetKey}','${inputId}');}" />
+            <input id="${inputId}" type="text" class="comment-input" placeholder="${placeholderText}" onkeydown="if(event.key==='Enter'){event.preventDefault();addComment('${targetKey}','${inputId}');}" />
             <button type="button" class="comment-submit-btn" onclick="addComment('${targetKey}','${inputId}')">Enviar</button>
           </div>
         </div>
@@ -3398,7 +3410,7 @@
       if (!card) return;
       const zone = TABLE_ZONES.find(z => z.id === state.selectedZoneId) || TABLE_ZONES[0];
       const isDone = state.zoneStatus[zone.id] === 'done';
-      const who = state.zoneAssignees[zone.id] || zone.defaultAssignee;
+      const opinion = state.zoneAssignees[zone.id] || 'love';
       const extraLinks = state.customShopLinks[zone.id] || [];
       const allLinks = [...zone.shopLinks, ...extraLinks];
 
@@ -3418,14 +3430,14 @@
 
           <div class="collab-control-row">
             <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleZoneDone('${zone.id}')">
-              ${isDone ? '✅ ¡Zona Lista!' : '⏳ Marcar Zona como Lista'}
+              ${isDone ? '✅ ¡Lista por Tamara!' : '⏳ Tamara: Marcar Zona Lista'}
             </button>
             <div style="display:flex;align-items:center;gap:0.35rem;font-size:0.74rem;">
-              <span style="color:var(--text-muted);">Encargada:</span>
+              <span style="color:var(--text-muted);">🧙🏼‍♀️ Opinión Lucía:</span>
               <select class="assignee-select" onchange="setZoneAssignee('${zone.id}', this.value)">
-                <option value="Tamara" ${who === 'Tamara' ? 'selected' : ''}>👩🏽‍🪄 Tamara</option>
-                <option value="Lucía" ${who === 'Lucía' ? 'selected' : ''}>🧙🏼‍♀️ Lucía</option>
-                <option value="Ambas" ${who === 'Ambas' ? 'selected' : ''}>🤝 Ambas</option>
+                <option value="love" ${opinion === 'love' ? 'selected' : ''}>😍 ¡Le encanta a Lucía!</option>
+                <option value="idea" ${opinion === 'idea' ? 'selected' : ''}>💡 Con sugerencia de Lucía</option>
+                <option value="pending" ${opinion === 'pending' ? 'selected' : ''}>👀 Pendiente de ver</option>
               </select>
             </div>
           </div>
@@ -3433,7 +3445,7 @@
           <p style="font-size:0.8rem;color:var(--text-muted);">${zone.description}</p>
 
           <div style="background:rgba(11,9,7,0.55);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:0.7rem;">
-            <div style="font-size:0.73rem;font-weight:800;color:var(--gold-bright);margin-bottom:0.35rem;">🛠️ Cómo montarlo paso a paso:</div>
+            <div style="font-size:0.73rem;font-weight:800;color:var(--gold-bright);margin-bottom:0.35rem;">🛠️ Cómo lo montará Tamara paso a paso:</div>
             <ul style="padding-left:1.1rem;font-size:0.76rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.25rem;">
               ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
             </ul>
@@ -3441,7 +3453,7 @@
 
           <div class="shopping-links-box">
             <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="shopping-links-title">🛍️ Enlaces de Compra de esta Zona:</span>
+              <span class="shopping-links-title">🛍️ Enlaces de Compra para Tamara:</span>
               <button type="button" class="btn-outline-brass" style="padding:0.2rem 0.5rem;font-size:0.68rem;" onclick="addCustomShopLink('${zone.id}')">+ Añadir enlace</button>
             </div>
             <div class="shopping-links-list">
@@ -3460,17 +3472,18 @@
 
       const filtered = TABLE_ZONES.filter(z => {
         const isDone = state.zoneStatus[z.id] === 'done';
-        const who = state.zoneAssignees[z.id] || z.defaultAssignee;
+        const opinion = state.zoneAssignees[z.id] || 'love';
+        const commentsCount = (state.comments[z.id] || []).length;
         if (state.zoneFilter === 'done') return isDone;
         if (state.zoneFilter === 'pending') return !isDone;
-        if (state.zoneFilter === 'Tamara') return who === 'Tamara' || who === 'Ambas';
-        if (state.zoneFilter === 'Lucía') return who === 'Lucía' || who === 'Ambas';
+        if (state.zoneFilter === 'love') return opinion === 'love';
+        if (state.zoneFilter === 'commented') return commentsCount > 0 || opinion === 'idea';
         return true;
       });
 
       grid.innerHTML = filtered.map(zone => {
         const isDone = state.zoneStatus[zone.id] === 'done';
-        const who = state.zoneAssignees[zone.id] || zone.defaultAssignee;
+        const opinion = state.zoneAssignees[zone.id] || 'love';
         const extraLinks = state.customShopLinks[zone.id] || [];
         const allLinks = [...zone.shopLinks, ...extraLinks];
 
@@ -3480,7 +3493,7 @@
               <img src="${zone.photo}" alt="${escapeHtml(zone.title)}" loading="lazy" />
               <span class="zone-level-tag">${zone.level}</span>
               <span class="zone-status-pill ${isDone ? 'pill-done' : 'pill-pending'}">
-                ${isDone ? '✅ ¡ZONA LISTA!' : '⏳ PENDIENTE'}
+                ${isDone ? '✅ ¡LISTA POR TAMARA!' : '⏳ PENDIENTE DE MONTAR'}
               </span>
             </div>
             <div class="zone-card-content">
@@ -3491,20 +3504,20 @@
 
               <div class="collab-control-row">
                 <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleZoneDone('${zone.id}')">
-                  ${isDone ? '✅ ¡Listo! (Quitar check)' : '⬜ Marcar Zona como Lista'}
+                  ${isDone ? '✅ ¡Lista por Tamara!' : '⬜ Tamara: Marcar Zona Lista'}
                 </button>
                 <div style="display:flex;align-items:center;gap:0.35rem;font-size:0.74rem;">
-                  <span style="color:var(--text-muted);">Hace:</span>
+                  <span style="color:var(--text-muted);">🧙🏼‍♀️ Opinión Lucía:</span>
                   <select class="assignee-select" onchange="setZoneAssignee('${zone.id}', this.value)">
-                    <option value="Tamara" ${who === 'Tamara' ? 'selected' : ''}>👩🏽‍🪄 Tamara</option>
-                    <option value="Lucía" ${who === 'Lucía' ? 'selected' : ''}>🧙🏼‍♀️ Lucía</option>
-                    <option value="Ambas" ${who === 'Ambas' ? 'selected' : ''}>🤝 Ambas</option>
+                    <option value="love" ${opinion === 'love' ? 'selected' : ''}>😍 ¡Le encanta a Lucía!</option>
+                    <option value="idea" ${opinion === 'idea' ? 'selected' : ''}>💡 Con sugerencia de Lucía</option>
+                    <option value="pending" ${opinion === 'pending' ? 'selected' : ''}>👀 Pendiente de ver</option>
                   </select>
                 </div>
               </div>
 
               <div style="background:rgba(11,9,7,0.5);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:0.65rem;">
-                <div style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);margin-bottom:0.3rem;">✨ Instrucciones rápidas:</div>
+                <div style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);margin-bottom:0.3rem;">✨ Guía rápida de montaje para Tamara:</div>
                 <ul style="padding-left:1.05rem;font-size:0.75rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.2rem;">
                   ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
                 </ul>
@@ -3512,8 +3525,8 @@
 
               <div class="shopping-links-box">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <span class="shopping-links-title">🛒 Enlaces directos de compra:</span>
-                  <button type="button" class="btn-outline-brass" style="padding:0.18rem 0.45rem;font-size:0.68rem;" onclick="addCustomShopLink('${zone.id}')">+ Añadir nuestro link</button>
+                  <span class="shopping-links-title">🛒 Enlaces directos de compra para Tamara:</span>
+                  <button type="button" class="btn-outline-brass" style="padding:0.18rem 0.45rem;font-size:0.68rem;" onclick="addCustomShopLink('${zone.id}')">+ Añadir link</button>
                 </div>
                 <div class="shopping-links-list">
                   ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
@@ -3530,21 +3543,22 @@
     function renderShoppingGrids() {
       const scale = state.guests / 35;
 
-      const filterItemFn = (id, defaultWho) => {
+      const filterItemFn = (id) => {
         const isDone = !!state.itemPurchased[id];
-        const who = state.itemAssignees[id] || defaultWho;
+        const opinion = state.itemAssignees[id] || 'love';
+        const commentsCount = (state.comments[id] || []).length;
         if (state.shopFilter === 'done') return isDone;
         if (state.shopFilter === 'pending') return !isDone;
-        if (state.shopFilter === 'Tamara') return who === 'Tamara' || who === 'Ambas';
-        if (state.shopFilter === 'Lucía') return who === 'Lucía' || who === 'Ambas';
+        if (state.shopFilter === 'love') return opinion === 'love';
+        if (state.shopFilter === 'commented') return commentsCount > 0 || opinion === 'idea';
         return true;
       };
 
       const sweetsGrid = document.getElementById('sweetsShoppingGrid');
       if (sweetsGrid) {
-        sweetsGrid.innerHTML = SWEETS_CATALOG.filter(item => filterItemFn(item.id, item.defaultAssignee)).map(item => {
+        sweetsGrid.innerHTML = SWEETS_CATALOG.filter(item => filterItemFn(item.id)).map(item => {
           const isDone = !!state.itemPurchased[item.id];
-          const who = state.itemAssignees[item.id] || item.defaultAssignee;
+          const opinion = state.itemAssignees[item.id] || 'love';
           const qty = Math.max(1, Math.round(item.baseQty35 * scale));
           const price = qty * item.priceByTier[state.tier];
           const weightGrams = Math.round(qty * item.unitWeightKg * 1000);
@@ -3564,17 +3578,17 @@
                   </div>
                 </div>
 
-                <p style="font-size:0.78rem;color:var(--text-muted);"><strong>Qué comprar:</strong> ${item.realProduct}</p>
+                <p style="font-size:0.78rem;color:var(--text-muted);"><strong>Qué comprar (Tamara):</strong> ${item.realProduct}</p>
                 <p style="font-size:0.75rem;color:var(--text-dim);"><strong>💡 Truco DIY:</strong> ${item.diyTrick}</p>
 
                 <div class="collab-control-row">
                   <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleItemPurchased('${item.id}')">
-                    ${isDone ? '✅ Comprado / Listo' : '🛒 Marcar como Comprado'}
+                    ${isDone ? '✅ Comprado por Tamara' : '🛒 Tamara: Marcar Comprado'}
                   </button>
                   <select class="assignee-select" onchange="setItemAssignee('${item.id}', this.value)">
-                    <option value="Tamara" ${who === 'Tamara' ? 'selected' : ''}>👩🏽‍🪄 Compra Tamara</option>
-                    <option value="Lucía" ${who === 'Lucía' ? 'selected' : ''}>🧙🏼‍♀️ Compra Lucía</option>
-                    <option value="Ambas" ${who === 'Ambas' ? 'selected' : ''}>🤝 Ambas</option>
+                    <option value="love" ${opinion === 'love' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 😍 ¡Me encanta!</option>
+                    <option value="idea" ${opinion === 'idea' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 💡 Sugerencia</option>
+                    <option value="pending" ${opinion === 'pending' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 👀 Por opinar</option>
                   </select>
                 </div>
 
@@ -3597,9 +3611,9 @@
 
       const decorGrid = document.getElementById('decorShoppingGrid');
       if (decorGrid) {
-        decorGrid.innerHTML = DECOR_ITEMS.filter(item => filterItemFn(item.id, item.defaultAssignee)).map(item => {
+        decorGrid.innerHTML = DECOR_ITEMS.filter(item => filterItemFn(item.id)).map(item => {
           const isDone = !!state.itemPurchased[item.id];
-          const who = state.itemAssignees[item.id] || item.defaultAssignee;
+          const opinion = state.itemAssignees[item.id] || 'love';
           const price = item.cost[state.tier];
           const extraLinks = state.customShopLinks[item.id] || [];
           const allLinks = [...item.links, ...extraLinks];
@@ -3618,12 +3632,12 @@
 
                 <div class="collab-control-row">
                   <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleItemPurchased('${item.id}')">
-                    ${isDone ? '✅ Ya lo tenemos' : '🛒 Marcar como Listo'}
+                    ${isDone ? '✅ Ya lo tiene Tamara' : '🛒 Tamara: Marcar Listo'}
                   </button>
                   <select class="assignee-select" onchange="setItemAssignee('${item.id}', this.value)">
-                    <option value="Tamara" ${who === 'Tamara' ? 'selected' : ''}>👩🏽‍🪄 Encargada: Tamara</option>
-                    <option value="Lucía" ${who === 'Lucía' ? 'selected' : ''}>🧙🏼‍♀️ Encargada: Lucía</option>
-                    <option value="Ambas" ${who === 'Ambas' ? 'selected' : ''}>🤝 Ambas</option>
+                    <option value="love" ${opinion === 'love' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 😍 ¡Me encanta!</option>
+                    <option value="idea" ${opinion === 'idea' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 💡 Sugerencia</option>
+                    <option value="pending" ${opinion === 'pending' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 👀 Por opinar</option>
                   </select>
                 </div>
 
@@ -4630,7 +4644,7 @@
       // Actualizar Contadores Hero
       document.getElementById('statZonesReady').textContent = `${metrics.doneZones} / ${metrics.totalZones}`;
       document.getElementById('statItemsReady').textContent = `${metrics.doneShop} / ${metrics.totalShop}`;
-      document.getElementById('statTeamSplit').textContent = `Tamara: ${metrics.tamaraDone}/${metrics.tamaraTotal} · Lucía: ${metrics.luciaDone}/${metrics.luciaTotal}`;
+      document.getElementById('statTeamSplit').textContent = `😍 ${metrics.lovedZones} / ${metrics.totalZones} zonas favoritas`;
 
       const totalCommentsCount = Object.values(state.comments).reduce((acc, arr) => acc + (arr ? arr.length : 0), 0);
       document.getElementById('statIdeasCount').textContent = `${(state.ideas || []).length} ideas · ${totalCommentsCount} comentarios`;
