@@ -1850,7 +1850,7 @@
 
   <script>
     // =========================================================================
-    // 1. DATOS MAESTROS: LAS 7 ZONAS DE LA MESA CON FOTOS RECREADAS Y COORDENADAS 3D
+    // 1. DATOS MAESTROS: LAS 8 ZONAS DE LA MESA (TODO 100% EMBOLSADO INDIVIDUAL)
     // =========================================================================
     const TABLE_ZONES = [
       {
@@ -1877,17 +1877,17 @@
       {
         id: 'zona-snitches',
         shortTitle: '🟡 2. Torre Central Snitches',
-        title: 'Nivel 3 Centro: Pirámide de Snitches Doradas + Sombrero',
+        title: 'Nivel 3 Centro: Pirámide de Snitches Doradas (Envoltorio Individual)',
         level: 'Nivel 3 · Centro Focal Elevado (+30 cm)',
         photo: 'assets/zona-snitches.jpg',
         defaultAssignee: 'Lucía',
         position3D: { x: 0, y: 1.55, z: -0.75 },
         cameraTarget: { pos: [0, 2.3, 3.1], look: [0, 1.4, -0.7] },
-        description: 'El corazón visual de la mesa. Una estructura escalonada de madera oscura coronada por el Sombrero Seleccionador y repleta de bombones dorados con alitas caladas.',
+        description: 'El corazón visual de la mesa. Cada bombón viene envuelto individualmente de fábrica en su papel de aluminio dorado higiénico (o dentro de bolsita transparente individual) con sus alitas doradas pegadas por fuera.',
         diySteps: [
           'Forrar 2 o 3 cajas de distinto tamaño con papel madera/marrón oscuro (o usar un soporte de madera de 3 pisos).',
-          'Pegar un par de alitas doradas caladas sobre cada bombón redondo dorado (Ferrero Rocher o versión marca blanca Lidl/Mercadona) con una gotita de pegamento.',
-          'Colocar el cartel envejecido de "Snitches Doradas" y el Sombrero Seleccionador arriba del todo.'
+          'Pegar un par de alitas doradas caladas sobre el envoltorio individual de cada bombón dorado (Ferrero Rocher o versión Lidl/Mercadona) o sobre su bolsita de celofán individual.',
+          'Colocar el cartel de "Snitches Doradas" y el Sombrero Seleccionador arriba del todo.'
         ],
         shopLinks: [
           { label: '🪽 Pack 50 Alas Doradas para Snitch (Amazon)', url: 'https://www.amazon.es/s?k=alas+doradas+snitch+harry+potter+chocolate' },
@@ -1897,38 +1897,39 @@
       },
       {
         id: 'zona-pociones',
-        shortTitle: '🧪 3. Botica de Pociones',
-        title: 'Nivel 3 Izquierda: Botica del Prof. Snape y Babosas',
+        shortTitle: '🧪 3. Botica y Babosas Embolsadas',
+        title: 'Nivel 3 Izquierda: Botica Decorativa de Snape + Babosas Embolsadas',
         level: 'Nivel 3 · Lateral Izquierdo sobre Libros (+25 cm)',
         photo: 'assets/zona-pociones.jpg',
         defaultAssignee: 'Tamara',
         position3D: { x: -2.4, y: 1.35, z: -0.65 },
         cameraTarget: { pos: [-2.6, 2.1, 2.8], look: [-2.2, 1.2, -0.6] },
-        description: 'Rincón alquímico con 3 frascos de cristal con corcho rellenos de líquidos brillantes (Poción Multijugos verde, Amortentia roja y Felix Felicis dorada) junto al tarro alto de gusanos ácidos.',
+        description: 'Rincón alquímico con 3 frascos de cristal decorativos iluminados junto al bote alto lleno de paquetitos individuales embolsados de Babosas y Gusanos de gelatina.',
         diySteps: [
-          'Llenar 3 botellas de cristal con agua + 1 gota de colorante alimentario (verde, rojo y amarillo) + media cucharadita de polvo nacarado comestible para el efecto remolino mágico.',
-          'Pegar las etiquetas envejecidas con té y atar cuerda de yute en el cuello del corcho.',
-          'Llenar el bote alto de cristal con 1 kg de gusanos de brillo ("Babosas de Pociones") sobre dos libros antiguos apilados.'
+          'Decoración: Llenar 3 botellas de cristal con agua + 1 gota de colorante (verde, rojo y amarillo) + polvo nacarado y pegar las etiquetas apotecarias de la Pestaña 4.',
+          'Embolsado higiénico: Repartir la bolsa de 1 kg de gusanos de brillo en bolsitas individuales de celofán transparente (unos 5–6 gusanos por bolsita) cerradas con pegatina o lazo.',
+          'Meter todas las bolsitas individuales dentro del tarro alto de cristal para que los niños cojan su paquetito cerrado.'
         ],
         shopLinks: [
           { label: '🧪 Frascos de Cristal con Corcho Pociones (Amazon)', url: 'https://www.amazon.es/s?k=botellas+cristal+corcho+pociones' },
-          { label: '✨ Polvo Nacarado Comestible Dorado/Verde (Amazon)', url: 'https://www.amazon.es/s?k=polvo+nacarado+comestible+reposteria' },
-          { label: '🐛 Bolsa 1kg Gusanos Gominola Brillo (Amazon)', url: 'https://www.amazon.es/s?k=gusanos+gominola+1kg+vidal+fini' }
+          { label: '🐛 Bolsa 1kg Gusanos Gominola Brillo (Amazon)', url: 'https://www.amazon.es/s?k=gusanos+gominola+1kg+vidal+fini' },
+          { label: '🛍️ 100 Bolsitas Celofán Transparente Autoadhesivas (Amazon)', url: 'https://www.amazon.es/s?k=bolsitas+celofan+transparentes+autoadhesivas+chuches' }
         ]
       },
       {
         id: 'zona-hedwig',
-        shortTitle: '🦉 4. Rincón de Hedwig y Cartas',
-        title: 'Nivel 3 Derecha: Lechucería de Hedwig y Cartas de Hogwarts',
+        shortTitle: '🦉 4. Rincón de Hedwig (Embolsadas)',
+        title: 'Nivel 3 Derecha: Lechucería de Hedwig (En Bolsitas) y Cartas',
         level: 'Nivel 3 · Lateral Derecho sobre Libros (+25 cm)',
         photo: 'assets/zona-hedwig.jpg',
         defaultAssignee: 'Lucía',
         position3D: { x: 2.4, y: 1.35, z: -0.65 },
         cameraTarget: { pos: [2.6, 2.1, 2.8], look: [2.2, 1.2, -0.6] },
-        description: 'Tarro apotecario lleno de nubes blancas decoradas como la lechuza Hedwig junto a una jaula decorativa blanca con cartas de admisión a Hogwarts cerradas con sello de lacre rojo.',
+        description: 'Tarro apotecario lleno de bolsitas transparentes individuales con 2 nubes blancas de la lechuza Hedwig en cada bolsita (se mantienen súper tiernas) junto a la jaula con cartas de admisión.',
         diySteps: [
-          'Con un rotulador de tinta comestible negra, dibujar en 5 minutos los ojitos y las plumitas del pecho a las nubes blancas más visibles (las que pegan al cristal del bote).',
-          'Meter dentro de una jaula decorativa (o asomando de una caja vintage) varios sobres beige con el sello de lacre rojo de Hogwarts dirigidos a Lucía.'
+          'Meter las nubes blancas de 2 en 2 dentro de bolsitas pequeñas de celofán transparente y cerrarlas con un lacito dorado.',
+          'Truco exprés: Puedes dibujar los ojitos y plumitas de Hedwig con rotulador comestible en la nube, ¡o directamente con rotulador permanente negro por fuera de la bolsita transparente en mitad de tiempo!',
+          'Colocar al lado la jaula blanca con los sobres lacrados de Hogwarts.'
         ],
         shopLinks: [
           { label: '🖊️ Rotulador Comestible Negro Repostería (Amazon)', url: 'https://www.amazon.es/s?k=rotulador+tinta+comestible+negro' },
@@ -1938,59 +1939,78 @@
       },
       {
         id: 'zona-varitas',
-        shortTitle: '🪄 5. Varitas y Grageas Bertie Bott',
-        title: 'Nivel 2 Izquierda/Centro: Varitas de Ollivanders y Grageas',
+        shortTitle: '🪄 5. Varitas y Grageas Embolsadas',
+        title: 'Nivel 2 Izquierda/Centro: Varitas y Grageas en Saquitos Individuales',
         level: 'Nivel 2 · Altura Media (+12 cm)',
         photo: 'assets/zona-varitas.jpg',
         defaultAssignee: 'Ambas',
         position3D: { x: -1.45, y: 0.95, z: 0.35 },
         cameraTarget: { pos: [-1.6, 1.8, 3.2], look: [-1.3, 0.9, 0.3] },
-        description: 'Vasos altos con varitas comestibles de chocolate y perlitas doradas atadas con cinta de Gryffindor, acompañadas de la bombonera de cristal llena de Jelly Beans de todos los sabores con cucharón.',
+        description: 'Vasos altos con varitas comestibles metidas en fundas largas de celofán transparente con lazo de Gryffindor, junto a la bombonera repleta de saquitos individuales cerrados de Grageas de Bertie Bott.',
         diySteps: [
-          'Usar palitos largos de Pretzel o Mikado, bañar el extremo en chocolate fundido y espolvorear bolitas/estrellas doradas de azúcar.',
-          'Colocarlos de pie en un tarro con lazo granate y dorado.',
-          'Volcar 1 kg de Jelly Beans de colores en una bombonera ancha con una pala metálica pequeña para servirse.'
+          'Varitas embolsadas: Bañar la punta de los Mikado/Pretzel largos en chocolate con perlitas doradas, dejar enfriar 10 min y meter de 2 en 2 en bolsitas alargadas de celofán atadas con cinta granate y oro.',
+          'Grageas embolsadas: Repartir el kilo de Jelly Beans en bolsitas transparentes tipo cono o saquito (unos 35g por bolsita) cerradas con lacito dorado para que ningún niño meta la mano al tarro.'
         ],
         shopLinks: [
           { label: '🫘 Jelly Beans Grageas Colores 1kg (Amazon)', url: 'https://www.amazon.es/s?k=jelly+beans+1kg+frutas' },
-          { label: '🥄 Pala / Cucharón Metálico Candy Bar (Amazon)', url: 'https://www.amazon.es/s?k=pala+metalica+chuches+candy+bar' },
+          { label: '🛍️ Bolsitas Celofán Alargadas para Varitas/Pretzel (Amazon)', url: 'https://www.amazon.es/s?k=bolsas+celofan+alargadas+pretzel+varitas' },
           { label: '🎀 Cinta Granate y Dorada Gryffindor (Amazon)', url: 'https://www.amazon.es/s?k=cinta+granate+y+dorada' }
         ]
       },
       {
         id: 'zona-escobas',
-        shortTitle: '🧹 6. Escobas Nimbus 2000',
-        title: 'Nivel 2 Derecha: Bandeja de Escobas Voladoras Nimbus 2000',
+        shortTitle: '🧹 6. Escobas Nimbus Embolsadas',
+        title: 'Nivel 2 Derecha: Bandeja de Escobas Nimbus 2000 Embolsadas',
         level: 'Nivel 2 · Lateral Derecho Media Altura (+10 cm)',
         photo: 'assets/zona-escobas.jpg',
         defaultAssignee: 'Tamara',
         position3D: { x: 1.55, y: 0.85, z: 0.35 },
         cameraTarget: { pos: [1.7, 1.8, 3.2], look: [1.4, 0.8, 0.3] },
-        description: 'Bandeja rústica de madera y pizarra con las famosas escobas Nimbus 2000 dulces-saladas que vuelan de la mesa.',
+        description: 'Bandeja rústica de madera y pizarra con las escobas Nimbus 2000 dulces-saladas, cada una dentro de su bolsita transparente individual para que el Pretzel se mantenga crujiente todo el día.',
         diySteps: [
-          'Cortar lenguas de pica-pica (o regaliz plano rojo/naranja) por la mitad y hacer flecos con unas tijeras de cocina limpias.',
-          'Enrollar la tira flecada en la punta de un palito salado Pretzel y atar con una tira fina de regaliz negro o hilo dorado comestible.'
+          'Enrollar media lengua ácida flecada en el extremo de un palito salado Pretzel largo.',
+          'Introducir cada escoba en una bolsita de celofán transparente individual y atar el lazo dorado justo a la altura del cepillo de la escoba por fuera de la bolsita.'
         ],
         shopLinks: [
-          { label: '🥨 Palitos Pretzel SaladosLargos (Amazon)', url: 'https://www.amazon.es/s?k=palitos+pretzel+salados' },
+          { label: '🥨 Palitos Pretzel Salados Largos (Amazon)', url: 'https://www.amazon.es/s?k=palitos+pretzel+salados' },
           { label: '🍬 Lenguas Ácidas Pica-Pica 1kg (Amazon)', url: 'https://www.amazon.es/s?k=lenguas+pica+pica+1kg+vidal' },
           { label: '🪨 Bandeja Pizarra / Madera Rústica (Amazon)', url: 'https://www.amazon.es/s?k=bandeja+pizarra+madera+rectangulares' }
         ]
       },
       {
+        id: 'zona-cantimploras',
+        shortTitle: '🧋 7. Cantimploras Pociones Bebibles',
+        title: 'Nivel 1 Izquierda: Cantimploras de Pociones de Chuches para Beber',
+        level: 'Nivel 1 · Frente Izquierdo (Para beber los niños)',
+        photo: 'assets/zona-cantimploras.jpg',
+        defaultAssignee: 'Tamara',
+        position3D: { x: -1.85, y: 0.65, z: 1.12 },
+        cameraTarget: { pos: [-1.9, 1.55, 3.4], look: [-1.7, 0.65, 1.0] },
+        description: '¡El éxito absoluto entre los niños! Cantimploras individuales con tapón de rosca (en frasco redondo tipo poción con pajita o bolsita cantimplora anti-derrame) rellenas de pociones bebibles de chuche líquida y zumos mágicos.',
+        diySteps: [
+          'Elegir envase individual cerrado: Frascos-cantimplora redondos de plástico PET alimentario con tapón de rosca (200-250ml) o bolsas cantimplora transparentes con boquilla anti-derrame.',
+          'Rellenar con 3 "Pociones Bebibles" para niños: Verde (Manzana verde / Lima con brillo comestible = Multijugos), Azul eléctrico (Refresco/Aquarius azul o chuche líquida frambuesa azul = Felix Felicis) y Rojo rubí (Fresa/Frutos rojos = Elixir de Quidditch).',
+          'Pegar en cada cantimplora las etiquetas de "Poción Bebible" de la Pestaña 4 y colocarlas en una cajita rústica de madera al alcance de los niños.'
+        ],
+        shopLinks: [
+          { label: '🧋 Pack Cantimploras Redondas Forma Poción con Tapón (Amazon)', url: 'https://www.amazon.es/s?k=botellas+plastico+redondas+pocion+con+tapon' },
+          { label: '🥤 Pack 50 Bolsas Cantimplora Bebida con Boquilla Niños (Amazon)', url: 'https://www.amazon.es/s?k=bolsas+bebida+reutilizables+con+tapon+ninos+transparentes' },
+          { label: '🍬 Chuches Líquidas / Bebidas Golosina Niños (Amazon)', url: 'https://www.amazon.es/s?k=chuches+liquidas+para+beber+ninos' }
+        ]
+      },
+      {
         id: 'zona-ranas',
-        shortTitle: '🐸 7. Ranas, Gringotts y Bolsitas',
-        title: 'Nivel 1 Frente: Ranas con Cromos, Cofre Gringotts y Bolsitas Kraft',
-        level: 'Nivel 1 · Frente de Mesa (Al alcance de los niños)',
+        shortTitle: '🐸 8. Ranas Embolsadas y Gringotts',
+        title: 'Nivel 1 Centro/Derecha: Ranas Embolsadas con Cromo y Gringotts',
+        level: 'Nivel 1 · Frente de Mesa (Todo Embolsado)',
         photo: 'assets/zona-ranas.jpg',
         defaultAssignee: 'Lucía',
-        position3D: { x: 0, y: 0.65, z: 1.15 },
-        cameraTarget: { pos: [0, 1.6, 3.6], look: [0, 0.65, 1.0] },
-        description: 'La primera fila delantera: Ranas de chocolate macizas posadas sobre sus cromos pentagonales de magos famosos, un cofre de madera rebosante de monedas de oro de Gringotts y las bolsitas Kraft con lacre para los invitados.',
+        position3D: { x: 0.65, y: 0.65, z: 1.15 },
+        cameraTarget: { pos: [0.65, 1.6, 3.6], look: [0.65, 0.65, 1.0] },
+        description: 'Cada rana de chocolate va metida dentro de su bolsita de celofán transparente junto con su cromo pentagonal de mago famoso, acompañada del cofre de Gringotts con saquitos de monedas doradas y las bolsitas Kraft con lacre.',
         diySteps: [
-          'Fundir chocolate con leche al microondas (de 30 en 30 seg), rellenar el molde de silicona de ranas y meter 20 min al frigorífico.',
-          'Colocar cada rana sobre su cromo pentagonal morado/dorado en la parte frontal de la mesa.',
-          'Dejar abierto el cofre de madera con las monedas de chocolate doradas y apilar al lado las bolsitas Kraft con pegatina de lacre.'
+          'Fundir el chocolate con leche, desmoldar las ranas tras 20 min de nevera y meter cada rana dentro de una bolsita de celofán transparente autoadhesiva con su cromo pentagonal detrás.',
+          'Repartir las monedas de chocolate de oro (que ya vienen envueltas en papel dorado) en saquitos transparentes o dentro del cofre y dejar listas las bolsitas Kraft con sello de lacre para que los niños guarden todos sus paquetes.'
         ],
         shopLinks: [
           { label: '🐸 Molde Silicona Ranas + Cromos (Amazon)', url: 'https://www.amazon.es/s?k=molde+ranas+chocolate+harry+potter' },
@@ -2001,15 +2021,32 @@
     ];
 
     // =========================================================================
-    // 2. CATÁLOGO DE CHUCHES Y DECORACIÓN CON ENLACES DE COMPRA
+    // 2. CATÁLOGO DE CHUCHES Y DECORACIÓN (FORMATO 100% EMBOLSADO INDIVIDUAL)
     // =========================================================================
     const SWEETS_CATALOG = [
       {
+        id: 'cantimploras',
+        icon: '🧋',
+        magicalName: 'Pociones de Chuches Bebibles en Cantimplora (Para los Niños)',
+        realProduct: 'Pack de cantimploras individuales con tapón/boquilla + Zumos de colores / Chuche líquida (Verde, Azul y Rojo)',
+        diyTrick: 'Llena cada cantimplora individual con bebida de frutas/chuche líquida + una pizca de brillo comestible, ciérrala con su tapón de rosca y ponle la etiqueta de Poción Bebible.',
+        unitLabel: 'lotes de 15 cantimploras',
+        baseQty35: 2,
+        unitWeightKg: 0.35,
+        priceByTier: { diy: 4.50, balanced: 5.90, premium: 7.90 },
+        defaultAssignee: 'Tamara',
+        links: [
+          { label: '🧋 Frascos Cantimplora Poción con Tapón (Amazon)', url: 'https://www.amazon.es/s?k=botellas+plastico+redondas+pocion+tapon' },
+          { label: '🥤 Bolsas Cantimplora con Boquilla Anti-derrame (Amazon)', url: 'https://www.amazon.es/s?k=bolsas+bebida+con+tapon+rosca+transparentes' },
+          { label: '🍬 Chuches Líquidas para Beber (La Casa de las Golosinas)', url: 'https://www.lacasadelasgolosinas.com/es/buscar?controller=search&s=liquido' }
+        ]
+      },
+      {
         id: 'snitches',
         icon: '🟡',
-        magicalName: 'Snitches Doradas del Torneo de Quidditch',
-        realProduct: 'Bombones redondos dorados (tipo Ferrero Rocher o versión Lidl/Mercadona)',
-        diyTrick: 'Pega dos alitas de papel dorado calado sobre cada envoltorio con una gota de silicona.',
+        magicalName: 'Snitches Doradas del Torneo de Quidditch (Envueltas)',
+        realProduct: 'Bombones redondos con envoltorio dorado individual (Ferrero Rocher o versión Lidl/Mercadona)',
+        diyTrick: 'Ya vienen envueltos individualmente en papel de oro; pega las dos alitas doradas sobre el envoltorio o mételos en bolsita de celofán individual.',
         unitLabel: 'cajas de 16 uds',
         baseQty35: 2,
         unitWeightKg: 0.2,
@@ -2023,9 +2060,9 @@
       {
         id: 'frogs',
         icon: '🐸',
-        magicalName: 'Ranas de Chocolate de Honeydukes (+ Cromos)',
-        realProduct: 'Molde de silicona de ranas + 3 tabletas de chocolate con leche fundir',
-        diyTrick: 'Con un molde de 6 cavidades sacas 24 ranas espectaculares en dos tandas de 15 min de nevera.',
+        magicalName: 'Ranas de Chocolate Embolsadas con Cromo',
+        realProduct: 'Molde de silicona de ranas + 3 tabletas chocolate + bolsitas celofán autoadhesivas 10x10cm',
+        diyTrick: 'Mete cada rana junto con su cromo pentagonal impreso dentro de una bolsita de celofán transparente autoadhesiva para que ningún niño toque el chocolate con la mano.',
         unitLabel: 'lotes (molde + choco)',
         baseQty35: 1,
         unitWeightKg: 0.4,
@@ -2033,15 +2070,15 @@
         defaultAssignee: 'Lucía',
         links: [
           { label: '🐸 Molde Silicona Ranas + Cromos (Amazon)', url: 'https://www.amazon.es/s?k=molde+ranas+chocolate+harry+potter' },
-          { label: '🍫 Chocolate Fundir Repostería (Amazon)', url: 'https://www.amazon.es/s?k=chocolate+con+leche+fundir+reposteria' }
+          { label: '🛍️ 100 Bolsitas Celofán Autoadhesivas 10x10 (Amazon)', url: 'https://www.amazon.es/s?k=bolsitas+celofan+autoadhesivas+10x10' }
         ]
       },
       {
         id: 'beans',
         icon: '🫘',
-        magicalName: 'Grageas de Todos los Sabores de Bertie Bott',
-        realProduct: 'Jelly Beans surtidas de colores vivos (bolsa ahorro 500g / 1kg)',
-        diyTrick: 'Sírvelas en bote de cristal ancho con pala metálica y cartel de "¡Cuidado con el sabor a cera de oído!".',
+        magicalName: 'Grageas de Bertie Bott (En Saquitos Individuales)',
+        realProduct: 'Jelly Beans surtidas de colores (bolsa 1kg) repartidas en saquitos de celofán de 35g',
+        diyTrick: 'Rellena 25–30 bolsitas pequeñas o conos de celofán transparente con grageas, ciérralas con un lazo dorado y colócalas dentro del bote ancho de cristal.',
         unitLabel: 'bolsas de 500g',
         baseQty35: 2,
         unitWeightKg: 0.5,
@@ -2055,9 +2092,9 @@
       {
         id: 'wands',
         icon: '🪄',
-        magicalName: 'Varitas Mágicas de Ollivanders',
-        realProduct: 'Palitos Mikado / bastones de chocolate + perlitas doradas comestibles',
-        diyTrick: 'Baña la punta en chocolate y espolvorea perlitas doradas. Átalos con cinta granate/oro.',
+        magicalName: 'Varitas de Ollivanders (En Funda Transparente)',
+        realProduct: 'Palitos Mikado / bastones de chocolate + perlitas doradas + bolsitas alargadas de celofán',
+        diyTrick: 'Una vez seco el chocolate con perlitas doradas, mete 2 varitas en cada bolsita alargada de celofán y átala con cinta granate y oro.',
         unitLabel: 'packs combinados',
         baseQty35: 2,
         unitWeightKg: 0.45,
@@ -2065,15 +2102,15 @@
         defaultAssignee: 'Tamara',
         links: [
           { label: '🍫 Mikado Chocolate (Amazon)', url: 'https://www.amazon.es/s?k=mikado+chocolate' },
-          { label: '✨ Sprinkles Dorados Repostería (Amazon)', url: 'https://www.amazon.es/s?k=sprinkles+dorados+comestibles' }
+          { label: '🛍️ Bolsitas Celofán Alargadas Varitas (Amazon)', url: 'https://www.amazon.es/s?k=bolsas+celofan+alargadas+pretzel' }
         ]
       },
       {
         id: 'slugs',
         icon: '🧪',
-        magicalName: 'Babosas y Gusanos de Pociones (Prof. Snape)',
-        realProduct: 'Bolsa mayorista 1 kg de gusanos de gelatina brillo (Vidal / Fini)',
-        diyTrick: 'Colócalos en el bote más alto junto a las 3 botellas de pociones iluminadas.',
+        magicalName: 'Babosas de Pociones (En Paquetitos Individuales)',
+        realProduct: 'Bolsa mayorista 1 kg de gusanos de gelatina brillo (Vidal / Fini) embolsados en raciones',
+        diyTrick: 'Haz bolsitas individuales de 5–6 gusanos ácidos con cierre adhesivo y mételas todas en el tarro alto junto a las botellas decorativas de pociones.',
         unitLabel: 'bolsas de 1 kg',
         baseQty35: 1,
         unitWeightKg: 1.0,
@@ -2087,9 +2124,9 @@
       {
         id: 'hedwig',
         icon: '🦉',
-        magicalName: 'Lechuzas Hedwig (Mensajería de Hogwarts)',
-        realProduct: 'Bolsa de Nubes blancas cilíndricas + Rotulador comestible negro',
-        diyTrick: 'Dibuja ojitos y plumitas con el rotulador comestible en las nubes exteriores del tarro.',
+        magicalName: 'Lechuzas Hedwig (Embolsadas de 2 en 2)',
+        realProduct: 'Bolsa de Nubes blancas cilíndricas + bolsitas de celofán + rotulador negro',
+        diyTrick: 'Al meter 2 nubes en cada bolsita cerrada no se secan nada y puedes pintar los ojitos de Hedwig por fuera del plástico transparente en segundos.',
         unitLabel: 'bolsas de 500g',
         baseQty35: 2,
         unitWeightKg: 0.5,
@@ -2103,9 +2140,9 @@
       {
         id: 'brooms',
         icon: '🧹',
-        magicalName: 'Escobas Voladoras Nimbus 2000',
-        realProduct: 'Palitos salados Pretzel largos + lenguas ácidas pica-pica',
-        diyTrick: 'Fleca media lengua ácida en la punta del palito Pretzel para crear el cepillo de la escoba.',
+        magicalName: 'Escobas Nimbus 2000 (En Bolsita Individual)',
+        realProduct: 'Palitos salados Pretzel largos + lenguas ácidas pica-pica + bolsita celofán',
+        diyTrick: 'Embolsar cada escobita individualmente evita que la humedad ablande el Pretzel salado y queda impecable en la bandeja.',
         unitLabel: 'lotes para 30 escobas',
         baseQty35: 1,
         unitWeightKg: 0.35,
@@ -2119,9 +2156,9 @@
       {
         id: 'galleons',
         icon: '🪙',
-        magicalName: 'Galeones de Oro del Banco Gringotts',
-        realProduct: 'Mallas o bolsa de 500g de monedas de chocolate doradas',
-        diyTrick: 'Llena un pequeño cofre de madera y esparce el resto por el camino dorado del mantel.',
+        magicalName: 'Galeones de Oro del Banco Gringotts (En Saquitos)',
+        realProduct: 'Monedas de chocolate doradas envueltas individualmente + saquitos dorados',
+        diyTrick: 'Cada moneda viene envuelta en su aluminio dorado y podéis agruparlas de 5 en 5 en bolsitas transparentes con moneda de Gringotts.',
         unitLabel: 'packs de 250g',
         baseQty35: 2,
         unitWeightKg: 0.25,
@@ -2149,7 +2186,7 @@
       {
         id: 'jars',
         name: '🫙 Tarros de Botica y Bomboneras de Cristal (6–8 uds)',
-        howTo: 'Combina botes altos de conserva sin etiqueta con 2 o 3 bomboneras con tapa estilo botica.',
+        howTo: 'Para exponer dentro los paquetitos individuales embolsados de forma ordenada y vistosa.',
         cost: { diy: 0.00, balanced: 6.50, premium: 14.00 },
         defaultAssignee: 'Ambas',
         links: [
@@ -2169,23 +2206,24 @@
       },
       {
         id: 'bags',
-        name: '🛍️ 50 Bolsitas Kraft + Pegatinas Sello Lacre Hogwarts',
-        howTo: 'Para que cada niño y adulto se lleve un surtido de chuches a su mesa tras el banquete.',
-        cost: { diy: 2.50, balanced: 4.00, premium: 6.50 },
+        name: '🛍️ Pack 200 Bolsitas Celofán Transparente + 50 Bolsitas Kraft con Lacre',
+        howTo: 'Imprescindible para que TODO esté embolsado individualmente con higiene total + las bolsas Kraft donde cada niño mete sus paquetitos.',
+        cost: { diy: 4.50, balanced: 6.50, premium: 9.50 },
         defaultAssignee: 'Lucía',
         links: [
-          { label: '🛍️ 50 Bolsitas Papel Kraft (Amazon)', url: 'https://www.amazon.es/s?k=bolsitas+papel+kraft+chuches+50' },
+          { label: '🛍️ Pack 200 Bolsitas Celofán Varias Medidas + Lazos (Amazon)', url: 'https://www.amazon.es/s?k=bolsitas+celofan+transparentes+chuches+con+lazos' },
+          { label: '🛍️ 50 Bolsitas Papel Kraft + Pegatinas Lacre (Amazon)', url: 'https://www.amazon.es/s?k=bolsitas+papel+kraft+chuches+50' },
           { label: '💮 Pegatinas Sello Lacre Hogwarts (Amazon)', url: 'https://www.amazon.es/s?k=pegatinas+sello+lacre+hogwarts' }
         ]
       },
       {
         id: 'potions',
-        name: '🧪 3 Frascos de Pociones con Corcho + Polvo Nacarado',
-        howTo: 'Botellas de cristal con tapón de corcho rellenas de agua teñida con efecto perlado mágico.',
+        name: '🧪 3 Frascos Grandes de Pociones Decorativas con Corcho + Polvo Nacarado',
+        howTo: 'Las 3 botellas grandes de vidrio de decoración para el Nivel 3 (separadas de las cantimploras bebibles de los niños).',
         cost: { diy: 1.50, balanced: 3.50, premium: 6.00 },
         defaultAssignee: 'Tamara',
         links: [
-          { label: '🧪 Frascos Pociones con Corcho (Amazon)', url: 'https://www.amazon.es/s?k=botellas+cristal+corcho+250ml' },
+          { label: '🧪 Frascos Pociones Decoración con Corcho (Amazon)', url: 'https://www.amazon.es/s?k=botellas+cristal+corcho+250ml' },
           { label: '✨ Colorante + Nacarado Comestible (Amazon)', url: 'https://www.amazon.es/s?k=colorante+alimentario+nacarado' }
         ]
       },
@@ -2204,19 +2242,19 @@
 
     const CHECKLIST_STEPS = [
       { id: 'c1', when: '3–4 semanas antes', text: 'Repartir zonas entre Tamara y Lucía y empezar a guardar botes de cristal bonitos.' },
-      { id: 'c2', when: '3 semanas antes', text: 'Pedir en Amazon/AliExpress el molde de ranas, las alas doradas de Snitch y las velas flotantes.' },
-      { id: 'c3', when: '2 semanas antes', text: 'Comprar las bolsas de 1 kg de gomitas/nubes/grageas (duran meses cerradas) y las bolsitas Kraft.' },
-      { id: 'c4', when: '1 semana antes', text: 'Imprimir los carteles desde la pestaña 4 y envejecer los bordes con una bolsita de té húmeda.' },
-      { id: 'c5', when: '3 días antes', text: 'Fundir el chocolate, hacer las Ranas de Chocolate en el molde y guardarlas en tupper en la nevera.' },
-      { id: 'c6', when: '2 días antes', text: 'Pegar las alitas doradas a los bombones Ferrero y pintar los ojitos a las nubes de Hedwig.' },
-      { id: 'c7', when: 'Día anterior', text: 'Dejar lista la estructura de la mesa: mantel, libros apilados en 3 alturas, pociones y carteles.' },
-      { id: 'c8', when: 'Día de la Comunión (2h antes)', text: 'Rellenar los tarros con las chuches tiernas, encender las velas LED y colocar las ranas en sus cromos.' }
+      { id: 'c2', when: '3 semanas antes', text: 'Pedir en Amazon las cantimploras de pociones bebibles, las bolsitas de celofán para embolsar todo, el molde de ranas y las velas.' },
+      { id: 'c3', when: '2 semanas antes', text: 'Comprar las bolsas de 1 kg de gomitas/nubes/grageas y las bebidas/chuches líquidas para las cantimploras.' },
+      { id: 'c4', when: '1 semana antes', text: 'Imprimir los carteles, etiquetas de cantimploras y cromos desde la pestaña 4.' },
+      { id: 'c5', when: '4 días antes', text: 'Embolsar individualmente las grageas, gusanos, nubes de Hedwig, varitas y escobas en sus bolsitas de celofán con lazo.' },
+      { id: 'c6', when: '2 días antes', text: 'Hacer las Ranas de Chocolate, meter cada una en su bolsita transparente con su cromo y pegar las alitas a las Snitches.' },
+      { id: 'c7', when: 'Día anterior', text: 'Rellenar y cerrar las cantimploras de pociones bebibles con sus etiquetas y dejar montada la estructura de 3 alturas.' },
+      { id: 'c8', when: 'Día de la Comunión (1h antes)', text: 'Colocar todos los paquetes embolsados y las cantimploras frías en sus zonas y encender las velas flotantes.' }
     ];
 
     // =========================================================================
     // 3. ESTADO COLABORATIVO PERSISTENTE + SINCRONIZACIÓN POR URL / WHATSAPP
     // =========================================================================
-    const STORAGE_KEY = 'hp_comunion_lucia_collab_v2';
+    const STORAGE_KEY = 'hp_comunion_lucia_collab_v3';
 
     const DEFAULT_STATE = {
       activeUser: 'Tamara',
@@ -2224,17 +2262,18 @@
       tier: 'balanced',
       childName: 'Lucía',
       house: 'Gryffindor',
-      selectedZoneId: 'zona-snitches',
+      selectedZoneId: 'zona-cantimploras',
       zoneFilter: 'all',
       shopFilter: 'all',
-      // Estado de cada una de las 7 zonas: 'pending' | 'wip' | 'done'
+      // Estado de cada una de las 8 zonas: 'pending' | 'wip' | 'done'
       zoneStatus: {
         'zona-velas': 'pending',
         'zona-snitches': 'pending',
-        'zona-pociones': 'done',
+        'zona-pociones': 'pending',
         'zona-hedwig': 'pending',
         'zona-varitas': 'pending',
         'zona-escobas': 'pending',
+        'zona-cantimploras': 'pending',
         'zona-ranas': 'pending'
       },
       zoneAssignees: {
@@ -2244,26 +2283,29 @@
         'zona-hedwig': 'Lucía',
         'zona-varitas': 'Ambas',
         'zona-escobas': 'Tamara',
+        'zona-cantimploras': 'Tamara',
         'zona-ranas': 'Lucía'
       },
       // Estado de compra de chuches y decoración (true = ya comprado/listo)
       itemPurchased: {
+        'cantimploras': false,
         'snitches': false,
-        'frogs': true,
+        'frogs': false,
         'beans': false,
         'wands': false,
-        'slugs': true,
+        'slugs': false,
         'hedwig': false,
         'brooms': false,
         'galleons': false,
         'candles': false,
-        'jars': true,
+        'jars': false,
         'tablecloth': false,
         'bags': false,
-        'potions': true,
+        'potions': false,
         'props': false
       },
       itemAssignees: {
+        'cantimploras': 'Tamara',
         'snitches': 'Lucía',
         'frogs': 'Lucía',
         'beans': 'Tamara',
@@ -2280,20 +2322,9 @@
         'props': 'Lucía'
       },
       customShopLinks: {},
-      completedSteps: ['c1'],
-      // Comentarios por zona o item
-      comments: {
-        'zona-snitches': [
-          { id: 'cm1', author: 'Tamara', date: 'Hoy', text: 'Lucía, he visto el pack de 50 alitas doradas ya recortadas en Amazon por 4€, nos ahorra muchísimo tiempo.' },
-          { id: 'cm2', author: 'Lucía', date: 'Hoy', text: '¡Súper! Me encargo yo de pedirlas junto con los bombones y monto la pirámide central.' }
-        ],
-        'zona-pociones': [
-          { id: 'cm3', author: 'Tamara', date: 'Hoy', text: 'Ya tengo guardados 3 frascos de vidrio ideales para las pociones y libros antiguos de tapa dura.' }
-        ],
-        'zona-ranas': [
-          { id: 'cm4', author: 'Lucía', date: 'Hoy', text: 'Ya he pedido el molde de las ranas de chocolate con los cromos pentagonales incluidos 🐸✨' }
-        ]
-      },
+      completedSteps: [],
+      // Sin comentarios de ejemplo por defecto
+      comments: {},
       // Muro de nuevas ideas colaborativas
       ideas: [
         {
@@ -2303,39 +2334,38 @@
           author: 'Tamara',
           cost: 6.50,
           link: 'https://www.amazon.es/s?k=botellas+cristal+pequenas+cerveza+mantequilla',
-          desc: 'Llenar 12 botellitas de cristal pequeñas con refresco Cream Soda o Fanta Naranja + un chorrito de sirope de caramelo y coronar con nata montada justo antes de empezar.',
+          desc: 'Llenar 12 botellitas pequeñas cerradas con refresco Cream Soda o Fanta Naranja + un chorrito de sirope de caramelo.',
           approved: true,
           done: false,
           likes: 2
         },
         {
           id: 'idea-2',
-          title: '🪴 Mini Macetas de Mandrágoras de Oreo y Chocolate',
+          title: '🪴 Mini Macetas de Mandrágoras de Oreo con Tapa',
           zone: 'Nivel 1 · Frente de Mesa',
           author: 'Lucía',
           cost: 5.00,
-          link: 'https://www.amazon.es/s?k=mini+macetas+plastico+postres',
-          desc: 'Vasitos marrones tipo maceta rellenos de natillas de chocolate con galleta Oreo triturada por encima ("tierra") y una hojita de menta o muñequito de mandrágora.',
+          link: 'https://www.amazon.es/s?k=vasitos+postre+con+tapa+cuchara',
+          desc: 'Vasitos individuales con tapa transparente rellenos de natillas de chocolate con galleta Oreo triturada ("tierra") y etiqueta de Mandrágora.',
           approved: true,
           done: false,
           likes: 2
-        },
-        {
-          id: 'idea-3',
-          title: '📸 Cartel Fotomatón "Se Busca en Azkaban" para los niños',
-          zone: 'Techo / Pared',
-          author: 'Tamara',
-          cost: 8.90,
-          link: 'https://www.amazon.es/s?k=photocall+azkaban+harry+potter',
-          desc: 'Poner al lado de la mesa de chuches un marco de cartón de "Have You Seen This Wizard?" con un par de varitas y gafas para que los invitados se hagan fotos mientras cogen chuches.',
-          approved: false,
-          done: false,
-          likes: 1
         }
       ]
     };
 
     let state = loadState();
+
+    function stripLegacyDemoComments(commentsObj) {
+      if (!commentsObj || typeof commentsObj !== 'object') return {};
+      const demoIds = new Set(['cm1', 'cm2', 'cm3', 'cm4']);
+      const cleaned = {};
+      Object.keys(commentsObj).forEach(key => {
+        const arr = Array.isArray(commentsObj[key]) ? commentsObj[key].filter(c => c && !demoIds.has(c.id)) : [];
+        if (arr.length > 0) cleaned[key] = arr;
+      });
+      return cleaned;
+    }
 
     function loadState() {
       // 1. Primero comprobar si viene un enlace mágico compartido en el hash (#sync=...)
@@ -2344,6 +2374,7 @@
           const encoded = window.location.hash.slice(6);
           const jsonStr = decodeURIComponent(escape(atob(encoded)));
           const incoming = JSON.parse(jsonStr);
+          incoming.comments = stripLegacyDemoComments(incoming.comments);
           const merged = Object.assign({}, DEFAULT_STATE, incoming);
           localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
           history.replaceState(null, '', window.location.pathname + window.location.search);
@@ -2366,7 +2397,7 @@
             zoneAssignees: Object.assign({}, DEFAULT_STATE.zoneAssignees, parsed.zoneAssignees || {}),
             itemPurchased: Object.assign({}, DEFAULT_STATE.itemPurchased, parsed.itemPurchased || {}),
             itemAssignees: Object.assign({}, DEFAULT_STATE.itemAssignees, parsed.itemAssignees || {}),
-            comments: Object.assign({}, DEFAULT_STATE.comments, parsed.comments || {})
+            comments: stripLegacyDemoComments(parsed.comments)
           });
         }
       } catch (e) {
@@ -2391,11 +2422,11 @@
     }
 
     function calculateCompletionMetrics() {
-      // 1. Zonas listas (7 zonas)
+      // 1. Zonas listas (8 zonas)
       const totalZones = TABLE_ZONES.length;
       const doneZones = TABLE_ZONES.filter(z => state.zoneStatus[z.id] === 'done').length;
 
-      // 2. Compras listas (8 chuches + 6 deco = 14 items)
+      // 2. Compras listas (9 chuches + 6 deco = 15 items)
       const allShopIds = [...SWEETS_CATALOG.map(s => s.id), ...DECOR_ITEMS.map(d => d.id)];
       const totalShop = allShopIds.length;
       const doneShop = allShopIds.filter(id => !!state.itemPurchased[id]).length;
@@ -2629,7 +2660,7 @@
         zPocionesGroup.add(bottle);
       });
 
-      // Tarro alto de Gusanos / Babosas
+      // Tarro alto de Gusanos / Babosas Embolsadas
       const slugJar = new THREE.Mesh(
         new THREE.CylinderGeometry(0.22, 0.22, 0.68, 18),
         new THREE.MeshStandardMaterial({ color: 0x34d399, roughness: 0.25 })
@@ -2644,7 +2675,7 @@
       bookStackRight.position.set(2.35, 0.57, -0.65);
       zHedwigGroup.add(bookStackRight);
 
-      // Tarro de Nubes blancas Hedwig
+      // Tarro de Nubes blancas Hedwig embolsadas
       const hedwigJar = new THREE.Mesh(
         new THREE.CylinderGeometry(0.24, 0.24, 0.66, 18),
         new THREE.MeshStandardMaterial({ color: 0xf8fafc, roughness: 0.3 })
@@ -2670,7 +2701,6 @@
       wandGlass.position.set(-1.7, 0.62, 0.32);
       zVaritasGroup.add(wandGlass);
 
-      // Palitos varita sobresaliendo
       for (let w = -2; w <= 2; w++) {
         const wandStick = new THREE.Mesh(
           new THREE.CylinderGeometry(0.022, 0.022, 0.75, 8),
@@ -2681,7 +2711,6 @@
         zVaritasGroup.add(wandStick);
       }
 
-      // Tarro ancho de Grageas de Bertie Bott
       const beansJar = new THREE.Mesh(
         new THREE.CylinderGeometry(0.26, 0.26, 0.52, 18),
         new THREE.MeshStandardMaterial({ color: 0xec4899, roughness: 0.35 })
@@ -2690,7 +2719,7 @@
       zVaritasGroup.add(beansJar);
       registerZoneGroup3D('zona-varitas', zVaritasGroup, new THREE.Vector3(-1.4, 1.45, 0.35));
 
-      // --- ZONA 6: BANDEJA DE ESCOBAS NIMBUS 2000 (zona-escobas) ---
+      // --- ZONA 6: BANDEJA DE ESCOBAS NIMBUS 2000 EMBOLSADAS (zona-escobas) ---
       const zEscobasGroup = new THREE.Group();
       const slateTray = new THREE.Mesh(
         new THREE.BoxGeometry(1.35, 0.12, 0.78),
@@ -2710,20 +2739,54 @@
       }
       registerZoneGroup3D('zona-escobas', zEscobasGroup, new THREE.Vector3(1.55, 1.15, 0.35));
 
-      // --- ZONA 7: FRENTE DE MESA: RANAS + COFRE GRINGOTTS + BOLSITAS (zona-ranas) ---
+      // --- ZONA 7: CANTIMPLORAS DE POCIONES BEBIBLES PARA NIÑOS (zona-cantimploras) ---
+      const zCantimplorasGroup = new THREE.Group();
+      const crateMesh = new THREE.Mesh(
+        new THREE.BoxGeometry(1.35, 0.24, 0.72),
+        new THREE.MeshStandardMaterial({ color: 0x4a2e1b, roughness: 0.8 })
+      );
+      crateMesh.position.set(-1.95, 0.46, 1.1);
+      zCantimplorasGroup.add(crateMesh);
+
+      const canteenColors = [0x10b981, 0x0284c7, 0xdc2626, 0x10b981, 0x0284c7, 0xdc2626];
+      canteenColors.forEach((cHex, idx) => {
+        const col = idx % 3;
+        const row = Math.floor(idx / 3);
+        const flaskBody = new THREE.Mesh(
+          new THREE.SphereGeometry(0.13, 14, 14),
+          new THREE.MeshStandardMaterial({ color: cHex, roughness: 0.2, metalness: 0.25 })
+        );
+        const fx = -2.32 + col * 0.36;
+        const fz = 0.96 + row * 0.26;
+        flaskBody.position.set(fx, 0.64, fz);
+        const capMesh = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.045, 0.045, 0.09, 10),
+          new THREE.MeshStandardMaterial({ color: 0x18181b })
+        );
+        capMesh.position.set(fx, 0.78, fz);
+        const strawMesh = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.014, 0.014, 0.22, 8),
+          new THREE.MeshStandardMaterial({ color: 0xfef2f2 })
+        );
+        strawMesh.position.set(fx + 0.02, 0.87, fz);
+        strawMesh.rotation.z = -0.18;
+        zCantimplorasGroup.add(flaskBody, capMesh, strawMesh);
+      });
+      registerZoneGroup3D('zona-cantimploras', zCantimplorasGroup, new THREE.Vector3(-1.95, 1.15, 1.1));
+
+      // --- ZONA 8: FRENTE DE MESA: RANAS EMBOLSADAS + COFRE GRINGOTTS + BOLSITAS (zona-ranas) ---
       const zRanasGroup = new THREE.Group();
-      // Cromos pentagonales morados/dorados con ranas en el frente
-      for (let f = -2; f <= 2; f++) {
+      for (let f = -1; f <= 2; f++) {
         const cardMesh = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.18, 0.18, 0.04, 5),
+          new THREE.CylinderGeometry(0.17, 0.17, 0.04, 5),
           new THREE.MeshStandardMaterial({ color: 0x5b21b6 })
         );
-        cardMesh.position.set(f * 0.42 - 0.5, 0.38, 1.12);
+        cardMesh.position.set(f * 0.38 - 0.15, 0.38, 1.12);
         const frogMesh = new THREE.Mesh(
-          new THREE.SphereGeometry(0.08, 10, 10),
+          new THREE.SphereGeometry(0.075, 10, 10),
           new THREE.MeshStandardMaterial({ color: 0x3e2013 })
         );
-        frogMesh.position.set(f * 0.42 - 0.5, 0.45, 1.12);
+        frogMesh.position.set(f * 0.38 - 0.15, 0.45, 1.12);
         zRanasGroup.add(cardMesh, frogMesh);
       }
 
@@ -2732,12 +2795,12 @@
         new THREE.BoxGeometry(0.55, 0.32, 0.38),
         new THREE.MeshStandardMaterial({ color: 0x452815 })
       );
-      chestBox.position.set(0.95, 0.52, 1.1);
+      chestBox.position.set(1.25, 0.52, 1.1);
       const goldPile = new THREE.Mesh(
         new THREE.BoxGeometry(0.48, 0.1, 0.32),
         goldMat
       );
-      goldPile.position.set(0.95, 0.69, 1.1);
+      goldPile.position.set(1.25, 0.69, 1.1);
       zRanasGroup.add(chestBox, goldPile);
 
       // Bolsitas Kraft a la derecha del frente
@@ -2746,10 +2809,10 @@
           new THREE.BoxGeometry(0.24, 0.38, 0.14),
           new THREE.MeshStandardMaterial({ color: 0xc8a97e })
         );
-        bag.position.set(1.65 + k * 0.28, 0.55, 1.12);
+        bag.position.set(1.9 + k * 0.28, 0.55, 1.12);
         zRanasGroup.add(bag);
       }
-      registerZoneGroup3D('zona-ranas', zRanasGroup, new THREE.Vector3(0, 1.05, 1.15));
+      registerZoneGroup3D('zona-ranas', zRanasGroup, new THREE.Vector3(0.85, 1.05, 1.15));
 
       // Eventos de ratón / táctil y raycaster para clicar zonas 3D
       setup3DInteractions(container);
@@ -3709,10 +3772,20 @@
           emblem: 'potion',
           badge: '🧪 MAZMORRAS DEL CASTILLO DE HOGWARTS',
           title: 'Botica del Prof. Snape',
-          subtitle: 'Babosas de Pociones, Elixir Multijugos, Amortentia y Felix Felicis',
-          lore: 'Ingredientes confitados de grado N.E.W.T. · Prohibido el uso sin supervisión mágica',
+          subtitle: 'Babosas de Pociones y Píldoras Doradas en sobrecitos individuales sellados',
+          lore: 'Ingredientes confitados de grado N.E.W.T. · 100% Embolsados listos para llevar',
           price: '5 SICKLES',
           catalogNo: 'MAZM-394'
+        },
+        {
+          id: 'sign-cantimploras',
+          emblem: 'potion',
+          badge: '🧋 TABERNA LAS TRES ESCOBAS & HONEYDUKES',
+          title: 'Cantimploras de Pociones',
+          subtitle: '¡Elixires líquidos de chuche para que los jóvenes magos se los beban!',
+          lore: 'Multijugos (Manzana), Amortentia (Fresa) y Suerte Líquida · Cantimplora individual precintada',
+          price: '4 SICKLES',
+          catalogNo: 'FLASK-9¾'
         },
         {
           id: 'sign-hedwig',
@@ -3720,7 +3793,7 @@
           badge: '🦉 OFICINA POSTAL DE LECHUZAS DE HOGWARTS',
           title: 'Rincón de Hedwig',
           subtitle: `Mensajería Aérea Urgente y Cartas de Admisión para ${name}`,
-          lore: 'Tiernas lechuzas nevadas de malvavisco recién llegadas de la Torre Norte',
+          lore: 'Tiernas lechuzas nevadas de malvavisco en bolsita individual con lacre real',
           price: '2 KNUTS',
           catalogNo: 'POST-OWL-07'
         },
@@ -3730,7 +3803,7 @@
           badge: '🧹 SUMINISTROS DE QUIDDITCH DE CALIDAD',
           title: 'Escobas Nimbus 2000',
           subtitle: 'El modelo más veloz del campo · Contraste dulce y salado encantado',
-          lore: 'Mango de madera crujiente salada con ramitas dulces de pica-pica encantado',
+          lore: 'Cada escoba voladora viene en su funda individual de celofán transparente con lazo dorado',
           price: '20 GALEONES',
           catalogNo: 'NIMBUS-2000'
         }
@@ -3803,36 +3876,36 @@
       const name = (state.childName || 'Lucía').trim();
       const potions = [
         {
-          code: 'ELIXIR N.º 394 · GRADO AVANZado',
+          code: 'CANTIMPLORA BEBIBLE · ELIXIR N.º 394',
           name: 'POCIÓN MULTIJUGOS',
-          latin: 'Polyjuice Potion · Transformación Temporal',
+          latin: 'Sabor Manzana Verde Ácida · Bebible para Niños',
           accent: '#065f46',
-          ingredients: 'Crisopos guisados 21 días · Sanguijuelas · Descurainia Sophia · Polvo de cuerno de Bicornio',
-          warning: 'USO EXCLUSIVO PARA MAGOS AUTORIZADOS'
+          ingredients: 'Zumo mágico de manzana esmeralda · Gelatina líquida de chuche · Cero alcohol · Precintado individual',
+          warning: 'AGITAR CANTIMPLORA ANTES DE BEBER'
         },
         {
-          code: 'DESTILADO REAL · H. SLUGHORN',
+          code: 'CANTIMPLORA BEBIBLE · H. SLUGHORN',
           name: 'FELIX FELICIS',
-          latin: 'Suerte Líquida · Oro Fundido Encantado',
+          latin: 'Suerte Líquida Dorada · Melocotón y Piña',
           accent: '#92400e',
-          ingredients: 'Huevo de Ashwinder · Bulbo de Scilla · Tentáculo de Murtlap · Tomillo y Ruda Mágica',
+          ingredients: 'Néctar dorado de melocotón · Polvo brillante comestible · Otorga racha de suerte en todos los juegos',
           warning: `ÉXITO GARANTIZADO EN LA COMUNIÓN DE ${name.toUpperCase()}`
         },
         {
-          code: 'FILTRO DE LA BOTICA REAL',
+          code: 'CANTIMPLORA BEBIBLE · BOTICA REAL',
           name: 'AMORTENTIA',
-          latin: 'El Filtro de Amor y Alegría más Poderoso',
+          latin: 'Elixir Rojo de Fresa y Frambuesa de Honeydukes',
           accent: '#991b1b',
-          ingredients: 'Espinas de Rosa Encantada · Polvo de Perla Lunar · Esencia de Miel de Honeydukes',
-          warning: 'VAPOR NACARADO EN ESPIRAL · NO DERRAMAR'
+          ingredients: 'Poción líquida de fresa dulce · Aroma a nubes de azúcar recién hechas · Tapón de seguridad',
+          warning: 'SERVIR FRÍA EN SU CANTIMPLORA INDIVIDUAL'
         },
         {
-          code: 'RESERVA DE LAS MAZMORRAS',
-          name: 'BABOSAS & VERITASERUM',
-          latin: 'Propiedad Privada del Prof. Severus Snape',
+          code: 'CANTIMPLORA BEBIBLE · RANGO AUROR',
+          name: 'VERITASERUM AZUL',
+          latin: 'Elixir Eléctrico de Mora y Frambuesa Azul',
           accent: '#1e3a8a',
-          ingredients: 'Tres gotas bastan para revelar cualquier secreto en el Gran Comedor de Hogwarts',
-          warning: 'MINISTERIO DE MAGIA · CLASIFICACIÓN X-5'
+          ingredients: 'Tres sorbos bastan para revelar todos los secretos del Gran Comedor de Hogwarts · Lengua azul garantizada',
+          warning: 'MINISTERIO DE MAGIA · EDICIÓN INFANTIL'
         }
       ];
 
@@ -3848,10 +3921,10 @@
               <div class="minalima-main-title" style="font-size:1.18rem;">${p.name}</div>
               <div class="font-serif-italic" style="font-size:0.92rem;font-weight:700;margin-bottom:0.45rem;">${p.latin}</div>
               <div class="minalima-lore-box" style="font-size:0.65rem;line-height:1.35;">
-                <strong>INGREDIENTES:</strong> ${p.ingredients}
+                <strong>COMPOSICIÓN:</strong> ${p.ingredients}
               </div>
               <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.4rem;font-family:'Cinzel',serif;font-size:0.58rem;font-weight:800;">
-                <span>✂️ RECORTAR Y PEGAR EN FRASCO</span>
+                <span>✂️ PEGAR EN CANTIMPLORA O TARRO</span>
                 <div class="wax-seal-badge" style="width:30px;height:30px;font-size:0.75rem;">S</div>
               </div>
             </div>
