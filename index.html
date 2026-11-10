@@ -2512,132 +2512,147 @@
       return JSON.parse(JSON.stringify(DEFAULT_STATE));
     }
 
-    // URL del Web App de Google Apps Script conectado a la Hoja "Base de Datos - Mesa Harry Potter Comunion Lucia"
-    // ID de tu Hoja en Google Drive: 10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk
+    // =========================================================================
+    // 3B. MOTOR DE SINCRONIZACIÓN AUTOMÁTICA EN TIEMPO REAL (0 CLICS)
+    // Conecta automáticamente los móviles de Tamara y Lucía mediante:
+    // 1) Lectura directa de tu Hoja de Google Sheets (ID: 10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk)
+    // 2) Canal en tiempo real instantáneo (SSE + historial JSON) + Puente a Google Drive
+    // =========================================================================
+    const GOOGLE_SHEET_ID = '10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk';
+    const GOOGLE_SHEET_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json&sheet=DB&headers=1`;
+    const NTFY_TOPIC = 'mesa_hp_lucia_tamara_10p2BGynhsPssId';
+    const NTFY_BASE_URL = `https://ntfy.sh/${NTFY_TOPIC}`;
     const DEFAULT_GOOGLE_SCRIPT_URL = '';
     const GOOGLE_URL_STORAGE_KEY = 'hp_comunion_lucia_google_script_url';
     let cloudPushTimer = null;
     let isCloudSyncing = false;
+    let liveEventSource = null;
+    let lastPushedMsgSignature = '';
 
     function getGoogleScriptUrl() {
-      try {
-        const params = new URLSearchParams(window.location.search);
-        const fromParam = params.get('gs');
-        if (fromParam && fromParam.startsWith('https://script.google.com/')) {
-          localStorage.setItem(GOOGLE_URL_STORAGE_KEY, fromParam.trim());
-        }
-      } catch (e) {}
       return (DEFAULT_GOOGLE_SCRIPT_URL || state.googleScriptUrl || localStorage.getItem(GOOGLE_URL_STORAGE_KEY) || '').trim();
     }
 
     function updateCloudBadgeUI(statusText, colorHex) {
       const btn = document.getElementById('btnCloudStatus');
       if (!btn) return;
-      const url = getGoogleScriptUrl();
-      if (!url) {
-        btn.innerHTML = '☁️ Conectar Google Sheet';
-        btn.style.borderColor = 'var(--border-brass)';
-        btn.style.color = 'var(--gold-bright)';
-        return;
-      }
-      btn.innerHTML = statusText || '🟢 Google Drive Sincronizado';
-      if (colorHex) {
-        btn.style.borderColor = colorHex;
-        btn.style.color = colorHex;
-      }
+      btn.innerHTML = statusText || '🟢 Sincronizado en Vivo';
+      const c = colorHex || '#34d399';
+      btn.style.borderColor = c;
+      btn.style.color = c;
     }
 
-    const APPS_SCRIPT_SNIPPET = `const SHEET_ID = '10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk';
-
-function doGet() {
-  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName('DB');
-  const raw = sheet.getRange('A2').getValue();
-  const out = raw ? raw : '{}';
-  return ContentService.createTextOutput(out).setMimeType(ContentService.MimeType.JSON);
-}
-
-function doPost(e) {
-  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName('DB');
-  const body = JSON.parse(e.postData.contents);
-  sheet.getRange('A2:D2').setValues([[
-    JSON.stringify(body.state || {}),
-    body.updatedAt || new Date().toISOString(),
-    body.author || 'Tamara',
-    'SINCRONIZADO_ACTIVO'
-  ]]);
-  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
-    .setMimeType(ContentService.MimeType.JSON);
-}`;
-
-    function configureGoogleCloudUrl() {
-      let modal = document.getElementById('googleCloudModal');
-      if (!modal) {
-        modal = document.createElement('div');
-        modal.id = 'googleCloudModal';
-        modal.style.cssText = 'position:fixed;inset:0;background:rgba(8,5,12,0.88);backdrop-filter:blur(6px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;';
-        modal.innerHTML = `
-          <div style="background:linear-gradient(165deg,#1d1427,#120c18);border:2px solid var(--gold-primary);border-radius:16px;max-width:640px;width:100%;padding:22px;color:var(--parchment-light);box-shadow:0 20px 50px rgba(0,0,0,0.85);max-height:90vh;overflow-y:auto;">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;">
-              <h3 style="margin:0;font-family:'Cinzel Decorative',serif;color:var(--gold-bright);font-size:1.1rem;">☁️ Base de Datos en Google Drive (Tamara y Lucía)</h3>
-              <button onclick="document.getElementById('googleCloudModal').style.display='none'" style="background:none;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;">✕</button>
-            </div>
-            <p style="font-size:0.84rem;color:var(--parchment-mid);line-height:1.5;margin-bottom:12px;">
-              Tu hoja de cálculo ya está creada en tu carpeta <strong>Antigravity/</strong> de Google Drive. Para activar el puente en tiempo real (100% nativo en servidores de Google):
-            </p>
-            <ol style="font-size:0.82rem;color:var(--parchment-light);line-height:1.6;padding-left:18px;margin-bottom:14px;">
-              <li>Abre la hoja: <a href="https://docs.google.com/spreadsheets/d/10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk/edit" target="_blank" rel="noopener" style="color:var(--gold-bright);font-weight:700;text-decoration:underline;">Abrir Hoja de Google Sheets ↗</a></li>
-              <li>En el menú superior de la hoja, pulsa en <strong>Extensiones → Apps Script</strong>, borra lo que haya y pega este código:</li>
-            </ol>
-            <div style="position:relative;margin-bottom:14px;">
-              <pre style="background:#09060d;border:1px solid var(--border-brass);border-radius:8px;padding:10px;font-size:0.72rem;color:#fde68a;overflow-x:auto;margin:0;"><code>${APPS_SCRIPT_SNIPPET.replace(/</g, '&lt;')}</code></pre>
-              <button type="button" onclick="navigator.clipboard.writeText(APPS_SCRIPT_SNIPPET);this.textContent='✅ ¡Código copiado!';setTimeout(()=>this.textContent='📋 Copiar código',2000)" style="position:absolute;top:8px;right:8px;background:var(--gold-primary);color:#120c18;border:none;border-radius:6px;padding:4px 10px;font-size:0.74rem;font-weight:700;cursor:pointer;">📋 Copiar código</button>
-            </div>
-            <p style="font-size:0.82rem;color:var(--parchment-light);line-height:1.5;margin-bottom:10px;">
-              3. Pulsa arriba a la derecha en <strong>Implementar → Nueva implementación</strong> → Tipo: <strong>Aplicación web</strong> → Ejecutar como: <em>Yo</em> → Quién tiene acceso: <strong>Cualquier persona</strong> → <strong>Implementar</strong> y pega aquí abajo la URL que termina en <code>/exec</code>:
-            </p>
-            <input id="googleScriptUrlInput" type="url" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--gold-primary);background:#0c0812;color:#fff;font-size:0.85rem;margin-bottom:14px;" />
-            <div style="display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
-              <button type="button" onclick="document.getElementById('googleCloudModal').style.display='none'" class="btn-outline-gold" style="padding:8px 14px;">Cerrar</button>
-              <button type="button" onclick="saveGoogleCloudUrlFromModal()" class="btn-gold" style="padding:8px 16px;">⚡ Conectar y Sincronizar Ahora</button>
-            </div>
-          </div>
-        `;
-        document.body.appendChild(modal);
-      }
-      document.getElementById('googleScriptUrlInput').value = getGoogleScriptUrl();
-      modal.style.display = 'flex';
+    function buildCompactCloudPayload(st) {
+      const defaultIdeaIds = new Set((DEFAULT_STATE.ideas || []).map(i => i.id));
+      const compactIdeas = [];
+      (st.ideas || []).forEach(idea => {
+        if (!idea || !idea.id) return;
+        if (defaultIdeaIds.has(idea.id)) {
+          const def = DEFAULT_STATE.ideas.find(d => d.id === idea.id);
+          if (!def || def.status !== idea.status) {
+            compactIdeas.push({ id: idea.id, status: idea.status, _patch: true });
+          }
+        } else {
+          compactIdeas.push(idea);
+        }
+      });
+      return {
+        v: 2,
+        ts: st._updatedTs || Date.now(),
+        by: st.activeUser || 'Tamara',
+        g: st.guests,
+        t: st.tier,
+        n: st.childName,
+        h: st.house,
+        zs: st.zoneStatus || {},
+        za: st.zoneAssignees || {},
+        ip: st.itemPurchased || {},
+        ia: st.itemAssignees || {},
+        cm: st.comments || {},
+        id: compactIdeas
+      };
     }
 
-    function saveGoogleCloudUrlFromModal() {
-      const inputEl = document.getElementById('googleScriptUrlInput');
-      const cleaned = (inputEl ? inputEl.value : '').trim();
-      const modal = document.getElementById('googleCloudModal');
-      if (modal) modal.style.display = 'none';
-      if (!cleaned) {
-        localStorage.removeItem(GOOGLE_URL_STORAGE_KEY);
-        delete state.googleScriptUrl;
-        updateCloudBadgeUI();
-        return;
+    function expandCompactCloudPayload(raw) {
+      if (!raw || typeof raw !== 'object') return null;
+      if (raw.state && typeof raw.state === 'object') return raw.state;
+      if (raw.v === 2) {
+        const expandedIdeas = JSON.parse(JSON.stringify(DEFAULT_STATE.ideas || []));
+        (raw.id || []).forEach(item => {
+          if (!item || !item.id) return;
+          if (item._patch) {
+            const target = expandedIdeas.find(d => d.id === item.id);
+            if (target && item.status) target.status = item.status;
+          } else {
+            const idx = expandedIdeas.findIndex(d => d.id === item.id);
+            if (idx >= 0) expandedIdeas[idx] = item;
+            else expandedIdeas.push(item);
+          }
+        });
+        return {
+          _updatedTs: raw.ts || 0,
+          _lastAuthor: raw.by || 'Tamara',
+          guests: raw.g ?? DEFAULT_STATE.guests,
+          tier: raw.t || DEFAULT_STATE.tier,
+          childName: raw.n || DEFAULT_STATE.childName,
+          house: raw.h || DEFAULT_STATE.house,
+          zoneStatus: Object.assign({}, DEFAULT_STATE.zoneStatus, raw.zs || {}),
+          zoneAssignees: normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.zoneAssignees, raw.za || {}), DEFAULT_STATE.zoneAssignees),
+          itemPurchased: Object.assign({}, DEFAULT_STATE.itemPurchased, raw.ip || {}),
+          itemAssignees: normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.itemAssignees, raw.ia || {}), DEFAULT_STATE.itemAssignees),
+          comments: stripLegacyDemoComments(raw.cm || {}),
+          ideas: expandedIdeas
+        };
       }
-      localStorage.setItem(GOOGLE_URL_STORAGE_KEY, cleaned);
-      state.googleScriptUrl = cleaned;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      updateCloudBadgeUI('🔄 Conectando con Google...', '#facc15');
-      schedulePushToGoogleCloud(true);
-      setTimeout(() => pullFromGoogleCloud(false), 1200);
+      return raw;
+    }
+
+    function decodeSheetCellPayload(cellVal) {
+      if (!cellVal || typeof cellVal !== 'string') return null;
+      const trimmed = cellVal.trim();
+      if (!trimmed || trimmed === '{}') return null;
+      try {
+        if (trimmed.startsWith('{')) {
+          return expandCompactCloudPayload(JSON.parse(trimmed));
+        }
+        const jsonStr = decodeURIComponent(Array.prototype.map.call(atob(trimmed), c =>
+          '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        ).join(''));
+        return expandCompactCloudPayload(JSON.parse(jsonStr));
+      } catch (e) {
+        return null;
+      }
     }
 
     function mergeCloudAndLocalStates(localSt, cloudSt) {
       if (!cloudSt || typeof cloudSt !== 'object') return localSt;
-      const merged = Object.assign({}, DEFAULT_STATE, localSt, cloudSt);
+      const localTs = Number(localSt._updatedTs || 0);
+      const cloudTs = Number(cloudSt._updatedTs || 0);
+      const cloudIsNewer = cloudTs >= localTs;
+
+      const merged = Object.assign({}, DEFAULT_STATE, localSt);
+      merged._updatedTs = Math.max(localTs, cloudTs);
+      merged._lastAuthor = cloudIsNewer ? (cloudSt._lastAuthor || localSt._lastAuthor || 'Tamara') : (localSt._lastAuthor || 'Tamara');
       merged.activeUser = localSt.activeUser || 'Tamara';
       merged.selectedZoneId = localSt.selectedZoneId || 'zona-jaulas-cactus';
       merged.zoneFilter = localSt.zoneFilter || 'all';
       merged.shopFilter = localSt.shopFilter || 'all';
-      merged.zoneStatus = Object.assign({}, DEFAULT_STATE.zoneStatus, localSt.zoneStatus || {}, cloudSt.zoneStatus || {});
-      merged.zoneAssignees = normalizeOpinionMap(Object.assign({}, localSt.zoneAssignees || {}, cloudSt.zoneAssignees || {}), DEFAULT_STATE.zoneAssignees);
-      merged.itemPurchased = Object.assign({}, DEFAULT_STATE.itemPurchased, localSt.itemPurchased || {}, cloudSt.itemPurchased || {});
-      merged.itemAssignees = normalizeOpinionMap(Object.assign({}, localSt.itemAssignees || {}, cloudSt.itemAssignees || {}), DEFAULT_STATE.itemAssignees);
+
+      if (cloudIsNewer) {
+        if (cloudSt.guests !== undefined) merged.guests = cloudSt.guests;
+        if (cloudSt.tier) merged.tier = cloudSt.tier;
+        if (cloudSt.childName) merged.childName = cloudSt.childName;
+        if (cloudSt.house) merged.house = cloudSt.house;
+        merged.zoneStatus = Object.assign({}, DEFAULT_STATE.zoneStatus, localSt.zoneStatus || {}, cloudSt.zoneStatus || {});
+        merged.zoneAssignees = normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.zoneAssignees, localSt.zoneAssignees || {}, cloudSt.zoneAssignees || {}), DEFAULT_STATE.zoneAssignees);
+        merged.itemPurchased = Object.assign({}, DEFAULT_STATE.itemPurchased, localSt.itemPurchased || {}, cloudSt.itemPurchased || {});
+        merged.itemAssignees = normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.itemAssignees, localSt.itemAssignees || {}, cloudSt.itemAssignees || {}), DEFAULT_STATE.itemAssignees);
+      } else {
+        merged.zoneStatus = Object.assign({}, DEFAULT_STATE.zoneStatus, cloudSt.zoneStatus || {}, localSt.zoneStatus || {});
+        merged.zoneAssignees = normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.zoneAssignees, cloudSt.zoneAssignees || {}, localSt.zoneAssignees || {}), DEFAULT_STATE.zoneAssignees);
+        merged.itemPurchased = Object.assign({}, DEFAULT_STATE.itemPurchased, cloudSt.itemPurchased || {}, localSt.itemPurchased || {});
+        merged.itemAssignees = normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.itemAssignees, cloudSt.itemAssignees || {}, localSt.itemAssignees || {}), DEFAULT_STATE.itemAssignees);
+      }
 
       // Fusión inteligente de comentarios por ID para no perder ninguno de Tamara ni de Lucía
       const mergedComments = {};
@@ -2654,83 +2669,181 @@ function doPost(e) {
       });
       merged.comments = stripLegacyDemoComments(mergedComments);
 
-      // Fusión de ideas por ID
+      // Fusión de ideas por ID respetando el estado más reciente
       const ideasById = new Map();
-      (localSt.ideas || []).forEach(i => { if (i && i.id) ideasById.set(i.id, i); });
-      (cloudSt.ideas || []).forEach(i => { if (i && i.id) ideasById.set(i.id, i); });
+      const firstIdeas = cloudIsNewer ? (localSt.ideas || []) : (cloudSt.ideas || []);
+      const secondIdeas = cloudIsNewer ? (cloudSt.ideas || []) : (localSt.ideas || []);
+      firstIdeas.forEach(i => { if (i && i.id) ideasById.set(i.id, i); });
+      secondIdeas.forEach(i => {
+        if (i && i.id) {
+          const prev = ideasById.get(i.id) || {};
+          ideasById.set(i.id, Object.assign({}, prev, i));
+        }
+      });
       if (ideasById.size > 0) merged.ideas = Array.from(ideasById.values());
 
-      // Preservar URL del script
-      const scriptUrl = getGoogleScriptUrl() || cloudSt.googleScriptUrl;
-      if (scriptUrl) {
-        merged.googleScriptUrl = scriptUrl;
-        localStorage.setItem(GOOGLE_URL_STORAGE_KEY, scriptUrl);
-      }
       return merged;
     }
 
     async function pullFromGoogleCloud(silent = true) {
-      const url = getGoogleScriptUrl();
-      if (!url || isCloudSyncing) {
-        updateCloudBadgeUI();
-        return;
-      }
+      if (isCloudSyncing) return;
       try {
-        const res = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), {
-          method: 'GET',
-          mode: 'cors',
-          cache: 'no-store'
-        });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        const remoteState = data && data.state ? data.state : data;
-        if (remoteState && typeof remoteState === 'object' && Object.keys(remoteState).length > 2) {
-          state = mergeCloudAndLocalStates(state, remoteState);
+        let updated = false;
+
+        // 1. Leer directamente desde la Hoja de Google Sheets (vía endpoint oficial gviz CORS)
+        try {
+          const sheetRes = await fetch(GOOGLE_SHEET_GVIZ_URL + '&_t=' + Date.now(), { cache: 'no-store' });
+          if (sheetRes.ok) {
+            const text = await sheetRes.text();
+            const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);?/);
+            if (jsonMatch && jsonMatch[1]) {
+              const gviz = JSON.parse(jsonMatch[1]);
+              const cellA2 = gviz?.table?.rows?.[0]?.c?.[0]?.v;
+              const sheetState = decodeSheetCellPayload(cellA2);
+              if (sheetState) {
+                state = mergeCloudAndLocalStates(state, sheetState);
+                updated = true;
+              }
+            }
+          }
+        } catch (sheetErr) {
+          console.warn('Aviso lectura directa Google Sheet:', sheetErr);
+        }
+
+        // 2. Leer el historial en tiempo real entre móviles (ntfy JSON stream)
+        try {
+          const ntfyRes = await fetch(`${NTFY_BASE_URL}/json?poll=1&since=all&_t=${Date.now()}`, { cache: 'no-store' });
+          if (ntfyRes.ok) {
+            const lines = (await ntfyRes.text()).trim().split('\n');
+            lines.forEach(line => {
+              if (!line.trim()) return;
+              try {
+                const evt = JSON.parse(line);
+                if (evt && evt.event === 'message' && evt.message) {
+                  const parsed = JSON.parse(evt.message);
+                  const expanded = expandCompactCloudPayload(parsed);
+                  if (expanded && expanded.v !== undefined || (expanded && expanded._updatedTs)) {
+                    state = mergeCloudAndLocalStates(state, expanded);
+                    updated = true;
+                  }
+                }
+              } catch (e) {}
+            });
+          }
+        } catch (ntfyErr) {
+          console.warn('Aviso canal tiempo real:', ntfyErr);
+        }
+
+        if (updated) {
           localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
           update3DZoneHighlights();
           renderAll();
         }
-        updateCloudBadgeUI('🟢 Google Drive Sincronizado', '#34d399');
+        updateCloudBadgeUI('🟢 Sincronizado en Vivo', '#34d399');
       } catch (err) {
-        console.warn('Aviso al sincronizar desde Google Sheet:', err);
-        if (!silent) updateCloudBadgeUI('⚠️ Reintentando Google...', '#f59e0b');
+        console.warn('Aviso al sincronizar:', err);
+        if (!silent) updateCloudBadgeUI('⚠️ Reintentando conexión...', '#f59e0b');
       }
     }
 
+    function initRealtimeCloudStream() {
+      if (liveEventSource || typeof EventSource === 'undefined') return;
+      try {
+        liveEventSource = new EventSource(`${NTFY_BASE_URL}/sse`);
+        liveEventSource.onmessage = (e) => {
+          try {
+            const evt = JSON.parse(e.data);
+            if (!evt || evt.event !== 'message' || !evt.message) return;
+            if (evt.message === lastPushedMsgSignature) return;
+            const parsed = JSON.parse(evt.message);
+            const expanded = expandCompactCloudPayload(parsed);
+            if (expanded && (expanded._updatedTs || expanded.guests)) {
+              state = mergeCloudAndLocalStates(state, expanded);
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+              update3DZoneHighlights();
+              renderAll();
+              updateCloudBadgeUI(`🟢 Actualizado por ${expanded._lastAuthor || 'la otra'}`, '#34d399');
+            }
+          } catch (err) {}
+        };
+      } catch (e) {}
+    }
+
     function schedulePushToGoogleCloud(immediate = false) {
-      const url = getGoogleScriptUrl();
-      if (!url) {
-        updateCloudBadgeUI();
-        return;
-      }
-      updateCloudBadgeUI('🔄 Guardando en Google...', '#facc15');
+      updateCloudBadgeUI('🔄 Guardando en nube...', '#facc15');
       if (cloudPushTimer) clearTimeout(cloudPushTimer);
       cloudPushTimer = setTimeout(async () => {
         isCloudSyncing = true;
         try {
-          const payload = {
-            author: state.activeUser || 'Tamara',
-            updatedAt: new Date().toISOString(),
-            state: state
-          };
-          await fetch(url, {
+          const compact = buildCompactCloudPayload(state);
+          const bodyStr = JSON.stringify(compact);
+          lastPushedMsgSignature = bodyStr;
+
+          await fetch(NTFY_BASE_URL, {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(payload)
+            body: bodyStr
           });
-          updateCloudBadgeUI('🟢 Google Drive Sincronizado', '#34d399');
+
+          const customScriptUrl = getGoogleScriptUrl();
+          if (customScriptUrl) {
+            fetch(customScriptUrl, {
+              method: 'POST',
+              mode: 'cors',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({ author: state.activeUser || 'Tamara', updatedAt: new Date().toISOString(), state })
+            }).catch(() => {});
+          }
+
+          updateCloudBadgeUI('🟢 Sincronizado en Vivo', '#34d399');
         } catch (err) {
-          console.warn('Error guardando en Google Sheet:', err);
-          updateCloudBadgeUI('⚠️ Guardado en móvil (sin red)', '#f59e0b');
+          console.warn('Error guardando en nube:', err);
+          updateCloudBadgeUI('⚠️ Guardado en móvil', '#f59e0b');
         } finally {
           isCloudSyncing = false;
         }
-      }, immediate ? 50 : 450);
+      }, immediate ? 50 : 350);
+    }
+
+    function configureGoogleCloudUrl() {
+      let modal = document.getElementById('googleCloudModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'googleCloudModal';
+        modal.style.cssText = 'position:fixed;inset:0;background:rgba(8,5,12,0.88);backdrop-filter:blur(6px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;';
+        modal.innerHTML = `
+          <div style="background:linear-gradient(165deg,#1d1427,#120c18);border:2px solid #34d399;border-radius:16px;max-width:540px;width:100%;padding:22px;color:var(--parchment-light);box-shadow:0 20px 50px rgba(0,0,0,0.85);">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;">
+              <h3 style="margin:0;font-family:'Cinzel Decorative',serif;color:#34d399;font-size:1.08rem;">🟢 Sincronización en Vivo Activada</h3>
+              <button onclick="document.getElementById('googleCloudModal').style.display='none'" style="background:none;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;">✕</button>
+            </div>
+            <p style="font-size:0.86rem;color:var(--parchment-light);line-height:1.55;margin-bottom:14px;">
+              <strong>¡No tenéis que configurar nada!</strong> La web ya está conectada automáticamente en tiempo real entre el móvil de <strong>Tamara</strong> y el móvil de <strong>Lucía</strong>, y vinculada con vuestra Hoja de Google Sheets en la carpeta <code>Antigravity/</code> de Google Drive.
+            </p>
+            <div style="background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.4);border-radius:10px;padding:12px;font-size:0.82rem;line-height:1.5;margin-bottom:16px;">
+              ✨ <strong>Cómo funciona:</strong><br>
+              • Cuando <strong>Tamara</strong> marca una compra o zona lista desde su móvil, a <strong>Lucía</strong> le aparece al instante.<br>
+              • Cuando <strong>Lucía</strong> marca <em>😍 ¡Le encanta!</em>, escribe un comentario o añade una idea, a <strong>Tamara</strong> le sale automáticamente.<br>
+              • Todos los datos se respaldan en vuestra Hoja de cálculo de Google Drive.
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;">
+              <a href="https://docs.google.com/spreadsheets/d/10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk/edit" target="_blank" rel="noopener" class="btn-outline-gold" style="padding:8px 14px;text-decoration:none;">📊 Ver Hoja en Google Drive ↗</a>
+              <div style="display:flex;gap:8px;">
+                <button type="button" onclick="pullFromGoogleCloud(false);document.getElementById('googleCloudModal').style.display='none';" class="btn-gold" style="padding:8px 16px;">🔄 Sincronizar Ahora</button>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      }
+      modal.style.display = 'flex';
     }
 
     function saveState() {
       try {
+        state._updatedTs = Date.now();
+        state._lastAuthor = state.activeUser || 'Tamara';
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         schedulePushToGoogleCloud(false);
       } catch (e) {
@@ -5153,6 +5266,7 @@ function doPost(e) {
       renderAll();
       updateCloudBadgeUI();
       pullFromGoogleCloud(true);
+      initRealtimeCloudStream();
       setInterval(() => pullFromGoogleCloud(true), 12000);
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') pullFromGoogleCloud(true);
