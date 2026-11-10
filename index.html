@@ -1363,6 +1363,290 @@
       color: var(--text-muted);
     }
 
+    /* =====================================================================
+       SUBMENÚS DESPLEGABLES Y VISTA MÓVIL SIMPLIFICADA (MODO LUCÍA / TAMARA)
+       ===================================================================== */
+    details.magical-submenu {
+      background: var(--bg-card);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.38);
+      transition: border-color 0.2s ease;
+    }
+
+    details.magical-submenu[open] {
+      border-color: var(--gold-main);
+    }
+
+    details.magical-submenu > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.8rem 1.1rem;
+      background: linear-gradient(135deg, rgba(36, 28, 21, 0.95) 0%, rgba(20, 15, 11, 0.95) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 0.86rem;
+      color: var(--gold-bright);
+      user-select: none;
+    }
+
+    details.magical-submenu > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.magical-submenu > summary::after {
+      content: '▾ Ver';
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--text-main);
+      background: rgba(212, 175, 55, 0.16);
+      border: 1px solid var(--border-brass);
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    details.magical-submenu[open] > summary::after {
+      content: '▴ Ocultar';
+      background: var(--gold-main);
+      color: #140e07;
+    }
+
+    .magical-submenu-body {
+      padding: 1rem 1.15rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Submenús compactos dentro de cada tarjeta de Zona / Compra / Idea */
+    .card-submenus-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      margin-top: 0.2rem;
+    }
+
+    details.card-submenu {
+      background: rgba(11, 9, 7, 0.58);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    details.card-submenu[open] {
+      border-color: var(--border-brass);
+      background: rgba(11, 9, 7, 0.82);
+    }
+
+    details.card-submenu > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      user-select: none;
+    }
+
+    details.card-submenu > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.card-submenu > summary::after {
+      content: '▾ Abrir';
+      font-size: 0.68rem;
+      color: var(--gold-bright);
+      font-weight: 700;
+      shrink: 0;
+    }
+
+    details.card-submenu[open] > summary::after {
+      content: '▴ Cerrar';
+    }
+
+    .card-submenu-content {
+      padding: 0.65rem 0.75rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Botones rápidos de 1 toque para que Lucía opine sin abrir desplegables */
+    .lucia-opinion-box {
+      background: rgba(37, 99, 235, 0.08);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    body.mode-lucia .lucia-opinion-box {
+      background: rgba(37, 99, 235, 0.16);
+      border-color: #60a5fa;
+      box-shadow: 0 0 14px rgba(37, 99, 235, 0.2);
+    }
+
+    .lucia-opinion-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .lucia-opinion-pills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.35rem;
+    }
+
+    .opinion-pill-btn {
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 11, 8, 0.85);
+      color: var(--text-muted);
+      padding: 0.42rem 0.35rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+
+    .opinion-pill-btn.active-love {
+      background: rgba(16, 185, 129, 0.22);
+      border-color: #34d399;
+      color: #a7f3d0;
+      font-weight: 800;
+    }
+
+    .opinion-pill-btn.active-idea {
+      background: rgba(245, 158, 11, 0.24);
+      border-color: #fbbf24;
+      color: #fde68a;
+      font-weight: 800;
+    }
+
+    .opinion-pill-btn.active-pending {
+      background: rgba(148, 163, 184, 0.2);
+      border-color: #94a3b8;
+      color: #f1f5f9;
+      font-weight: 800;
+    }
+
+    /* Banner guía rápido según el usuario activo */
+    .role-welcome-banner {
+      padding: 0.7rem 0.95rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      line-height: 1.45;
+      border: 1px solid var(--border-brass);
+      background: rgba(212, 175, 55, 0.09);
+      color: var(--text-main);
+    }
+
+    /* Submenú de la barra superior para no ocupar espacio en el móvil */
+    details.topbar-submenu {
+      position: relative;
+    }
+
+    details.topbar-submenu > summary {
+      list-style: none;
+      cursor: pointer;
+      background: rgba(36, 28, 21, 0.92);
+      border: 1px solid var(--border-brass);
+      color: var(--gold-bright);
+      padding: 0.42rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      user-select: none;
+    }
+
+    details.topbar-submenu > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .topbar-dropdown-panel {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      width: min(92vw, 380px);
+      background: #17120d;
+      border: 2px solid var(--gold-main);
+      border-radius: var(--radius-md);
+      padding: 0.95rem;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.88);
+      z-index: 1200;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .sticky-topbar {
+        padding: 0.45rem 0.65rem;
+      }
+      .topbar-inner {
+        gap: 0.45rem;
+        justify-content: space-between;
+      }
+      .user-switcher-label {
+        display: none;
+      }
+      .user-btn {
+        padding: 0.34rem 0.65rem;
+        font-size: 0.73rem;
+      }
+      .main-container {
+        padding: 0.85rem 0.75rem 3rem;
+        gap: 1rem;
+      }
+      .hero-content {
+        padding: 1.1rem;
+        gap: 0.75rem;
+      }
+      .hero-title {
+        font-size: 1.3rem;
+      }
+      .hero-visual {
+        min-height: 195px;
+      }
+      .magical-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.4rem;
+        padding: 0.45rem;
+      }
+      .magical-tab-btn {
+        min-width: 0;
+        padding: 0.55rem 0.45rem;
+        font-size: 0.75rem;
+      }
+      #table3dCanvasContainer {
+        height: 340px;
+      }
+      .zone-card-photo {
+        height: 185px;
+      }
+      .zone-card-content {
+        padding: 0.95rem;
+        gap: 0.65rem;
+      }
+    }
+
     @media print {
       @page {
         size: A4 portrait;
@@ -1399,87 +1683,151 @@
 </head>
 <body>
 
-  <!-- BARRA SUPERIOR COLABORATIVA Y % DE FINALIZACIÓN -->
+  <!-- BARRA SUPERIOR COMPACTA CON SUBMENÚ DESPLEGABLE PARA MÓVIL -->
   <div class="sticky-topbar no-print">
     <div class="topbar-inner">
       <!-- Selector de rol activo: Tamara (Hace la mesa) o Lucía (Opina) -->
       <div class="user-switcher" role="group" aria-label="Seleccionar modo de uso">
-        <span class="user-switcher-label">Viendo como:</span>
+        <span class="user-switcher-label">Modo:</span>
         <button id="btnUserTamara" type="button" class="user-btn active-tamara" onclick="setActiveUser('Tamara')" title="Tamara: Se encarga de comprar, preparar y montar la mesa">
-          👩🏽‍🪄 Tamara (Hace la mesa)
+          👩🏽‍🪄 Tamara
         </button>
-        <button id="btnUserLucia" type="button" class="user-btn" onclick="setActiveUser('Lucía')" title="Lucía: Da su opinión, vota qué le gusta y aporta ideas">
-          🧙🏼‍♀️ Lucía (Opina)
+        <button id="btnUserLucia" type="button" class="user-btn" onclick="setActiveUser('Lucía')" title="Lucía: Vista simplificada para ver fotos, votar qué le gusta y comentar">
+          🧙🏼‍♀️ Lucía
         </button>
       </div>
 
-      <!-- Barra de Progreso Global de la Mesa -->
-      <div class="global-progress-wrap">
-        <div class="progress-header-row">
-          <span>✨ <strong>Progreso de Tamara en la Mesa:</strong> <span id="globalProgressDetail" style="color:var(--text-muted)">0 de 0 listos</span></span>
-          <span id="globalProgressPct" class="progress-pct-badge">0% LISTO</span>
-        </div>
-        <div class="progress-track" aria-label="Porcentaje de finalización de la mesa">
-          <div id="globalProgressBar" class="progress-fill" style="width: 0%"></div>
-        </div>
-      </div>
+      <!-- Indicador compacto + Submenú desplegable de Progreso y Compartir -->
+      <div style="display:flex;align-items:center;gap:0.45rem;">
+        <button id="btnCloudStatus" type="button" class="btn-outline-brass" style="border-color:#34d399;color:#34d399;padding:0.38rem 0.65rem;font-size:0.72rem;border-radius:999px;" onclick="configureGoogleCloudUrl()" title="Sincronización automática en tiempo real activa">
+          🟢 En Vivo
+        </button>
 
-      <!-- Botones de Sincronización Colaborativa y Base de Datos Google -->
-      <div class="sync-actions">
-        <button id="btnCloudStatus" type="button" class="btn-outline-brass" onclick="configureGoogleCloudUrl()" title="Sincronización automática en tiempo real con la Hoja de Google Sheets en vuestro Google Drive">
-          ☁️ Base de Datos Google
-        </button>
-        <button type="button" class="btn-gold" onclick="shareProgressWhatsApp()" title="Envía un enlace mágico por WhatsApp con tus últimos checks, opiniones o comentarios">
-          📲 Enviar por WhatsApp
-        </button>
-        <button type="button" class="btn-outline-brass" onclick="copyShareLink()" title="Copiar enlace sincronizado">
-          🔗 Copiar enlace
-        </button>
+        <details class="topbar-submenu" id="topbarMenuDetails">
+          <summary>
+            <span>📊 <span id="compactTopbarPct">0%</span> · ☰ Opciones</span>
+          </summary>
+          <div class="topbar-dropdown-panel">
+            <!-- Barra de Progreso Global dentro del submenú superior -->
+            <div class="global-progress-wrap" style="min-width:0;max-width:none;">
+              <div class="progress-header-row">
+                <span>✨ <strong>Avance de Tamara:</strong> <span id="globalProgressDetail" style="color:var(--text-muted)">0 de 0</span></span>
+                <span id="globalProgressPct" class="progress-pct-badge">0% LISTO</span>
+              </div>
+              <div class="progress-track" aria-label="Porcentaje de finalización de la mesa">
+                <div id="globalProgressBar" class="progress-fill" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.45rem;">
+              <button type="button" class="btn-gold" style="justify-content:center;" onclick="shareProgressWhatsApp()">
+                📲 WhatsApp
+              </button>
+              <button type="button" class="btn-outline-brass" style="justify-content:center;" onclick="copyShareLink()">
+                🔗 Copiar Link
+              </button>
+              <button type="button" class="btn-outline-brass" style="justify-content:center;" onclick="configureGoogleCloudUrl()">
+                ☁️ Google Drive
+              </button>
+              <button type="button" class="btn-outline-brass" style="justify-content:center;" onclick="exportBackupJSON()">
+                💾 Copia (.json)
+              </button>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
   </div>
 
   <main class="main-container no-print">
 
-    <!-- CABECERA HERO GRAN COMEDOR & HONEYDUKES -->
+    <!-- CABECERA SIMPLIFICADA CON SUBMENÚS DESPLEGABLES -->
     <header class="hero-card">
       <div class="hero-grid">
         <div class="hero-content">
           <div>
             <div class="hogwarts-crest-line">
-              <span>⚡ Expreso de Hogwarts · Andén 9 ¾ · Dulcería Honeydukes</span>
+              <span>⚡ Comunión de Lucía · Dulcería Honeydukes</span>
             </div>
             <h1 class="hero-title font-display">
-              Mesa Mágica de Comunión · <span>Creada por Tamara</span>
+              Mesa Mágica Harry Potter · <span>Tamara &amp; Lucía</span>
             </h1>
-            <p class="hero-subtitle" style="margin-top:0.5rem;">
-              Centro de mando para que <strong>Tamara</strong> diseñe, compre y monte paso a paso toda la mesa de chuches de Harry Potter (con enlaces directos y el % de avance), y para que <strong>Lucía</strong> pueda ver el <strong>Layout 3D y las fotos recreadas</strong>, dar su opinión en cada zona (<em>😍 ¡Me encanta!</em> o <em>💡 Sugerencia</em>), comentar y proponer ideas.
-            </p>
+            <div id="roleQuickBanner" class="role-welcome-banner" style="margin-top:0.55rem;">
+              👋 <strong>¡Hola!</strong> Elige arriba si eres <strong>🧙🏼‍♀️ Lucía</strong> (para ver las fotos y votar <em>😍 ¡Me encanta!</em>) o <strong>👩🏽‍🪄 Tamara</strong> (para compras y montaje). Todo se guarda solo en tiempo real.
+            </div>
           </div>
 
-          <!-- Marcadores de Progreso Desglosados -->
-          <div class="hero-stats-grid">
-            <div class="stat-box">
-              <div class="stat-box-label">🏛️ Montaje (Tamara)</div>
-              <div id="statZonesReady" class="stat-box-value">0 / 9</div>
-              <div class="stat-box-sub">Zonas listas por Tamara</div>
+          <!-- Submenú 1: Marcadores de Progreso y Presupuesto -->
+          <details class="magical-submenu">
+            <summary>📊 Resumen de Avance, Opiniones y Presupuesto</summary>
+            <div class="magical-submenu-body">
+              <div class="hero-stats-grid" style="margin-top:0;">
+                <div class="stat-box">
+                  <div class="stat-box-label">🏛️ Montaje (Tamara)</div>
+                  <div id="statZonesReady" class="stat-box-value">0 / 9</div>
+                  <div class="stat-box-sub">Zonas listas por Tamara</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-box-label">🛒 Compras (Tamara)</div>
+                  <div id="statItemsReady" class="stat-box-value">0 / 16</div>
+                  <div class="stat-box-sub">Materiales comprados</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-box-label">🧙🏼‍♀️ Opinión de Lucía</div>
+                  <div id="statTeamSplit" class="stat-box-value" style="font-size:1.05rem;padding-top:0.3rem;">😍 0 / 9 zonas</div>
+                  <div class="stat-box-sub" id="statIdeasCount">Ideas y comentarios activos</div>
+                </div>
+                <div class="stat-box">
+                  <div class="stat-box-label">🪙 Presupuesto Estimado</div>
+                  <div id="totalBudgetDisplay" class="stat-box-value">89,90 €</div>
+                  <div class="stat-box-sub"><span id="costPerGuestBadge">~2,55 €/inv.</span> · <strong id="totalWeightDisplay">3,4 kg</strong></div>
+                </div>
+              </div>
             </div>
-            <div class="stat-box">
-              <div class="stat-box-label">🛒 Compras (Tamara)</div>
-              <div id="statItemsReady" class="stat-box-value">0 / 16</div>
-              <div class="stat-box-sub">Materiales comprados</div>
+          </details>
+
+          <!-- Submenú 2: Controles de Invitados, Nivel de Presupuesto y Casa -->
+          <details class="magical-submenu">
+            <summary>⚙️ Configurar Invitados (<span id="summaryGuestCount">35</span>), Presupuesto y Casa</summary>
+            <div class="magical-submenu-body">
+              <div class="config-strip" style="padding:0;border:none;background:transparent;">
+                <div class="control-group">
+                  <label for="guestSlider">
+                    <span>👥 Nº de Invitados (calcula cantidades)</span>
+                    <strong id="guestCountValue" style="color:var(--gold-bright)">35 inv.</strong>
+                  </label>
+                  <input id="guestSlider" type="range" min="15" max="80" step="5" value="35" />
+                </div>
+
+                <div class="control-group">
+                  <label for="tierSelect">
+                    <span>⚖️ Nivel Calidad / Ahorro</span>
+                    <span id="tierHint" style="font-weight:400;color:var(--text-dim);">Mayorista 1kg + DIY</span>
+                  </label>
+                  <select id="tierSelect" class="select-dark">
+                    <option value="diy">Modo Ahorro Máximo (Botes reciclados + Marca Blanca)</option>
+                    <option value="balanced" selected>Equilibrio Ideal (Bolsas 1kg Mayorista + DIY)</option>
+                    <option value="premium">Modo Gran Comedor (Atrezzo extra + Ferrero Original)</option>
+                  </select>
+                </div>
+
+                <div class="control-group">
+                  <label for="childNameInput">
+                    <span>🪄 Protagonista y Casa de Hogwarts</span>
+                  </label>
+                  <div style="display:flex;gap:0.45rem;">
+                    <input id="childNameInput" type="text" value="Lucía" class="input-dark" placeholder="Nombre comunión" />
+                    <select id="houseSelect" class="select-dark" style="max-width:145px;">
+                      <option value="Gryffindor">🦁 Gryffindor</option>
+                      <option value="Slytherin">🐍 Slytherin</option>
+                      <option value="Ravenclaw">🦅 Ravenclaw</option>
+                      <option value="Hufflepuff">🦡 Hufflepuff</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="stat-box">
-              <div class="stat-box-label">🧙🏼‍♀️ Opinión de Lucía</div>
-              <div id="statTeamSplit" class="stat-box-value" style="font-size:1.05rem;padding-top:0.3rem;">😍 0 / 9 zonas</div>
-              <div class="stat-box-sub" id="statIdeasCount">Ideas y comentarios activos</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-box-label">🪙 Presupuesto Estimado</div>
-              <div id="totalBudgetDisplay" class="stat-box-value">89,90 €</div>
-              <div class="stat-box-sub"><span id="costPerGuestBadge">~2,55 €/inv.</span> · <strong id="totalWeightDisplay">3,4 kg</strong></div>
-            </div>
-          </div>
+          </details>
         </div>
 
         <!-- Imagen Recreación General de la Mesa -->
@@ -1487,193 +1835,144 @@
           <img src="assets/mesa-completa.jpg" alt="Recreación completa de la Mesa Dulce de Harry Potter para la Comunión de Lucía" />
           <div class="hero-visual-overlay">
             <div>
-              <span style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--gold-bright);font-weight:800;">📸 Recreación Oficial de Objetivo</span>
-              <div style="font-family:'Cinzel',serif;font-weight:700;font-size:1rem;">Diseño en 3 Alturas · 100% Embolsado + Papercraft</div>
+              <span style="font-size:0.68rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--gold-bright);font-weight:800;">📸 Foto Recreación General</span>
+              <div style="font-family:'Cinzel',serif;font-weight:700;font-size:0.92rem;">Toca la imagen para verla en grande</div>
             </div>
-            <button type="button" class="btn-outline-brass" style="background:rgba(11,9,7,0.85);">
-              🔍 Ampliar Foto
+            <button type="button" class="btn-outline-brass" style="background:rgba(11,9,7,0.85);padding:0.35rem 0.65rem;font-size:0.72rem;">
+              🔍 Ampliar
             </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Controles de Escala de Invitados, Nivel y Casa -->
-      <div class="config-strip">
-        <div class="control-group">
-          <label for="guestSlider">
-            <span>👥 Nº de Invitados (calcula cantidades)</span>
-            <strong id="guestCountValue" style="color:var(--gold-bright)">35 inv.</strong>
-          </label>
-          <input id="guestSlider" type="range" min="15" max="80" step="5" value="35" />
-        </div>
-
-        <div class="control-group">
-          <label for="tierSelect">
-            <span>⚖️ Nivel Calidad / Ahorro</span>
-            <span id="tierHint" style="font-weight:400;color:var(--text-dim);">Mayorista 1kg + DIY</span>
-          </label>
-          <select id="tierSelect" class="select-dark">
-            <option value="diy">Modo Ahorro Máximo (Botes reciclados + Marca Blanca)</option>
-            <option value="balanced" selected>Equilibrio Ideal (Bolsas 1kg Mayorista + DIY)</option>
-            <option value="premium">Modo Gran Comedor (Atrezzo extra + Ferrero Original)</option>
-          </select>
-        </div>
-
-        <div class="control-group">
-          <label for="childNameInput">
-            <span>🪄 Protagonista y Casa de Hogwarts</span>
-          </label>
-          <div style="display:flex;gap:0.45rem;">
-            <input id="childNameInput" type="text" value="Lucía" class="input-dark" placeholder="Nombre comunión" />
-            <select id="houseSelect" class="select-dark" style="max-width:145px;">
-              <option value="Gryffindor">🦁 Gryffindor</option>
-              <option value="Slytherin">🐍 Slytherin</option>
-              <option value="Ravenclaw">🦅 Ravenclaw</option>
-              <option value="Hufflepuff">🦡 Hufflepuff</option>
-            </select>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- NAVEGACIÓN PRINCIPAL DE PESTAÑAS -->
+    <!-- NAVEGACIÓN PRINCIPAL DE PESTAÑAS (2x2 EN MÓVIL) -->
     <nav class="magical-tabs" aria-label="Secciones del planificador de mesa">
       <button type="button" data-tab="3dzones" class="magical-tab-btn active">
-        🧊 1. Layout 3D y Fotos por Zona <span id="badgeTabZones" class="tab-badge">0/9</span>
+        📸 1. Zonas y Fotos <span id="badgeTabZones" class="tab-badge">0/9</span>
       </button>
       <button type="button" data-tab="shopping" class="magical-tab-btn">
-        🛒 2. Compras de Tamara y Enlaces <span id="badgeTabShopping" class="tab-badge">0/16</span>
+        🛒 2. Compras <span id="badgeTabShopping" class="tab-badge">0/16</span>
       </button>
       <button type="button" data-tab="ideas" class="magical-tab-btn">
-        💡 3. Muro de Ideas y Opiniones <span id="badgeTabIdeas" class="tab-badge">2</span>
+        💡 3. Ideas <span id="badgeTabIdeas" class="tab-badge">2</span>
       </button>
       <button type="button" data-tab="labels" class="magical-tab-btn">
-        🏷️ 4. Carteles, Papercraft 3D y Cronograma <span id="badgeTabSteps" class="tab-badge">0/8</span>
+        🏷️ 4. Imprimibles <span id="badgeTabSteps" class="tab-badge">0/8</span>
       </button>
     </nav>
 
     <!-- =================================================================== -->
-    <!-- PESTAÑA 1: LAYOUT 3D INTERACTIVO + FOTOS RECREADAS DE CADA ZONA     -->
+    <!-- PESTAÑA 1: FOTOS POR ZONA + SUBMENÚ MAQUETA 3D INTERACTIVA          -->
     <!-- =================================================================== -->
-    <section id="tab-3dzones" class="tab-panel" style="display:flex;flex-direction:column;gap:1.5rem;">
+    <section id="tab-3dzones" class="tab-panel" style="display:flex;flex-direction:column;gap:1.1rem;">
 
-      <!-- Visor 3D + Inspector de Zona Activa -->
-      <div class="layout-3d-wrapper">
-        <!-- Escena 3D Three.js -->
-        <div class="canvas-3d-card">
-          <div class="canvas-3d-header">
-            <div>
-              <h2 style="font-size:1.05rem;color:var(--gold-bright);">🧊 Maqueta 3D Interactiva de la Mesa (3 Alturas + Techo + Papercraft)</h2>
-              <p style="font-size:0.75rem;color:var(--text-muted);">
-                Arrastra para girar 360°, usa la rueda para zoom o pulsa en cualquier zona 3D para ver su foto recreada, enlaces de compra para Tamara y opiniones de Lucía.
-              </p>
-            </div>
-            <div style="display:flex;gap:0.4rem;">
-              <button type="button" id="btnToggleSpin" class="btn-outline-brass" onclick="toggle3DSpin()">
-                🔄 Giro Auto: ON
-              </button>
-              <button type="button" class="btn-outline-brass" onclick="reset3DCamera()">
-                🎯 Centrar Vista
-              </button>
-            </div>
-          </div>
-
-          <div id="table3dCanvasContainer">
-            <div class="canvas-3d-overlay-top">
-              <div class="camera-pills">
-                <button type="button" class="cam-pill active" onclick="setCameraView('overview', this)">Vista General</button>
-                <button type="button" class="cam-pill" onclick="setCameraView('ceiling', this)">🕯️ Techo Velas</button>
-                <button type="button" class="cam-pill" onclick="setCameraView('tier3', this)">📚 Nivel 3 (Fondo)</button>
-                <button type="button" class="cam-pill" onclick="setCameraView('tier2', this)">🪄 Nivel 2 (Medio)</button>
-                <button type="button" class="cam-pill" onclick="setCameraView('tier1', this)">🐸 Nivel 1 (Frente)</button>
+      <!-- Submenú Desplegable: Maqueta 3D Interactiva (para que en móvil no estorbe al hacer scroll) -->
+      <details id="submenu3DWrapper" class="magical-submenu" ontoggle="if(this.open){setTimeout(()=>window.dispatchEvent(new Event('resize')),60);}">
+        <summary>🧊 Maqueta 3D Interactiva de la Mesa (360° + Detalle por Zona)</summary>
+        <div class="magical-submenu-body" style="padding:0.85rem;">
+          <div class="layout-3d-wrapper">
+            <!-- Escena 3D Three.js -->
+            <div class="canvas-3d-card">
+              <div class="canvas-3d-header">
+                <div>
+                  <h2 style="font-size:0.98rem;color:var(--gold-bright);">🧊 Maqueta 3D Interactiva (Gira con el dedo o pulsa una zona)</h2>
+                </div>
+                <div style="display:flex;gap:0.4rem;">
+                  <button type="button" id="btnToggleSpin" class="btn-outline-brass" onclick="toggle3DSpin()">
+                    🔄 Giro Auto: ON
+                  </button>
+                  <button type="button" class="btn-outline-brass" onclick="reset3DCamera()">
+                    🎯 Centrar
+                  </button>
+                </div>
               </div>
-              <div style="background:rgba(11,9,7,0.82);border:1px solid var(--border-brass);padding:0.3rem 0.65rem;border-radius:var(--radius-sm);font-size:0.72rem;">
-                🟢 Verde = ¡Listo por Tamara! &nbsp;|&nbsp; 🟡 Dorado = En preparación
+
+              <div id="table3dCanvasContainer">
+                <div class="canvas-3d-overlay-top">
+                  <div class="camera-pills">
+                    <button type="button" class="cam-pill active" onclick="setCameraView('overview', this)">General</button>
+                    <button type="button" class="cam-pill" onclick="setCameraView('ceiling', this)">🕯️ Techo</button>
+                    <button type="button" class="cam-pill" onclick="setCameraView('tier3', this)">📚 Nivel 3</button>
+                    <button type="button" class="cam-pill" onclick="setCameraView('tier2', this)">🪄 Nivel 2</button>
+                    <button type="button" class="cam-pill" onclick="setCameraView('tier1', this)">🐸 Nivel 1</button>
+                  </div>
+                </div>
               </div>
+
+              <!-- Botones rápidos de las 9 zonas debajo del 3D -->
+              <div id="zone3DSelectorStrip" class="zone-selector-strip"></div>
             </div>
+
+            <!-- Inspector Detallado de la Zona Seleccionada en el 3D -->
+            <aside id="zoneInspectorCard" class="inspector-card"></aside>
           </div>
-
-          <!-- Botones rápidos de las 9 zonas debajo del 3D -->
-          <div id="zone3DSelectorStrip" class="zone-selector-strip"></div>
         </div>
+      </details>
 
-        <!-- Inspector Detallado de la Zona Seleccionada en el 3D -->
-        <aside id="zoneInspectorCard" class="inspector-card"></aside>
-      </div>
-
-      <!-- Barra de filtro de zonas -->
-      <div class="filter-bar">
-        <div>
-          <h2 style="font-size:1.1rem;color:var(--gold-bright);">📸 Las 9 Zonas Recreadas de la Mesa (Montaje de Tamara + Opinión de Lucía)</h2>
-          <p style="font-size:0.76rem;color:var(--text-muted);">
-            <strong>👩🏽‍🪄 Tamara:</strong> Marca cada zona cuando la tengas lista y usa las instrucciones paso a paso. &nbsp;|&nbsp; <strong>🧙🏼‍♀️ Lucía:</strong> Indica qué te parece cada zona (<em>😍 ¡Me encanta!</em> o <em>💡 Sugerencia</em>) y deja tus comentarios abajo.
-          </p>
+      <!-- Cabecera de las 9 Zonas + Submenú de Filtros -->
+      <details class="magical-submenu">
+        <summary>🔍 Filtrar las 9 Zonas de la Mesa (Todas, Favoritas de Lucía, Pendientes...)</summary>
+        <div class="magical-submenu-body">
+          <div class="filter-pills">
+            <button type="button" class="filter-pill active" onclick="setZoneFilter('all', this)">Todas las Zonas (9)</button>
+            <button type="button" class="filter-pill" onclick="setZoneFilter('love', this)">😍 Favoritas de Lucía</button>
+            <button type="button" class="filter-pill" onclick="setZoneFilter('commented', this)">💬 Con Sugerencia / Comentario</button>
+            <button type="button" class="filter-pill" onclick="setZoneFilter('pending', this)">⏳ Pendientes de Tamara</button>
+            <button type="button" class="filter-pill" onclick="setZoneFilter('done', this)">✅ Listas por Tamara</button>
+          </div>
         </div>
-        <div class="filter-pills">
-          <button type="button" class="filter-pill active" onclick="setZoneFilter('all', this)">Todas las Zonas (9)</button>
-          <button type="button" class="filter-pill" onclick="setZoneFilter('pending', this)">⏳ Pendientes de Tamara</button>
-          <button type="button" class="filter-pill" onclick="setZoneFilter('done', this)">✅ Listas por Tamara</button>
-          <button type="button" class="filter-pill" onclick="setZoneFilter('love', this)">😍 Favoritas de Lucía</button>
-          <button type="button" class="filter-pill" onclick="setZoneFilter('commented', this)">💬 Con Comentarios</button>
-        </div>
-      </div>
+      </details>
 
-      <!-- Grid de las 9 Zonas con sus Fotos Recreadas, Enlaces y Comentarios -->
+      <!-- Grid de las 9 Zonas con sus Fotos Recreadas y Submenús internos -->
       <div id="zonesCardsGrid" class="zones-grid"></div>
     </section>
 
     <!-- =================================================================== -->
-    <!-- PESTAÑA 2: CATÁLOGO DE COMPRAS CON ENLACES DIRECTOS (CHUCHES + DECO)-->
+    <!-- PESTAÑA 2: CATÁLOGO DE COMPRAS CON SUBMENÚS POR CATEGORÍA           -->
     <!-- =================================================================== -->
-    <section id="tab-shopping" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.5rem;">
+    <section id="tab-shopping" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.1rem;">
 
-      <div class="filter-bar">
-        <div>
-          <h2 style="font-size:1.15rem;color:var(--gold-bright);">🛒 Lista de Compras de Tamara con Enlaces Directos (y Opinión de Lucía)</h2>
-          <p style="font-size:0.78rem;color:var(--text-muted);">
-            <strong>👩🏽‍🪄 Tamara:</strong> Pulsa en los enlaces para ir directa a cada producto y marca <strong>"✅ Comprado"</strong> cuando lo tengas. &nbsp;|&nbsp; <strong>🧙🏼‍♀️ Lucía:</strong> Puedes votar tus chuches favoritas o dejar comentarios y sugerencias en cualquiera de ellas.
-          </p>
+      <details class="magical-submenu">
+        <summary>🔍 Filtrar Lista de Compras (Todo, Falta comprar, Favoritos de Lucía...)</summary>
+        <div class="magical-submenu-body">
+          <div class="filter-pills">
+            <button type="button" class="filter-pill active" onclick="setShopFilter('all', this)">Todo (16)</button>
+            <button type="button" class="filter-pill" onclick="setShopFilter('pending', this)">🛒 Falta Comprar (Tamara)</button>
+            <button type="button" class="filter-pill" onclick="setShopFilter('done', this)">✅ Ya Comprado</button>
+            <button type="button" class="filter-pill" onclick="setShopFilter('love', this)">😍 Favoritos de Lucía</button>
+            <button type="button" class="filter-pill" onclick="setShopFilter('commented', this)">💬 Con Comentarios</button>
+          </div>
         </div>
-        <div class="filter-pills">
-          <button type="button" class="filter-pill active" onclick="setShopFilter('all', this)">Todo (16)</button>
-          <button type="button" class="filter-pill" onclick="setShopFilter('pending', this)">🛒 Falta Comprar (Tamara)</button>
-          <button type="button" class="filter-pill" onclick="setShopFilter('done', this)">✅ Ya Comprado</button>
-          <button type="button" class="filter-pill" onclick="setShopFilter('love', this)">😍 Favoritos de Lucía</button>
-          <button type="button" class="filter-pill" onclick="setShopFilter('commented', this)">💬 Con Comentarios</button>
+      </details>
+
+      <details class="magical-submenu" open>
+        <summary>🍬 A. Las 9 Chuches y Pociones Bebibles (100% Embolsadas)</summary>
+        <div class="magical-submenu-body">
+          <div id="sweetsShoppingGrid" class="zones-grid"></div>
         </div>
-      </div>
+      </details>
 
-      <div>
-        <h3 class="font-magical" style="font-size:1.05rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-          🍬 A. Las 9 Chuches y Pociones Bebibles de Honeydukes (100% Embolsadas · Auto-ajustadas a invitados)
-        </h3>
-        <div id="sweetsShoppingGrid" class="zones-grid"></div>
-      </div>
-
-      <div>
-        <h3 class="font-magical" style="font-size:1.05rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-          🕯️ B. Bolsitas Celofán, Papercraft 3D, Escenografía y Decoración (Coste Low-Cost)
-        </h3>
-        <div id="decorShoppingGrid" class="zones-grid"></div>
-      </div>
+      <details class="magical-submenu">
+        <summary>🕯️ B. Decoración, Bolsitas, Jaulas de Cactus y Papercraft (7 ítems)</summary>
+        <div class="magical-submenu-body">
+          <div id="decorShoppingGrid" class="zones-grid"></div>
+        </div>
+      </details>
     </section>
 
     <!-- =================================================================== -->
-    <!-- PESTAÑA 3: MURO DE NUEVAS IDEAS Y SUGERENCIAS (TAMARA & LUCÍA)      -->
+    <!-- PESTAÑA 3: MURO DE NUEVAS IDEAS Y SUGERENCIAS CON SUBMENÚS          -->
     <!-- =================================================================== -->
-    <section id="tab-ideas" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.5rem;">
+    <section id="tab-ideas" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.1rem;">
 
-      <div class="layout-3d-wrapper">
-        <!-- Formulario para que Lucía o Tamara añadan una nueva idea -->
-        <div class="canvas-3d-card" style="padding:1.5rem;gap:1rem;">
-          <div>
-            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;">✨ Sala de los Menesteres · Buzón de Ideas y Sugerencias</span>
-            <h2 style="font-size:1.2rem;margin-top:0.2rem;">Proponer Nueva Idea o Detalle para la Mesa</h2>
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.2rem;">
-              <strong>🧙🏼‍♀️ Lucía:</strong> Si has visto algún detalle chulo en Pinterest/TikTok/Amazon o se te ocurre una idea para la mesa, apúntala aquí para que <strong>Tamara</strong> la vea y decida si la incorpora al montaje.
-            </p>
-          </div>
-
+      <!-- Submenú Desplegable: Formulario para añadir una idea nueva -->
+      <details class="magical-submenu">
+        <summary>➕ Proponer Nueva Idea o Sugerencia para la Mesa</summary>
+        <div class="magical-submenu-body">
+          <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:0.85rem;">
+            <strong>🧙🏼‍♀️ Lucía:</strong> Si has visto algún detalle chulo en Pinterest/TikTok/Amazon o se te ocurre una idea para la mesa, apúntala aquí para que <strong>Tamara</strong> la vea.
+          </p>
           <form id="newIdeaForm" onsubmit="handleCreateIdea(event)" style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;">
             <div style="grid-column:span 2;">
               <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Título de la idea o sugerencia *</label>
@@ -1697,7 +1996,7 @@
             </div>
 
             <div style="grid-column:span 2;">
-              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Enlace de compra o inspiración (Amazon, AliExpress, TikTok, Pinterest...)</label>
+              <label style="font-size:0.75rem;font-weight:700;color:var(--text-muted);display:block;margin-bottom:0.25rem;">Enlace de compra o inspiración (opcional)</label>
               <input id="ideaLink" type="url" class="input-dark" placeholder="https://www.amazon.es/..." />
             </div>
 
@@ -1707,50 +2006,19 @@
             </div>
 
             <div style="grid-column:span 2;display:flex;justify-content:space-between;align-items:center;padding-top:0.3rem;">
-              <span style="font-size:0.76rem;color:var(--text-muted);">Se publicará firmado por: <strong id="ideaAuthorPreview" style="color:var(--gold-bright);">Tamara</strong></span>
+              <span style="font-size:0.76rem;color:var(--text-muted);">Firmado por: <strong id="ideaAuthorPreview" style="color:var(--gold-bright);">Tamara</strong></span>
               <button type="submit" class="btn-gold">
-                🪄 Publicar Idea en el Muro
+                🪄 Publicar Idea
               </button>
             </div>
           </form>
         </div>
+      </details>
 
-        <!-- Explicación clara de los roles: Tamara hace la mesa y Lucía opina -->
-        <div class="inspector-card" style="padding:1.5rem;gap:1rem;">
-          <div>
-            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;">🦉 Lechucería de Hogwarts · Roles del Equipo</span>
-            <h2 style="font-size:1.15rem;margin-top:0.2rem;">👩🏽‍🪄 Tamara monta la mesa · 🧙🏼‍♀️ Lucía opina</h2>
-          </div>
-
-          <div style="display:flex;flex-direction:column;gap:0.75rem;font-size:0.8rem;color:var(--text-muted);">
-            <div style="background:rgba(11,9,7,0.65);border:1px solid var(--border-subtle);padding:0.8rem;border-radius:var(--radius-sm);">
-              <strong style="color:var(--gold-bright);">👩🏽‍🪄 Tamara (Creadora y Montaje de la Mesa):</strong><br/>
-              Se encarga de hacer toda la mesa: utiliza los enlaces directos de compra, imprime los carteles y el papercraft 3D, embolsa las chuches y va marcando cada zona y material como <strong>"✅ ¡Listo!"</strong> para ver subir el % de finalización.
-            </div>
-            <div style="background:rgba(11,9,7,0.65);border:1px solid var(--border-subtle);padding:0.8rem;border-radius:var(--radius-sm);">
-              <strong style="color:#c084fc;">🧙🏼‍♀️ Lucía (Opinión, Visto Bueno e Ideas):</strong><br/>
-              Selecciona arriba <strong>"🧙🏼‍♀️ Lucía (Opina)"</strong>, explora el 3D y las fotos, marca en cada zona su valoración (<strong>😍 ¡Me encanta!</strong> o <strong>💡 Tengo sugerencia</strong>), deja comentarios y propone ideas nuevas en este muro.
-            </div>
-            <div style="background:rgba(11,9,7,0.65);border:1px solid var(--border-subtle);padding:0.8rem;border-radius:var(--radius-sm);">
-              <strong style="color:var(--text-main);">📲 Sincronización por WhatsApp:</strong><br/>
-              Cuando Lucía termine de dejar sus opiniones o Tamara marque avances, pulsad arriba en <strong>"📲 Enviar avances / opiniones por WhatsApp"</strong> para mandaros el enlace actualizado.
-            </div>
-          </div>
-
-          <div style="margin-top:auto;display:flex;flex-wrap:wrap;gap:0.5rem;padding-top:0.75rem;border-top:1px solid var(--border-subtle);">
-            <button type="button" class="btn-gold" onclick="shareProgressWhatsApp()">
-              📲 Compartir por WhatsApp
-            </button>
-            <button type="button" class="btn-outline-brass" onclick="exportBackupJSON()">
-              💾 Guardar copia (.json)
-            </button>
-          </div>
-        </div>
-      </div>
-
+      <!-- Lista directa de Ideas -->
       <div>
-        <h3 class="font-magical" style="font-size:1.1rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-          💡 Ideas y Sugerencias para la Mesa (Tamara puede aprobarlas y marcarlas cuando estén listas)
+        <h3 class="font-magical" style="font-size:1.02rem;color:var(--gold-bright);margin-bottom:0.75rem;">
+          💡 Ideas Propuestas para la Mesa
         </h3>
         <div id="ideasCardsGrid" class="zones-grid"></div>
       </div>
@@ -1759,80 +2027,73 @@
     <!-- =================================================================== -->
     <!-- PESTAÑA 4: CARTELES IMPRIMIBLES + PAPERCRAFT 3D + CRONOGRAMA        -->
     <!-- =================================================================== -->
-    <section id="tab-labels" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.5rem;">
+    <section id="tab-labels" class="tab-panel hidden" style="display:flex;flex-direction:column;gap:1.1rem;">
 
-      <!-- Cronograma Paso a Paso -->
-      <div class="canvas-3d-card" style="padding:1.5rem;">
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem;">
-          <div>
-            <h2 style="font-size:1.15rem;color:var(--gold-bright);">📅 Cronograma de Preparación Paso a Paso (Cuenta en el % Total)</h2>
-            <p style="font-size:0.78rem;color:var(--text-muted);">
-              Id marcando cada hito conforme se acerque el día de la Comunión de Lucía.
-            </p>
-          </div>
-          <span id="checklistProgressBadge" class="cam-pill active">0 / 8 pasos listos</span>
+      <!-- Submenú 1: Cronograma Paso a Paso -->
+      <details class="magical-submenu">
+        <summary>📅 Cronograma de Preparación Paso a Paso (<span id="checklistProgressBadge">0 / 8 pasos listos</span>)</summary>
+        <div class="magical-submenu-body">
+          <div id="checklistStepsGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0.75rem;"></div>
         </div>
-        <div id="checklistStepsGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0.75rem;"></div>
-      </div>
+      </details>
 
       <!-- Estudio de Cartelería Mágica Imprimible Estilo MinaLima + Papercraft 3D -->
-      <div class="canvas-3d-card" style="padding:1.5rem;">
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.15rem;">
+      <div class="canvas-3d-card" style="padding:1.15rem;">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:0.75rem;margin-bottom:0.85rem;">
           <div>
-            <span style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);text-transform:uppercase;letter-spacing:0.08em;">
-              ✨ Imprenta Oficial del Callejón Diagón · Estilo MinaLima &amp; Papercraft 3D Studio
-            </span>
-            <h2 style="font-size:1.3rem;color:var(--text-main);margin-top:0.2rem;">
-              🏷️ Estudio de Cartelería Mágica y Figuras Papercraft 3D (Alta Resolución A4)
+            <h2 style="font-size:1.1rem;color:var(--gold-bright);">
+              🏷️ Carteles Imprimibles y Plantillas Papercraft 3D (A4)
             </h2>
-            <p style="font-size:0.8rem;color:var(--text-muted);max-width:820px;margin-top:0.2rem;">
-              Incluye <strong>5 colecciones completas</strong>: Carteles de Mesa con escudos grabados y lacre, Etiquetas para las Cantimploras de Pociones, Cromos Pentagonales para las Ranas, Billetes del Andén 9 ¾ y <strong>Plantillas Recortables Papercraft 3D (Cubeecraft Harry, Hedwig, Caja Bertie Bott, Carta Vociferadora + 8 PDFs Oficiales Descargables)</strong>.
-            </p>
           </div>
-          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+          <div style="display:flex;flex-wrap:wrap;gap:0.45rem;">
             <button type="button" class="btn-outline-brass" onclick="openAddCustomSignModal()">
-              ➕ Crear Cartel Nuevo
+              ➕ Crear Cartel
             </button>
             <button type="button" class="btn-gold" onclick="window.print()">
-              🖨️ Imprimir Colección en A4 / Guardar PDF
+              🖨️ Imprimir / Guardar PDF
             </button>
           </div>
         </div>
 
-        <!-- Barra de configuración del Estudio de Impresión -->
-        <div class="printable-studio-controls">
-          <div class="control-group">
-            <label for="printCollectionSelect"><span>📚 Qué colección mostrar e imprimir</span></label>
-            <select id="printCollectionSelect" class="select-dark" onchange="setPrintOption('collection', this.value)">
-              <option value="all">✨ Kit Completo (Carteles + Pociones + Cromos + Billetes + Papercraft 3D)</option>
-              <option value="signs">🪧 1. Solo Carteles de Mesa Grandes (9+ uds)</option>
-              <option value="potions">🧪 2. Solo Etiquetas para Cantimploras y Pociones (4 uds)</option>
-              <option value="frogs">🐸 3. Solo Cromos Pentagonales Ranas de Chocolate (4 uds)</option>
-              <option value="tickets">🎫 4. Solo Billetes Expreso de Hogwarts Andén 9 ¾ (4 uds)</option>
-              <option value="papercraft">📐 5. Solo Figuras Papercraft 3D y Cajas Recortables (4 Plantillas + 8 PDFs)</option>
-            </select>
-          </div>
+        <!-- Submenú para las opciones de filtro e impresión de carteles -->
+        <details class="magical-submenu" style="margin-bottom:1.1rem;" open>
+          <summary>⚙️ Elegir qué colección ver/imprimir y estilo visual</summary>
+          <div class="magical-submenu-body">
+            <div class="printable-studio-controls" style="margin-bottom:0;">
+              <div class="control-group">
+                <label for="printCollectionSelect"><span>📚 Qué colección mostrar e imprimir</span></label>
+                <select id="printCollectionSelect" class="select-dark" onchange="setPrintOption('collection', this.value)">
+                  <option value="all">✨ Kit Completo (Carteles + Pociones + Cromos + Billetes + Papercraft 3D)</option>
+                  <option value="signs">🪧 1. Solo Carteles de Mesa Grandes (9+ uds)</option>
+                  <option value="potions">🧪 2. Solo Etiquetas para Cantimploras y Pociones (4 uds)</option>
+                  <option value="frogs">🐸 3. Solo Cromos Pentagonales Ranas de Chocolate (4 uds)</option>
+                  <option value="tickets">🎫 4. Solo Billetes Expreso de Hogwarts Andén 9 ¾ (4 uds)</option>
+                  <option value="papercraft">📐 5. Solo Figuras Papercraft 3D y Jaulas de Cactus (5 Plantillas + PDFs)</option>
+                </select>
+              </div>
 
-          <div class="control-group">
-            <label for="printThemeSelect"><span>🎨 Acabado Visual de los Carteles</span></label>
-            <select id="printThemeSelect" class="select-dark" onchange="setPrintOption('theme', this.value)">
-              <option value="parchment">📜 Pergamino Antiguo MinaLima (A todo color)</option>
-              <option value="royal">🖤 Gala Nocturna Gran Comedor (Negro, Burdeos y Oro)</option>
-              <option value="ink">🖨️ Ahorro de Tinta (Para imprimir en cartulina beige)</option>
-            </select>
-          </div>
+              <div class="control-group">
+                <label for="printThemeSelect"><span>🎨 Acabado Visual</span></label>
+                <select id="printThemeSelect" class="select-dark" onchange="setPrintOption('theme', this.value)">
+                  <option value="parchment">📜 Pergamino Antiguo MinaLima (A todo color)</option>
+                  <option value="royal">🖤 Gala Nocturna Gran Comedor (Negro, Burdeos y Oro)</option>
+                  <option value="ink">🖨️ Ahorro de Tinta (Para imprimir en cartulina beige)</option>
+                </select>
+              </div>
 
-          <div class="control-group">
-            <label for="printFoldSelect"><span>⛺ Formato de Soporte en Mesa</span></label>
-            <select id="printFoldSelect" class="select-dark" onchange="setPrintOption('foldable', this.value === 'tent')">
-              <option value="tent">⛺ Plegable Caballete (Se sujeta de pie doblándolo)</option>
-              <option value="flat">🖼️ Tarjeta Plana (Para marcos o apoyar en tarros)</option>
-            </select>
+              <div class="control-group">
+                <label for="printFoldSelect"><span>⛺ Formato de Soporte</span></label>
+                <select id="printFoldSelect" class="select-dark" onchange="setPrintOption('foldable', this.value === 'tent')">
+                  <option value="tent">⛺ Plegable Caballete (Se sujeta de pie doblándolo)</option>
+                  <option value="flat">🖼️ Tarjeta Plana (Para marcos o apoyar en tarros)</option>
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
+        </details>
 
         <!-- Previsualización Interactiva de las Colecciones Imprimibles -->
-        <div id="printablePreviewGrid" style="display:flex;flex-direction:column;gap:2rem;"></div>
+        <div id="printablePreviewGrid" style="display:flex;flex-direction:column;gap:1.5rem;"></div>
       </div>
     </section>
 
@@ -3558,10 +3819,20 @@
     function setActiveUser(name) {
       state.activeUser = name;
       saveState();
+      document.body.classList.toggle('mode-lucia', name === 'Lucía');
       document.getElementById('btnUserTamara').className = 'user-btn ' + (name === 'Tamara' ? 'active-tamara' : '');
       document.getElementById('btnUserLucia').className = 'user-btn ' + (name === 'Lucía' ? 'active-lucia' : '');
       const authorPrev = document.getElementById('ideaAuthorPreview');
       if (authorPrev) authorPrev.textContent = name;
+
+      const banner = document.getElementById('roleQuickBanner');
+      if (banner) {
+        if (name === 'Lucía') {
+          banner.innerHTML = '🧙🏼‍♀️ <strong>Modo Lucía (Vista Simplificada):</strong> Mira la foto de cada zona y toca <strong>😍 ¡Me encanta!</strong> o <strong>💡 Sugerencia</strong>. Si quieres decirle algo a Tamara, abre el submenú <strong>💬 Comentarios</strong> de esa tarjeta.';
+        } else {
+          banner.innerHTML = '👩🏽‍🪄 <strong>Modo Tamara (Montaje y Compras):</strong> Marca las zonas y compras listas, y despliega los submenús <strong>🛠️ Cómo montarlo</strong> o <strong>🛒 Enlaces de compra</strong> cuando los necesites.';
+        }
+      }
       renderAll();
     }
 
@@ -3759,37 +4030,64 @@
     }
 
     // =========================================================================
-    // 8. RENDERIZADO COMPLETO DE LA INTERFAZ
+    // 8. RENDERIZADO COMPLETO DE LA INTERFAZ (CON SUBMENÚS PARA MÓVIL)
     // =========================================================================
-    function renderCommentsBlock(targetKey, inputSuffix) {
+    function renderLuciaOpinionBox(targetId, currentOpinion, isZone = true) {
+      const fnName = isZone ? 'setZoneAssignee' : 'setItemAssignee';
+      return `
+        <div class="lucia-opinion-box">
+          <div class="lucia-opinion-label">
+            <span>🧙🏼‍♀️ ¿Qué opina Lucía?</span>
+            <span style="font-weight:600;color:var(--text-dim);">Toca 1 botón</span>
+          </div>
+          <div class="lucia-opinion-pills">
+            <button type="button" class="opinion-pill-btn ${currentOpinion === 'love' ? 'active-love' : ''}" onclick="${fnName}('${targetId}', 'love')">
+              😍 ¡Me encanta!
+            </button>
+            <button type="button" class="opinion-pill-btn ${currentOpinion === 'idea' ? 'active-idea' : ''}" onclick="${fnName}('${targetId}', 'idea')">
+              💡 Sugerencia
+            </button>
+            <button type="button" class="opinion-pill-btn ${currentOpinion === 'pending' ? 'active-pending' : ''}" onclick="${fnName}('${targetId}', 'pending')">
+              👀 Por ver
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCommentsSubmenu(targetKey, inputSuffix) {
       const list = state.comments[targetKey] || [];
       const inputId = `commentInput_${targetKey}_${inputSuffix}`;
       const placeholderText = state.activeUser === 'Lucía'
         ? 'Escribe aquí tu opinión o sugerencia como Lucía...'
-        : 'Escribe una nota de montaje o respuesta como Tamara...';
+        : 'Escribe una nota o respuesta como Tamara...';
+      const isOpenAttr = list.length > 0 ? 'open' : '';
       return `
-        <div class="comments-section">
-          <div style="font-size:0.73rem;font-weight:700;color:var(--text-muted);display:flex;justify-content:space-between;">
-            <span>💬 Opiniones de Lucía y notas de Tamara (${list.length})</span>
-            <span>Escribiendo como <strong style="color:var(--gold-bright)">${state.activeUser}</strong></span>
-          </div>
-          ${list.length === 0 ? `<div style="font-size:0.73rem;color:var(--text-dim);font-style:italic;">Aún no hay comentarios aquí. ¡Lucía puede dejar su opinión o sugerencia sobre esta parte!</div>` : ''}
-          ${list.map(c => `
-            <div class="comment-item ${c.author === 'Tamara' ? 'by-tamara' : 'by-lucia'}">
-              <div class="comment-meta">
-                <span class="comment-author ${c.author === 'Tamara' ? 'tamara' : 'lucia'}">
-                  ${c.author === 'Tamara' ? '👩🏽‍🪄 Tamara (Montaje)' : '🧙🏼‍♀️ Lucía (Opinión)'} · <span style="font-weight:400;color:var(--text-dim);">${c.date}</span>
-                </span>
-                <button type="button" class="comment-delete-btn" onclick="deleteComment('${targetKey}', '${c.id}')" title="Borrar comentario">✕</button>
+        <details class="card-submenu" ${isOpenAttr}>
+          <summary>
+            <span>💬 Comentarios y sugerencias (${list.length})</span>
+          </summary>
+          <div class="card-submenu-content">
+            <div class="comments-section" style="border-top:none;padding-top:0;margin-top:0;">
+              ${list.length === 0 ? `<div style="font-size:0.73rem;color:var(--text-dim);font-style:italic;">Aún no hay comentarios. ¡Escribe abajo tu opinión como ${state.activeUser}!</div>` : ''}
+              ${list.map(c => `
+                <div class="comment-item ${c.author === 'Tamara' ? 'by-tamara' : 'by-lucia'}">
+                  <div class="comment-meta">
+                    <span class="comment-author ${c.author === 'Tamara' ? 'tamara' : 'lucia'}">
+                      ${c.author === 'Tamara' ? '👩🏽‍🪄 Tamara' : '🧙🏼‍♀️ Lucía'} · <span style="font-weight:400;color:var(--text-dim);">${c.date}</span>
+                    </span>
+                    <button type="button" class="comment-delete-btn" onclick="deleteComment('${targetKey}', '${c.id}')" title="Borrar comentario">✕</button>
+                  </div>
+                  <div style="color:var(--text-main);">${escapeHtml(c.text)}</div>
+                </div>
+              `).join('')}
+              <div class="comment-form">
+                <input id="${inputId}" type="text" class="comment-input" placeholder="${placeholderText}" onkeydown="if(event.key==='Enter'){event.preventDefault();addComment('${targetKey}','${inputId}');}" />
+                <button type="button" class="comment-submit-btn" onclick="addComment('${targetKey}','${inputId}')">Enviar</button>
               </div>
-              <div style="color:var(--text-main);">${escapeHtml(c.text)}</div>
             </div>
-          `).join('')}
-          <div class="comment-form">
-            <input id="${inputId}" type="text" class="comment-input" placeholder="${placeholderText}" onkeydown="if(event.key==='Enter'){event.preventDefault();addComment('${targetKey}','${inputId}');}" />
-            <button type="button" class="comment-submit-btn" onclick="addComment('${targetKey}','${inputId}')">Enviar</button>
           </div>
-        </div>
+        </details>
       `;
     }
 
@@ -3829,50 +4127,45 @@
         <div class="inspector-photo-wrap" onclick="openLightbox('${zone.photo}', '${escapeHtml(zone.title)}')">
           <img src="${zone.photo}" alt="${escapeHtml(zone.title)}" />
           <span class="inspector-photo-badge">${zone.level}</span>
-          <button type="button" class="inspector-zoom-btn">🔍 Ver foto recreada en grande</button>
+          <button type="button" class="inspector-zoom-btn">🔍 Ampliar foto</button>
         </div>
         <div class="inspector-body">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;">
-            <div>
-              <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:800;text-transform:uppercase;">📍 Zona seleccionada en el 3D</span>
-              <h3 class="font-magical" style="font-size:1.05rem;margin-top:0.15rem;">${zone.title}</h3>
-            </div>
+          <div>
+            <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:800;text-transform:uppercase;">📍 Zona seleccionada en el 3D</span>
+            <h3 class="font-magical" style="font-size:1.02rem;margin-top:0.15rem;">${zone.title}</h3>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">${zone.description}</p>
           </div>
 
-          <div class="collab-control-row">
-            <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleZoneDone('${zone.id}')">
-              ${isDone ? '✅ ¡Lista por Tamara!' : '⏳ Tamara: Marcar Zona Lista'}
+          ${renderLuciaOpinionBox(zone.id, opinion, true)}
+
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" style="width:100%;justify-content:center;" onclick="toggleZoneDone('${zone.id}')">
+              ${isDone ? '✅ ¡Zona Lista por Tamara!' : '⬜ Tamara: Marcar Zona Lista'}
             </button>
-            <div style="display:flex;align-items:center;gap:0.35rem;font-size:0.74rem;">
-              <span style="color:var(--text-muted);">🧙🏼‍♀️ Opinión Lucía:</span>
-              <select class="assignee-select" onchange="setZoneAssignee('${zone.id}', this.value)">
-                <option value="love" ${opinion === 'love' ? 'selected' : ''}>😍 ¡Le encanta a Lucía!</option>
-                <option value="idea" ${opinion === 'idea' ? 'selected' : ''}>💡 Con sugerencia de Lucía</option>
-                <option value="pending" ${opinion === 'pending' ? 'selected' : ''}>👀 Pendiente de ver</option>
-              </select>
-            </div>
           </div>
 
-          <p style="font-size:0.8rem;color:var(--text-muted);">${zone.description}</p>
+          <div class="card-submenus-stack">
+            ${renderCommentsSubmenu(zone.id, 'inspector')}
 
-          <div style="background:rgba(11,9,7,0.55);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:0.7rem;">
-            <div style="font-size:0.73rem;font-weight:800;color:var(--gold-bright);margin-bottom:0.35rem;">🛠️ Cómo lo montará Tamara paso a paso:</div>
-            <ul style="padding-left:1.1rem;font-size:0.76rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.25rem;">
-              ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
-            </ul>
+            <details class="card-submenu">
+              <summary>🛠️ Cómo montarlo paso a paso (${zone.diySteps.length} pasos)</summary>
+              <div class="card-submenu-content">
+                <ul style="padding-left:1.1rem;font-size:0.76rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.25rem;">
+                  ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+              </div>
+            </details>
+
+            <details class="card-submenu">
+              <summary>🛒 Enlaces de compra (${allLinks.length} tiendas)</summary>
+              <div class="card-submenu-content">
+                <div class="shopping-links-list" style="margin-bottom:0.45rem;">
+                  ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
+                </div>
+                <button type="button" class="btn-outline-brass" style="padding:0.2rem 0.55rem;font-size:0.7rem;" onclick="addCustomShopLink('${zone.id}')">+ Añadir otro enlace</button>
+              </div>
+            </details>
           </div>
-
-          <div class="shopping-links-box">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-              <span class="shopping-links-title">🛍️ Enlaces de Compra para Tamara:</span>
-              <button type="button" class="btn-outline-brass" style="padding:0.2rem 0.5rem;font-size:0.68rem;" onclick="addCustomShopLink('${zone.id}')">+ Añadir enlace</button>
-            </div>
-            <div class="shopping-links-list">
-              ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
-            </div>
-          </div>
-
-          ${renderCommentsBlock(zone.id, 'inspector')}
         </div>
       `;
     }
@@ -3904,47 +4197,46 @@
               <img src="${zone.photo}" alt="${escapeHtml(zone.title)}" loading="lazy" />
               <span class="zone-level-tag">${zone.level}</span>
               <span class="zone-status-pill ${isDone ? 'pill-done' : 'pill-pending'}">
-                ${isDone ? '✅ ¡LISTA POR TAMARA!' : '⏳ PENDIENTE DE MONTAR'}
+                ${isDone ? '✅ ¡LISTA!' : '⏳ PENDIENTE'}
               </span>
             </div>
             <div class="zone-card-content">
               <div>
-                <h3 class="font-magical" style="font-size:1.02rem;color:var(--text-main);">${zone.title}</h3>
-                <p style="font-size:0.78rem;color:var(--text-muted);margin-top:0.25rem;">${zone.description}</p>
+                <h3 class="font-magical" style="font-size:1rem;color:var(--text-main);">${zone.title}</h3>
+                <p style="font-size:0.77rem;color:var(--text-muted);margin-top:0.2rem;">${zone.description}</p>
               </div>
 
-              <div class="collab-control-row">
-                <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleZoneDone('${zone.id}')">
-                  ${isDone ? '✅ ¡Lista por Tamara!' : '⬜ Tamara: Marcar Zona Lista'}
-                </button>
-                <div style="display:flex;align-items:center;gap:0.35rem;font-size:0.74rem;">
-                  <span style="color:var(--text-muted);">🧙🏼‍♀️ Opinión Lucía:</span>
-                  <select class="assignee-select" onchange="setZoneAssignee('${zone.id}', this.value)">
-                    <option value="love" ${opinion === 'love' ? 'selected' : ''}>😍 ¡Le encanta a Lucía!</option>
-                    <option value="idea" ${opinion === 'idea' ? 'selected' : ''}>💡 Con sugerencia de Lucía</option>
-                    <option value="pending" ${opinion === 'pending' ? 'selected' : ''}>👀 Pendiente de ver</option>
-                  </select>
-                </div>
-              </div>
+              <!-- Botones rápidos de 1 toque para Lucía -->
+              ${renderLuciaOpinionBox(zone.id, opinion, true)}
 
-              <div style="background:rgba(11,9,7,0.5);border:1px solid var(--border-subtle);border-radius:var(--radius-sm);padding:0.65rem;">
-                <div style="font-size:0.72rem;font-weight:800;color:var(--gold-bright);margin-bottom:0.3rem;">✨ Guía rápida de montaje para Tamara:</div>
-                <ul style="padding-left:1.05rem;font-size:0.75rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.2rem;">
-                  ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
-                </ul>
-              </div>
+              <!-- Botón de Estado de Tamara -->
+              <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" style="width:100%;justify-content:center;" onclick="toggleZoneDone('${zone.id}')">
+                ${isDone ? '✅ ¡Zona Lista por Tamara!' : '⬜ Tamara: Marcar Zona Lista'}
+              </button>
 
-              <div class="shopping-links-box">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                  <span class="shopping-links-title">🛒 Enlaces directos de compra para Tamara:</span>
-                  <button type="button" class="btn-outline-brass" style="padding:0.18rem 0.45rem;font-size:0.68rem;" onclick="addCustomShopLink('${zone.id}')">+ Añadir link</button>
-                </div>
-                <div class="shopping-links-list">
-                  ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
-                </div>
-              </div>
+              <!-- Submenús desplegables para no recargar la vista en el móvil -->
+              <div class="card-submenus-stack">
+                ${renderCommentsSubmenu(zone.id, 'card')}
 
-              ${renderCommentsBlock(zone.id, 'card')}
+                <details class="card-submenu">
+                  <summary>🛠️ Guía de montaje para Tamara (${zone.diySteps.length} pasos)</summary>
+                  <div class="card-submenu-content">
+                    <ul style="padding-left:1.05rem;font-size:0.75rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.25rem;">
+                      ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
+                    </ul>
+                  </div>
+                </details>
+
+                <details class="card-submenu">
+                  <summary>🛒 Enlaces de compra (${allLinks.length} enlaces)</summary>
+                  <div class="card-submenu-content">
+                    <div class="shopping-links-list" style="margin-bottom:0.45rem;">
+                      ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
+                    </div>
+                    <button type="button" class="btn-outline-brass" style="padding:0.2rem 0.55rem;font-size:0.68rem;" onclick="addCustomShopLink('${zone.id}')">+ Añadir enlace</button>
+                  </div>
+                </details>
+              </div>
             </div>
           </article>
         `;
@@ -3982,38 +4274,35 @@
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;">
                   <div>
                     <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:700;">${qty} ${item.unitLabel} (~${weightGrams}g)</span>
-                    <h4 class="font-magical" style="font-size:0.98rem;margin-top:0.15rem;">${item.icon} ${item.magicalName}</h4>
+                    <h4 class="font-magical" style="font-size:0.96rem;margin-top:0.15rem;">${item.icon} ${item.magicalName}</h4>
                   </div>
                   <div style="text-align:right;shrink:0;">
-                    <div style="font-family:'Cinzel',serif;font-weight:800;font-size:1.1rem;color:var(--gold-bright);">${formatEuro(price)}</div>
+                    <div style="font-family:'Cinzel',serif;font-weight:800;font-size:1.05rem;color:var(--gold-bright);">${formatEuro(price)}</div>
                   </div>
                 </div>
 
-                <p style="font-size:0.78rem;color:var(--text-muted);"><strong>Qué comprar (Tamara):</strong> ${item.realProduct}</p>
-                <p style="font-size:0.75rem;color:var(--text-dim);"><strong>💡 Truco DIY:</strong> ${item.diyTrick}</p>
+                <p style="font-size:0.76rem;color:var(--text-muted);">${item.realProduct}</p>
 
-                <div class="collab-control-row">
-                  <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleItemPurchased('${item.id}')">
-                    ${isDone ? '✅ Comprado por Tamara' : '🛒 Tamara: Marcar Comprado'}
-                  </button>
-                  <select class="assignee-select" onchange="setItemAssignee('${item.id}', this.value)">
-                    <option value="love" ${opinion === 'love' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 😍 ¡Me encanta!</option>
-                    <option value="idea" ${opinion === 'idea' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 💡 Sugerencia</option>
-                    <option value="pending" ${opinion === 'pending' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 👀 Por opinar</option>
-                  </select>
+                ${renderLuciaOpinionBox(item.id, opinion, false)}
+
+                <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" style="width:100%;justify-content:center;" onclick="toggleItemPurchased('${item.id}')">
+                  ${isDone ? '✅ Comprado por Tamara' : '🛒 Tamara: Marcar Comprado'}
+                </button>
+
+                <div class="card-submenus-stack">
+                  <details class="card-submenu">
+                    <summary>🔗 Dónde comprarlo (${allLinks.length} enlaces) y Truco DIY</summary>
+                    <div class="card-submenu-content">
+                      <p style="font-size:0.74rem;color:var(--text-dim);margin-bottom:0.5rem;"><strong>💡 Truco DIY:</strong> ${item.diyTrick}</p>
+                      <div class="shopping-links-list" style="margin-bottom:0.45rem;">
+                        ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
+                      </div>
+                      <button type="button" class="btn-outline-brass" style="padding:0.18rem 0.5rem;font-size:0.68rem;" onclick="addCustomShopLink('${item.id}')">+ Añadir link</button>
+                    </div>
+                  </details>
+
+                  ${renderCommentsSubmenu(item.id, 'shop')}
                 </div>
-
-                <div class="shopping-links-box">
-                  <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span class="shopping-links-title">🔗 Dónde comprarlo al mejor precio:</span>
-                    <button type="button" class="btn-outline-brass" style="padding:0.15rem 0.45rem;font-size:0.68rem;" onclick="addCustomShopLink('${item.id}')">+ Añadir link</button>
-                  </div>
-                  <div class="shopping-links-list">
-                    ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
-                  </div>
-                </div>
-
-                ${renderCommentsBlock(item.id, 'shop')}
               </div>
             </article>
           `;
@@ -4033,36 +4322,32 @@
             <article class="zone-card ${isDone ? 'status-done' : ''}">
               <div class="zone-card-content">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;">
-                  <h4 class="font-magical" style="font-size:0.96rem;">${item.name}</h4>
-                  <span style="font-family:'Cinzel',serif;font-weight:800;font-size:1.05rem;color:var(--gold-bright);shrink:0;">
-                    ${price === 0 ? 'GRATIS (Reciclado)' : formatEuro(price)}
+                  <h4 class="font-magical" style="font-size:0.95rem;">${item.name}</h4>
+                  <span style="font-family:'Cinzel',serif;font-weight:800;font-size:1.02rem;color:var(--gold-bright);shrink:0;">
+                    ${price === 0 ? 'GRATIS' : formatEuro(price)}
                   </span>
                 </div>
 
-                <p style="font-size:0.78rem;color:var(--text-muted);">${item.howTo}</p>
+                ${renderLuciaOpinionBox(item.id, opinion, false)}
 
-                <div class="collab-control-row">
-                  <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" onclick="toggleItemPurchased('${item.id}')">
-                    ${isDone ? '✅ Ya lo tiene Tamara' : '🛒 Tamara: Marcar Listo'}
-                  </button>
-                  <select class="assignee-select" onchange="setItemAssignee('${item.id}', this.value)">
-                    <option value="love" ${opinion === 'love' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 😍 ¡Me encanta!</option>
-                    <option value="idea" ${opinion === 'idea' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 💡 Sugerencia</option>
-                    <option value="pending" ${opinion === 'pending' ? 'selected' : ''}>🧙🏼‍♀️ Lucía: 👀 Por opinar</option>
-                  </select>
+                <button type="button" class="status-toggle-btn ${isDone ? 'done' : ''}" style="width:100%;justify-content:center;" onclick="toggleItemPurchased('${item.id}')">
+                  ${isDone ? '✅ Ya lo tiene Tamara' : '🛒 Tamara: Marcar Listo'}
+                </button>
+
+                <div class="card-submenus-stack">
+                  <details class="card-submenu">
+                    <summary>🔗 Enlaces de compra (${allLinks.length}) y cómo prepararlo</summary>
+                    <div class="card-submenu-content">
+                      <p style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.5rem;">${item.howTo}</p>
+                      <div class="shopping-links-list" style="margin-bottom:0.45rem;">
+                        ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
+                      </div>
+                      <button type="button" class="btn-outline-brass" style="padding:0.18rem 0.5rem;font-size:0.68rem;" onclick="addCustomShopLink('${item.id}')">+ Añadir link</button>
+                    </div>
+                  </details>
+
+                  ${renderCommentsSubmenu(item.id, 'decor')}
                 </div>
-
-                <div class="shopping-links-box">
-                  <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span class="shopping-links-title">🔗 Enlaces de compra recomendados:</span>
-                    <button type="button" class="btn-outline-brass" style="padding:0.15rem 0.45rem;font-size:0.68rem;" onclick="addCustomShopLink('${item.id}')">+ Añadir link</button>
-                  </div>
-                  <div class="shopping-links-list">
-                    ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
-                  </div>
-                </div>
-
-                ${renderCommentsBlock(item.id, 'decor')}
               </div>
             </article>
           `;
@@ -4080,32 +4365,32 @@
               <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;">
                 <div>
                   <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:700;">
-                    📍 ${escapeHtml(idea.zone)} · Propuesta de ${idea.author === 'Tamara' ? '👩🏽‍🪄 Tamara' : '🧙🏼‍♀️ Lucía'}
+                    📍 ${escapeHtml(idea.zone)} · Por ${idea.author === 'Tamara' ? '👩🏽‍🪄 Tamara' : '🧙🏼‍♀️ Lucía'}
                   </span>
-                  <h4 class="font-magical" style="font-size:1rem;margin-top:0.2rem;">${escapeHtml(idea.title)}</h4>
+                  <h4 class="font-magical" style="font-size:0.98rem;margin-top:0.15rem;">${escapeHtml(idea.title)}</h4>
                 </div>
                 <span style="font-family:'Cinzel',serif;font-weight:800;color:var(--gold-bright);shrink:0;">
                   ${formatEuro(idea.cost)}
                 </span>
               </div>
 
-              <p style="font-size:0.8rem;color:var(--text-muted);">${escapeHtml(idea.desc)}</p>
+              <p style="font-size:0.78rem;color:var(--text-muted);">${escapeHtml(idea.desc)}</p>
 
               ${idea.link ? `
                 <div>
                   <a href="${escapeHtml(idea.link)}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">
-                    🔗 Ver producto / inspiración en tienda ↗
+                    🔗 Ver producto / inspiración ↗
                   </a>
                 </div>
               ` : ''}
 
               <div class="collab-control-row">
                 <button type="button" class="status-toggle-btn ${idea.done ? 'done' : ''}" onclick="toggleIdeaDone('${idea.id}')">
-                  ${idea.done ? '✅ Idea Lista' : '⬜ Marcar Idea Lista'}
+                  ${idea.done ? '✅ Idea Lista' : '⬜ Marcar Lista'}
                 </button>
                 <div style="display:flex;gap:0.35rem;align-items:center;">
                   <button type="button" class="btn-outline-brass" style="padding:0.3rem 0.55rem;font-size:0.72rem;" onclick="toggleIdeaApproved('${idea.id}')">
-                    ${idea.approved ? '⭐ Incluida en la mesa' : '➕ Incluir en la mesa'}
+                    ${idea.approved ? '⭐ Incluida' : '➕ Incluir'}
                   </button>
                   <button type="button" class="btn-outline-brass" style="padding:0.3rem 0.55rem;font-size:0.72rem;" onclick="likeIdea('${idea.id}')">
                     ❤️ ${idea.likes || 0}
@@ -4114,7 +4399,9 @@
                 </div>
               </div>
 
-              ${renderCommentsBlock(idea.id, 'idea')}
+              <div class="card-submenus-stack">
+                ${renderCommentsSubmenu(idea.id, 'idea')}
+              </div>
             </div>
           </article>
         `;
@@ -5076,12 +5363,17 @@
         const signsCardsPreview = signsList.map(s => renderSingleMinaLimaSignHTML(s, theme, foldable, false)).join('');
         const signsCardsPrint = signsList.map(s => renderSingleMinaLimaSignHTML(s, theme, foldable, true)).join('');
         previewSectionsHTML += `
-          <div>
-            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-              🪧 A. Carteles Principales de Mesa (${signsList.length} carteles · Formato ${foldable ? 'Caballete Plegable' : 'Tarjeta Plana'})
-            </h3>
-            <div class="print-cards-showcase">${signsCardsPreview}</div>
-          </div>
+          <details class="magical-submenu" open>
+            <summary>
+              <span class="submenu-title-wrap">
+                <span>🪧 A. Carteles Principales de Mesa</span>
+                <span class="submenu-badge">${signsList.length} carteles</span>
+              </span>
+            </summary>
+            <div class="magical-submenu-body">
+              <div class="print-cards-showcase">${signsCardsPreview}</div>
+            </div>
+          </details>
         `;
         printSheetSectionsHTML += `
           <div style="margin-bottom:18px;">
@@ -5094,12 +5386,17 @@
       if (collection === 'all' || collection === 'potions') {
         const potionsHTML = renderPotionApothecaryLabelsHTML(theme);
         previewSectionsHTML += `
-          <div>
-            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-              🧪 B. Etiquetas Apotecarias para pegar en Cantimploras y Botellas de Pociones (4 etiquetas recortables)
-            </h3>
-            <div class="print-cards-showcase">${potionsHTML}</div>
-          </div>
+          <details class="magical-submenu" ${collection === 'potions' ? 'open' : ''}>
+            <summary>
+              <span class="submenu-title-wrap">
+                <span>🧪 B. Etiquetas de Pociones (Cantimploras y Botellas)</span>
+                <span class="submenu-badge">4 etiquetas</span>
+              </span>
+            </summary>
+            <div class="magical-submenu-body">
+              <div class="print-cards-showcase">${potionsHTML}</div>
+            </div>
+          </details>
         `;
         printSheetSectionsHTML += `
           <div style="margin-bottom:18px;">
@@ -5112,12 +5409,17 @@
       if (collection === 'all' || collection === 'frogs') {
         const frogsHTML = renderChocolateFrogPentagonsHTML();
         previewSectionsHTML += `
-          <div>
-            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-              🐸 C. Cromos Pentagonales Coleccionables para las Ranas de Chocolate (Incluye el Cromo de ${(state.childName || 'Lucía').trim()})
-            </h3>
-            <div class="print-cards-showcase" style="justify-items:center;">${frogsHTML}</div>
-          </div>
+          <details class="magical-submenu" ${collection === 'frogs' ? 'open' : ''}>
+            <summary>
+              <span class="submenu-title-wrap">
+                <span>🐸 C. Cromos Pentagonales de Ranas de Chocolate</span>
+                <span class="submenu-badge">Incluye a ${(state.childName || 'Lucía').trim()}</span>
+              </span>
+            </summary>
+            <div class="magical-submenu-body">
+              <div class="print-cards-showcase" style="justify-items:center;">${frogsHTML}</div>
+            </div>
+          </details>
         `;
         printSheetSectionsHTML += `
           <div style="margin-bottom:18px;">
@@ -5130,12 +5432,17 @@
       if (collection === 'all' || collection === 'tickets') {
         const ticketsHTML = renderHogwartsExpressTicketsHTML();
         previewSectionsHTML += `
-          <div>
-            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-              🎫 D. Billetes Conmemorativos del Expreso de Hogwarts · Andén 9 ¾ (Para las Bolsitas Kraft o Platos)
-            </h3>
-            <div class="print-cards-showcase">${ticketsHTML}</div>
-          </div>
+          <details class="magical-submenu" ${collection === 'tickets' ? 'open' : ''}>
+            <summary>
+              <span class="submenu-title-wrap">
+                <span>🎫 D. Billetes del Expreso de Hogwarts · Andén 9 ¾</span>
+                <span class="submenu-badge">Para bolsitas</span>
+              </span>
+            </summary>
+            <div class="magical-submenu-body">
+              <div class="print-cards-showcase">${ticketsHTML}</div>
+            </div>
+          </details>
         `;
         printSheetSectionsHTML += `
           <div style="margin-bottom:18px;">
@@ -5149,13 +5456,18 @@
         const papercraftDirectoryHTML = renderPapercraftDirectoryHTML();
         const papercraftNetsHTML = renderPapercraftTemplatesHTML();
         previewSectionsHTML += `
-          <div>
-            <h3 class="font-magical" style="font-size:1.08rem;color:var(--gold-bright);margin-bottom:0.85rem;">
-              📐 E. Figuras Papercraft 3D, Jaula para Mini Cactus y Cajas Recortables (11 Templates Externos + 5 Plantillas A4 Listas para Imprimir)
-            </h3>
-            ${papercraftDirectoryHTML}
-            <div class="print-cards-showcase">${papercraftNetsHTML}</div>
-          </div>
+          <details class="magical-submenu" ${collection === 'papercraft' ? 'open' : ''}>
+            <summary>
+              <span class="submenu-title-wrap">
+                <span>📐 E. Figuras Papercraft 3D y Jaulas de Mini Cactus</span>
+                <span class="submenu-badge">11 enlaces + 5 plantillas A4</span>
+              </span>
+            </summary>
+            <div class="magical-submenu-body">
+              ${papercraftDirectoryHTML}
+              <div class="print-cards-showcase">${papercraftNetsHTML}</div>
+            </div>
+          </details>
         `;
         printSheetSectionsHTML += `
           <div>
@@ -5179,10 +5491,12 @@
       const metrics = calculateCompletionMetrics();
       const budget = calculateBudgetTotals();
 
-      // Actualizar Barra de Progreso Global
+      // Actualizar Barra de Progreso Global y botón compacto móvil
       document.getElementById('globalProgressPct').textContent = `${metrics.pct}% LISTO`;
       document.getElementById('globalProgressBar').style.width = `${metrics.pct}%`;
       document.getElementById('globalProgressDetail').textContent = `${metrics.grandDoneTasks} de ${metrics.grandTotalTasks} objetivos completados`;
+      const compactPctEl = document.getElementById('compactTopbarPct');
+      if (compactPctEl) compactPctEl.textContent = `${metrics.pct}%`;
 
       // Actualizar Contadores Hero
       document.getElementById('statZonesReady').textContent = `${metrics.doneZones} / ${metrics.totalZones}`;
@@ -5196,6 +5510,8 @@
       document.getElementById('costPerGuestBadge').textContent = `~${formatEuro(budget.perGuest)} / inv.`;
       document.getElementById('totalWeightDisplay').textContent = `${budget.totalWeight.toFixed(1).replace('.', ',')} kg`;
       document.getElementById('guestCountValue').textContent = `${state.guests} inv.`;
+      const summaryGuestEl = document.getElementById('summaryGuestCount');
+      if (summaryGuestEl) summaryGuestEl.textContent = `${state.guests}`;
 
       // Badges de las pestañas
       document.getElementById('badgeTabZones').textContent = `${metrics.doneZones}/${metrics.totalZones}`;
