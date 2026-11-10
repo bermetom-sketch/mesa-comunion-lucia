@@ -1647,6 +1647,154 @@
       }
     }
 
+    /* ======================================================================= */
+    /* CHAT FLOTANTE ASISTENTE GEMINI · AUTO-AMPLIACIÓN DE LA WEB               */
+    /* ======================================================================= */
+    .gemini-fab-btn {
+      position: fixed;
+      right: 16px;
+      bottom: 18px;
+      z-index: 1500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.72rem 1.1rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #c026d3 100%);
+      color: #ffffff;
+      border: 2px solid var(--gold-bright);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      box-shadow: 0 10px 30px rgba(124, 58, 237, 0.55), 0 0 0 3px rgba(212, 175, 55, 0.2);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .gemini-fab-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 14px 36px rgba(124, 58, 237, 0.75);
+    }
+
+    .gemini-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 6, 12, 0.76);
+      backdrop-filter: blur(5px);
+      z-index: 1600;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 12px;
+    }
+
+    .gemini-drawer-panel {
+      width: min(100%, 450px);
+      max-height: min(88vh, 690px);
+      background: linear-gradient(170deg, #1b1326 0%, #120d18 100%);
+      border: 2px solid var(--gold-main);
+      border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.92);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .gemini-drawer-header {
+      padding: 0.85rem 1rem;
+      background: linear-gradient(90deg, rgba(124, 58, 237, 0.28), rgba(212, 175, 55, 0.16));
+      border-bottom: 1px solid var(--border-brass);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .gemini-quick-strip {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding: 0.6rem 0.85rem;
+      background: rgba(15, 11, 20, 0.75);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+      scrollbar-width: thin;
+    }
+
+    .gemini-quick-chip {
+      flex-shrink: 0;
+      background: rgba(124, 58, 237, 0.18);
+      border: 1px solid rgba(167, 139, 250, 0.45);
+      color: #ede9fe;
+      padding: 0.34rem 0.68rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .gemini-quick-chip:hover {
+      background: rgba(124, 58, 237, 0.38);
+      border-color: var(--gold-bright);
+    }
+
+    .gemini-chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      min-height: 250px;
+      max-height: 52vh;
+    }
+
+    .gemini-msg {
+      padding: 0.7rem 0.85rem;
+      border-radius: 14px;
+      font-size: 0.8rem;
+      line-height: 1.48;
+      max-width: 92%;
+      word-break: break-word;
+    }
+
+    .gemini-msg.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.24), rgba(122, 22, 22, 0.45));
+      border: 1px solid var(--gold-main);
+      color: var(--text-main);
+      border-bottom-right-radius: 4px;
+    }
+
+    .gemini-msg.assistant {
+      align-self: flex-start;
+      background: rgba(46, 32, 68, 0.65);
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      color: #f5f3ff;
+      border-bottom-left-radius: 4px;
+    }
+
+    .gemini-action-card {
+      margin-top: 0.55rem;
+      padding: 0.55rem 0.7rem;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .gemini-chat-input-bar {
+      padding: 0.7rem 0.85rem;
+      background: #140e1c;
+      border-top: 1px solid var(--border-brass);
+      display: flex;
+      gap: 0.45rem;
+      align-items: center;
+    }
+
     @media print {
       @page {
         size: A4 portrait;
@@ -2110,6 +2258,52 @@
         <button type="button" class="btn-outline-brass" onclick="closeLightbox()">✕ Cerrar</button>
       </div>
       <img id="lightboxImage" src="" alt="Vista ampliada de la zona" />
+    </div>
+  </div>
+
+  <!-- BOTÓN FLOTANTE Y CHAT CON GEMINI PARA AUTO-AMPLIAR LA WEB -->
+  <button id="geminiFabBtn" type="button" class="gemini-fab-btn no-print" onclick="toggleGeminiChat(true)">
+    <span>✨ Chat Gemini · + Ampliar Web</span>
+  </button>
+
+  <div id="geminiChatDrawer" class="gemini-drawer-backdrop hidden no-print" onclick="if(event.target===this)toggleGeminiChat(false)">
+    <div class="gemini-drawer-panel" onclick="event.stopPropagation()">
+      <div class="gemini-drawer-header">
+        <div>
+          <div style="display:flex;align-items:center;gap:0.4rem;">
+            <strong class="font-magical" style="color:#f5d0fe;font-size:0.94rem;">✨ Chat Gemini · Ampliar Web</strong>
+            <span style="font-size:0.65rem;background:rgba(52,211,153,0.18);color:#34d399;border:1px solid rgba(52,211,153,0.45);padding:1px 7px;border-radius:999px;font-weight:800;">EN VIVO</span>
+          </div>
+          <div style="font-size:0.71rem;color:var(--text-muted);margin-top:2px;">
+            Pide incluir chuches, decoración, zonas o carteles y se añaden solos a la web
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.35rem;">
+          <button type="button" class="btn-outline-brass" style="padding:0.25rem 0.5rem;font-size:0.68rem;" onclick="configureGeminiApiKey()" title="Configurar API Key opcional de Google Gemini">🔑 API</button>
+          <button type="button" class="btn-outline-brass" style="padding:0.25rem 0.55rem;font-size:0.78rem;" onclick="toggleGeminiChat(false)">✕</button>
+        </div>
+      </div>
+
+      <!-- Botones rápidos de 1 toque para Tamara y Lucía -->
+      <div class="gemini-quick-strip">
+        <button type="button" class="gemini-quick-chip" onclick="triggerQuickGeminiWizard('sweet')">🍬 + Añadir Chuche / Bebida</button>
+        <button type="button" class="gemini-quick-chip" onclick="triggerQuickGeminiWizard('decor')">🕯️ + Añadir Decoración</button>
+        <button type="button" class="gemini-quick-chip" onclick="triggerQuickGeminiWizard('zone')">📸 + Nueva Zona Mesa</button>
+        <button type="button" class="gemini-quick-chip" onclick="triggerQuickGeminiWizard('sign')">🪧 + Crear Cartel</button>
+        <button type="button" class="gemini-quick-chip" onclick="sendPresetGeminiPrompt('Dame 3 ideas nuevas de chuches o decoración de Harry Potter fáciles para que Tamara pueda incluir en la mesa')">💡 Ideas Harry Potter</button>
+        <button type="button" class="gemini-quick-chip" onclick="openNativeGeminiApp()">📱 Abrir App Gemini</button>
+      </div>
+
+      <!-- Historial de mensajes del Chat -->
+      <div id="geminiChatMessages" class="gemini-chat-messages"></div>
+
+      <!-- Barra para escribir lo que Tamara o Lucía quieran incluir -->
+      <form id="geminiChatForm" class="gemini-chat-input-bar" onsubmit="handleGeminiChatSubmit(event)">
+        <input id="geminiChatInput" type="text" class="comment-input" style="font-size:0.8rem;padding:0.55rem 0.75rem;" placeholder="Ej: Añade piruletas de rayo por 5€ a compras..." autocomplete="off" />
+        <button id="geminiChatSendBtn" type="submit" class="btn-gold" style="padding:0.55rem 0.9rem;flex-shrink:0;">
+          ✨ Enviar
+        </button>
+      </form>
     </div>
   </div>
 
@@ -2678,6 +2872,11 @@
       },
       customShopLinks: {},
       completedSteps: [],
+      customZones: [],
+      customSweets: [],
+      customDecor: [],
+      userAddedSigns: [],
+      aiChatHistory: [],
       // Sin comentarios por defecto
       comments: {},
       // Muro de nuevas ideas colaborativas (botones desmarcados y 0 likes por defecto)
@@ -2710,6 +2909,18 @@
     };
 
     let state = loadState();
+
+    function getAllTableZones() {
+      return [...TABLE_ZONES, ...(state.customZones || [])];
+    }
+
+    function getAllSweetsCatalog() {
+      return [...SWEETS_CATALOG, ...(state.customSweets || [])];
+    }
+
+    function getAllDecorItems() {
+      return [...DECOR_ITEMS, ...(state.customDecor || [])];
+    }
 
     function normalizeOpinionMap(mapObj, defaultMap) {
       const result = Object.assign({}, defaultMap);
@@ -2830,7 +3041,12 @@
         ia: st.itemAssignees || {},
         cs: st.completedSteps || [],
         cm: st.comments || {},
-        id: st.ideas || []
+        id: st.ideas || [],
+        cz: st.customZones || [],
+        csw: st.customSweets || [],
+        cd: st.customDecor || [],
+        us: st.userAddedSigns || [],
+        chat: (st.aiChatHistory || []).slice(-18)
       };
     }
 
@@ -2852,7 +3068,12 @@
           itemAssignees: normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.itemAssignees, raw.ia || {}), DEFAULT_STATE.itemAssignees),
           completedSteps: Array.isArray(raw.cs) ? raw.cs : [],
           comments: stripLegacyDemoComments(raw.cm || {}),
-          ideas: Array.isArray(raw.id) && raw.id.length > 0 ? raw.id : JSON.parse(JSON.stringify(DEFAULT_STATE.ideas))
+          ideas: Array.isArray(raw.id) && raw.id.length > 0 ? raw.id : JSON.parse(JSON.stringify(DEFAULT_STATE.ideas)),
+          customZones: Array.isArray(raw.cz) ? raw.cz : [],
+          customSweets: Array.isArray(raw.csw) ? raw.csw : [],
+          customDecor: Array.isArray(raw.cd) ? raw.cd : [],
+          userAddedSigns: Array.isArray(raw.us) ? raw.us : [],
+          aiChatHistory: Array.isArray(raw.chat) ? raw.chat : []
         };
       }
       return raw;
@@ -2918,6 +3139,11 @@
         if (Array.isArray(cloudSt.completedSteps)) merged.completedSteps = cloudSt.completedSteps;
         merged.comments = stripLegacyDemoComments(cloudSt.comments || {});
         if (Array.isArray(cloudSt.ideas)) merged.ideas = cloudSt.ideas;
+        if (Array.isArray(cloudSt.customZones)) merged.customZones = cloudSt.customZones;
+        if (Array.isArray(cloudSt.customSweets)) merged.customSweets = cloudSt.customSweets;
+        if (Array.isArray(cloudSt.customDecor)) merged.customDecor = cloudSt.customDecor;
+        if (Array.isArray(cloudSt.userAddedSigns)) merged.userAddedSigns = cloudSt.userAddedSigns;
+        if (Array.isArray(cloudSt.aiChatHistory)) merged.aiChatHistory = cloudSt.aiChatHistory;
       } else {
         merged.zoneStatus = Object.assign({}, DEFAULT_STATE.zoneStatus, cloudSt.zoneStatus || {}, localSt.zoneStatus || {});
         merged.zoneAssignees = normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.zoneAssignees, cloudSt.zoneAssignees || {}, localSt.zoneAssignees || {}), DEFAULT_STATE.zoneAssignees);
@@ -3102,12 +3328,16 @@
     }
 
     function calculateCompletionMetrics() {
-      // 1. Zonas listas por Tamara (9 zonas)
-      const totalZones = TABLE_ZONES.length;
-      const doneZones = TABLE_ZONES.filter(z => state.zoneStatus[z.id] === 'done').length;
+      const allZones = getAllTableZones();
+      const allSweets = getAllSweetsCatalog();
+      const allDecor = getAllDecorItems();
 
-      // 2. Compras listas por Tamara (10 chuches + 6 deco = 16 items)
-      const allShopIds = [...SWEETS_CATALOG.map(s => s.id), ...DECOR_ITEMS.map(d => d.id)];
+      // 1. Zonas listas por Tamara
+      const totalZones = allZones.length;
+      const doneZones = allZones.filter(z => state.zoneStatus[z.id] === 'done').length;
+
+      // 2. Compras listas por Tamara
+      const allShopIds = [...allSweets.map(s => s.id), ...allDecor.map(d => d.id)];
       const totalShop = allShopIds.length;
       const doneShop = allShopIds.filter(id => !!state.itemPurchased[id]).length;
 
@@ -3126,7 +3356,7 @@
 
       // Valoraciones de Lucía en las zonas
       let lovedZones = 0, ideaZones = 0;
-      TABLE_ZONES.forEach(z => {
+      allZones.forEach(z => {
         const op = state.zoneAssignees[z.id] || '';
         if (op === 'love') lovedZones++;
         if (op === 'idea') ideaZones++;
@@ -3151,14 +3381,15 @@
       const scale = state.guests / 35;
       let sweetsCost = 0;
       let totalWeight = 0;
-      SWEETS_CATALOG.forEach(item => {
-        const scaledUnits = Math.max(1, Math.round(item.baseQty35 * scale));
-        sweetsCost += scaledUnits * item.priceByTier[state.tier];
-        totalWeight += scaledUnits * item.unitWeightKg;
+      getAllSweetsCatalog().forEach(item => {
+        const scaledUnits = Math.max(1, Math.round((item.baseQty35 || 1) * scale));
+        const unitPrice = item.priceByTier ? (item.priceByTier[state.tier] ?? item.priceByTier.balanced ?? 0) : 0;
+        sweetsCost += scaledUnits * unitPrice;
+        totalWeight += scaledUnits * (item.unitWeightKg || 0.25);
       });
       let decorCost = 0;
-      DECOR_ITEMS.forEach(d => {
-        decorCost += d.cost[state.tier];
+      getAllDecorItems().forEach(d => {
+        decorCost += d.cost ? (d.cost[state.tier] ?? d.cost.balanced ?? 0) : 0;
       });
       let ideasCost = 0;
       (state.ideas || []).forEach(idea => {
@@ -4105,7 +4336,7 @@
     function render3DSelectorStrip() {
       const strip = document.getElementById('zone3DSelectorStrip');
       if (!strip) return;
-      strip.innerHTML = TABLE_ZONES.map(z => {
+      strip.innerHTML = getAllTableZones().map(z => {
         const isDone = state.zoneStatus[z.id] === 'done';
         const isActive = state.selectedZoneId === z.id;
         return `
@@ -4120,11 +4351,12 @@
     function render3DZoneInspector() {
       const card = document.getElementById('zoneInspectorCard');
       if (!card) return;
-      const zone = TABLE_ZONES.find(z => z.id === state.selectedZoneId) || TABLE_ZONES[0];
+      const allZones = getAllTableZones();
+      const zone = allZones.find(z => z.id === state.selectedZoneId) || allZones[0];
       const isDone = state.zoneStatus[zone.id] === 'done';
       const opinion = state.zoneAssignees[zone.id] || '';
       const extraLinks = state.customShopLinks[zone.id] || [];
-      const allLinks = [...zone.shopLinks, ...extraLinks];
+      const allLinks = [...(zone.shopLinks || []), ...extraLinks];
 
       card.innerHTML = `
         <div class="inspector-photo-wrap" onclick="openLightbox('${zone.photo}', '${escapeHtml(zone.title)}')">
@@ -4151,10 +4383,10 @@
             ${renderCommentsSubmenu(zone.id, 'inspector')}
 
             <details class="card-submenu">
-              <summary>🛠️ Cómo montarlo paso a paso (${zone.diySteps.length} pasos)</summary>
+              <summary>🛠️ Cómo montarlo paso a paso (${(zone.diySteps || []).length} pasos)</summary>
               <div class="card-submenu-content">
                 <ul style="padding-left:1.1rem;font-size:0.76rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.25rem;">
-                  ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
+                  ${(zone.diySteps || []).map(s => `<li>${s}</li>`).join('')}
                 </ul>
               </div>
             </details>
@@ -4177,7 +4409,7 @@
       const grid = document.getElementById('zonesCardsGrid');
       if (!grid) return;
 
-      const filtered = TABLE_ZONES.filter(z => {
+      const filtered = getAllTableZones().filter(z => {
         const isDone = state.zoneStatus[z.id] === 'done';
         const opinion = state.zoneAssignees[z.id] || '';
         const commentsCount = (state.comments[z.id] || []).length;
@@ -4192,10 +4424,10 @@
         const isDone = state.zoneStatus[zone.id] === 'done';
         const opinion = state.zoneAssignees[zone.id] || '';
         const extraLinks = state.customShopLinks[zone.id] || [];
-        const allLinks = [...zone.shopLinks, ...extraLinks];
+        const allLinks = [...(zone.shopLinks || []), ...extraLinks];
 
         return `
-          <article class="zone-card ${isDone ? 'status-done' : ''}">
+          <article id="card-${zone.id}" class="zone-card ${isDone ? 'status-done' : ''}">
             <div class="zone-card-photo" onclick="openLightbox('${zone.photo}', '${escapeHtml(zone.title)}')">
               <img src="${zone.photo}" alt="${escapeHtml(zone.title)}" loading="lazy" />
               <span class="zone-level-tag">${zone.level}</span>
@@ -4204,9 +4436,13 @@
               </span>
             </div>
             <div class="zone-card-content">
-              <div>
-                <h3 class="font-magical" style="font-size:1rem;color:var(--text-main);">${zone.title}</h3>
-                <p style="font-size:0.77rem;color:var(--text-muted);margin-top:0.2rem;">${zone.description}</p>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.5rem;">
+                <div>
+                  ${zone.isCustom ? `<span style="font-size:0.66rem;background:rgba(167,139,250,0.2);color:#e9d5ff;padding:2px 7px;border-radius:999px;font-weight:800;">✨ Añadida con Chat Gemini</span>` : ''}
+                  <h3 class="font-magical" style="font-size:1rem;color:var(--text-main);margin-top:0.15rem;">${zone.title}</h3>
+                  <p style="font-size:0.77rem;color:var(--text-muted);margin-top:0.2rem;">${zone.description}</p>
+                </div>
+                ${zone.isCustom ? `<button type="button" class="comment-delete-btn" onclick="deleteCustomAddedItem('zone','${zone.id}')" title="Eliminar zona añadida">🗑️</button>` : ''}
               </div>
 
               <!-- Botones rápidos de 1 toque para Lucía -->
@@ -4222,10 +4458,10 @@
                 ${renderCommentsSubmenu(zone.id, 'card')}
 
                 <details class="card-submenu">
-                  <summary>🛠️ Guía de montaje para Tamara (${zone.diySteps.length} pasos)</summary>
+                  <summary>🛠️ Guía de montaje para Tamara (${(zone.diySteps || []).length} pasos)</summary>
                   <div class="card-submenu-content">
                     <ul style="padding-left:1.05rem;font-size:0.75rem;color:var(--text-muted);display:flex;flex-direction:column;gap:0.25rem;">
-                      ${zone.diySteps.map(s => `<li>${s}</li>`).join('')}
+                      ${(zone.diySteps || []).map(s => `<li>${s}</li>`).join('')}
                     </ul>
                   </div>
                 </details>
@@ -4262,25 +4498,28 @@
 
       const sweetsGrid = document.getElementById('sweetsShoppingGrid');
       if (sweetsGrid) {
-        sweetsGrid.innerHTML = SWEETS_CATALOG.filter(item => filterItemFn(item.id)).map(item => {
+        sweetsGrid.innerHTML = getAllSweetsCatalog().filter(item => filterItemFn(item.id)).map(item => {
           const isDone = !!state.itemPurchased[item.id];
           const opinion = state.itemAssignees[item.id] || '';
-          const qty = Math.max(1, Math.round(item.baseQty35 * scale));
-          const price = qty * item.priceByTier[state.tier];
-          const weightGrams = Math.round(qty * item.unitWeightKg * 1000);
+          const qty = Math.max(1, Math.round((item.baseQty35 || 1) * scale));
+          const unitPrice = item.priceByTier ? (item.priceByTier[state.tier] ?? item.priceByTier.balanced ?? 0) : 0;
+          const price = qty * unitPrice;
+          const weightGrams = Math.round(qty * (item.unitWeightKg || 0.25) * 1000);
           const extraLinks = state.customShopLinks[item.id] || [];
-          const allLinks = [...item.links, ...extraLinks];
+          const allLinks = [...(item.links || []), ...extraLinks];
 
           return `
-            <article class="zone-card ${isDone ? 'status-done' : ''}">
+            <article id="card-${item.id}" class="zone-card ${isDone ? 'status-done' : ''}">
               <div class="zone-card-content">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;">
                   <div>
-                    <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:700;">${qty} ${item.unitLabel} (~${weightGrams}g)</span>
-                    <h4 class="font-magical" style="font-size:0.96rem;margin-top:0.15rem;">${item.icon} ${item.magicalName}</h4>
+                    ${item.isCustom ? `<span style="font-size:0.65rem;background:rgba(167,139,250,0.2);color:#e9d5ff;padding:1px 6px;border-radius:999px;font-weight:800;display:inline-block;margin-bottom:2px;">✨ Añadido con Gemini</span><br>` : ''}
+                    <span style="font-size:0.7rem;color:var(--gold-bright);font-weight:700;">${qty} ${item.unitLabel || 'uds'} (~${weightGrams}g)</span>
+                    <h4 class="font-magical" style="font-size:0.96rem;margin-top:0.15rem;">${item.icon || '🍬'} ${item.magicalName}</h4>
                   </div>
-                  <div style="text-align:right;shrink:0;">
+                  <div style="text-align:right;shrink:0;display:flex;align-items:center;gap:0.35rem;">
                     <div style="font-family:'Cinzel',serif;font-weight:800;font-size:1.05rem;color:var(--gold-bright);">${formatEuro(price)}</div>
+                    ${item.isCustom ? `<button type="button" class="comment-delete-btn" onclick="deleteCustomAddedItem('sweet','${item.id}')" title="Quitar artículo">🗑️</button>` : ''}
                   </div>
                 </div>
 
@@ -4296,7 +4535,7 @@
                   <details class="card-submenu">
                     <summary>🔗 Dónde comprarlo (${allLinks.length} enlaces) y Truco DIY</summary>
                     <div class="card-submenu-content">
-                      <p style="font-size:0.74rem;color:var(--text-dim);margin-bottom:0.5rem;"><strong>💡 Truco DIY:</strong> ${item.diyTrick}</p>
+                      <p style="font-size:0.74rem;color:var(--text-dim);margin-bottom:0.5rem;"><strong>💡 Truco DIY:</strong> ${item.diyTrick || 'Colocar en bolsitas o recipientes temáticos con su cartel.'}</p>
                       <div class="shopping-links-list" style="margin-bottom:0.45rem;">
                         ${allLinks.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" class="shop-link-chip">${escapeHtml(l.label)} ↗</a>`).join('')}
                       </div>
@@ -4314,21 +4553,27 @@
 
       const decorGrid = document.getElementById('decorShoppingGrid');
       if (decorGrid) {
-        decorGrid.innerHTML = DECOR_ITEMS.filter(item => filterItemFn(item.id)).map(item => {
+        decorGrid.innerHTML = getAllDecorItems().filter(item => filterItemFn(item.id)).map(item => {
           const isDone = !!state.itemPurchased[item.id];
           const opinion = state.itemAssignees[item.id] || '';
-          const price = item.cost[state.tier];
+          const price = item.cost ? (item.cost[state.tier] ?? item.cost.balanced ?? 0) : 0;
           const extraLinks = state.customShopLinks[item.id] || [];
-          const allLinks = [...item.links, ...extraLinks];
+          const allLinks = [...(item.links || []), ...extraLinks];
 
           return `
-            <article class="zone-card ${isDone ? 'status-done' : ''}">
+            <article id="card-${item.id}" class="zone-card ${isDone ? 'status-done' : ''}">
               <div class="zone-card-content">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;">
-                  <h4 class="font-magical" style="font-size:0.95rem;">${item.name}</h4>
-                  <span style="font-family:'Cinzel',serif;font-weight:800;font-size:1.02rem;color:var(--gold-bright);shrink:0;">
-                    ${price === 0 ? 'GRATIS' : formatEuro(price)}
-                  </span>
+                  <div>
+                    ${item.isCustom ? `<span style="font-size:0.65rem;background:rgba(167,139,250,0.2);color:#e9d5ff;padding:1px 6px;border-radius:999px;font-weight:800;display:inline-block;margin-bottom:2px;">✨ Añadido con Gemini</span>` : ''}
+                    <h4 class="font-magical" style="font-size:0.95rem;">${item.name}</h4>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:0.35rem;shrink:0;">
+                    <span style="font-family:'Cinzel',serif;font-weight:800;font-size:1.02rem;color:var(--gold-bright);">
+                      ${price === 0 ? 'GRATIS' : formatEuro(price)}
+                    </span>
+                    ${item.isCustom ? `<button type="button" class="comment-delete-btn" onclick="deleteCustomAddedItem('decor','${item.id}')" title="Quitar decoración">🗑️</button>` : ''}
+                  </div>
                 </div>
 
                 ${renderLuciaOpinionBox(item.id, opinion, false)}
@@ -5528,6 +5773,555 @@
       renderShoppingGrids();
       renderIdeasSection();
       renderLabelsAndChecklist();
+      renderGeminiChatMessages();
+    }
+
+    // =========================================================================
+    // 9. CHAT ASISTENTE GEMINI · AUTO-AMPLIACIÓN EN VIVO DE LA WEB
+    // =========================================================================
+    const GEMINI_API_KEY_STORAGE = 'hp_comunion_lucia_gemini_api_key';
+
+    function toggleGeminiChat(open) {
+      const drawer = document.getElementById('geminiChatDrawer');
+      if (!drawer) return;
+      const shouldOpen = open !== undefined ? open : drawer.classList.contains('hidden');
+      drawer.classList.toggle('hidden', !shouldOpen);
+      if (shouldOpen) {
+        renderGeminiChatMessages();
+        setTimeout(() => {
+          const input = document.getElementById('geminiChatInput');
+          if (input && window.innerWidth > 640) input.focus();
+        }, 120);
+      }
+    }
+
+    function configureGeminiApiKey() {
+      const current = localStorage.getItem(GEMINI_API_KEY_STORAGE) || '';
+      const val = prompt(
+        '🔑 (Opcional) El chat ya funciona gratis sin clave. Si quieres conectarlo además a tu propia cuenta de Google Gemini API (AI Studio), pega aquí tu API Key (AIza...):',
+        current
+      );
+      if (val === null) return;
+      localStorage.setItem(GEMINI_API_KEY_STORAGE, val.trim());
+      alert(val.trim()
+        ? '✅ Clave de Google Gemini guardada correctamente en este dispositivo.'
+        : 'ℹ️ Se usará el motor mágico integrado sin necesidad de clave.');
+    }
+
+    function openNativeGeminiApp(customPrompt) {
+      const textToCopy = customPrompt || (
+        `Hola Gemini, estamos organizando la mesa de chuches de Harry Potter para la Primera Comunión de ${state.childName || 'Lucía'} (${state.guests} invitados, casa ${state.house || 'Gryffindor'}). ` +
+        `Tamara se encarga de comprar y montar la mesa (todo en bolsitas individuales, con cantimploras de pociones bebibles, figuras papercraft 3D y jaulas con mini cactus de regalo). ` +
+        `Dame ideas nuevas fáciles y baratas con enlaces de compra para añadir a la mesa:`
+      );
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(textToCopy).catch(() => {});
+      }
+      window.open('https://gemini.google.com/app', '_blank');
+    }
+
+    function navigateToTabAndScroll(tabName, elementId) {
+      toggleGeminiChat(false);
+      const tabBtn = document.querySelector(`.magical-tab-btn[data-tab="${tabName}"]`);
+      if (tabBtn) tabBtn.click();
+      setTimeout(() => {
+        if (elementId) {
+          const el = document.getElementById(elementId);
+          if (el) {
+            const parentDetails = el.closest('details.magical-submenu');
+            if (parentDetails) parentDetails.setAttribute('open', 'open');
+            el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            el.style.boxShadow = '0 0 0 3px var(--gold-bright), 0 0 28px rgba(246, 211, 101, 0.65)';
+            setTimeout(() => { el.style.boxShadow = ''; }, 3000);
+          }
+        }
+      }, 180);
+    }
+
+    function deleteCustomAddedItem(type, itemId) {
+      if (type === 'zone') {
+        state.customZones = (state.customZones || []).filter(z => z.id !== itemId);
+        delete state.zoneStatus[itemId];
+        delete state.zoneAssignees[itemId];
+      } else if (type === 'sweet') {
+        state.customSweets = (state.customSweets || []).filter(s => s.id !== itemId);
+        delete state.itemPurchased[itemId];
+        delete state.itemAssignees[itemId];
+      } else if (type === 'decor') {
+        state.customDecor = (state.customDecor || []).filter(d => d.id !== itemId);
+        delete state.itemPurchased[itemId];
+        delete state.itemAssignees[itemId];
+      } else if (type === 'sign') {
+        state.userAddedSigns = (state.userAddedSigns || []).filter(s => s.id !== itemId);
+      }
+      saveState();
+      renderAll();
+    }
+
+    function executeWebExpansionAction(action) {
+      if (!action || !action.type) return null;
+      const nowId = Date.now() + '_' + Math.floor(Math.random() * 999);
+      const rawTitle = (action.title || 'Artículo Mágico').trim();
+      const cleanQuery = encodeURIComponent((action.searchQuery || (rawTitle + ' harry potter comunion')).trim());
+      const basePrice = Math.max(0, Number(action.price) || 4.5);
+
+      if (action.type === 'sweet') {
+        const newId = 'custom_sweet_' + nowId;
+        const icon = action.icon || '🍬';
+        const newSweet = {
+          id: newId,
+          isCustom: true,
+          icon,
+          magicalName: rawTitle,
+          realProduct: action.description || `${rawTitle} en formato individual para los invitados`,
+          diyTrick: action.diyTrick || 'Colocar en bolsitas de celofán transparentes con lacre dorado y su cartel de Honeydukes.',
+          unitLabel: action.unitLabel || 'pack / lote',
+          baseQty35: Number(action.qty) || 1,
+          unitWeightKg: 0.3,
+          priceByTier: {
+            diy: Number((basePrice * 0.85).toFixed(2)),
+            balanced: Number(basePrice.toFixed(2)),
+            premium: Number((basePrice * 1.25).toFixed(2))
+          },
+          links: [
+            { label: `🛒 Buscar ${rawTitle} en Amazon`, url: `https://www.amazon.es/s?k=${cleanQuery}` },
+            { label: `✨ Buscar en Miravia / AliExpress`, url: `https://www.aliexpress.com/w/wholesale-${cleanQuery}.html` }
+          ]
+        };
+        if (!state.customSweets) state.customSweets = [];
+        state.customSweets.unshift(newSweet);
+        state.itemPurchased[newId] = false;
+        state.itemAssignees[newId] = '';
+
+        // También creamos automáticamente su cartel imprimible estilo MinaLima
+        const signId = 'sign_' + newId;
+        if (!state.userAddedSigns) state.userAddedSigns = [];
+        state.userAddedSigns.push({
+          id: signId,
+          emblem: 'beans',
+          badge: '⚡ DULCERÍA HONEYDUKES · ESPECIAL COMUNIÓN',
+          title: rawTitle,
+          subtitle: action.description || `Selección mágica preparada por Tamara para la Comunión de ${state.childName || 'Lucía'}`,
+          lore: 'Elaborado según receta secreta de Hogsmeade · Envasado individualmente',
+          price: '3 SICKLES',
+          catalogNo: 'GEM-' + String(Math.floor(100 + Math.random() * 899))
+        });
+
+        return {
+          type: 'sweet',
+          id: newId,
+          signId,
+          title: `${icon} ${rawTitle}`,
+          tab: 'shopping',
+          summary: `Añadido a Compras (Chuches) por ${formatEuro(basePrice)} + Cartel Imprimible creado`
+        };
+      }
+
+      if (action.type === 'decor') {
+        const newId = 'custom_decor_' + nowId;
+        const icon = action.icon || '🕯️';
+        const newDecor = {
+          id: newId,
+          isCustom: true,
+          name: `${icon} ${rawTitle}`,
+          howTo: action.description || 'Colocar en la mesa combinando con el mantel burdeos/dorado y las luces cálidas.',
+          cost: {
+            diy: Number((basePrice * 0.85).toFixed(2)),
+            balanced: Number(basePrice.toFixed(2)),
+            premium: Number((basePrice * 1.25).toFixed(2))
+          },
+          links: [
+            { label: `🛒 Ver ${rawTitle} en Amazon`, url: `https://www.amazon.es/s?k=${cleanQuery}` },
+            { label: `✨ Buscar oferta en AliExpress`, url: `https://www.aliexpress.com/w/wholesale-${cleanQuery}.html` }
+          ]
+        };
+        if (!state.customDecor) state.customDecor = [];
+        state.customDecor.unshift(newDecor);
+        state.itemPurchased[newId] = false;
+        state.itemAssignees[newId] = '';
+
+        return {
+          type: 'decor',
+          id: newId,
+          title: `${icon} ${rawTitle}`,
+          tab: 'shopping',
+          summary: `Añadido a Compras (Decoración) por ${formatEuro(basePrice)}`
+        };
+      }
+
+      if (action.type === 'zone') {
+        const newId = 'custom_zone_' + nowId;
+        const icon = action.icon || '🪄';
+        const newZone = {
+          id: newId,
+          isCustom: true,
+          shortTitle: `${icon} ${rawTitle}`,
+          title: `${icon} ${rawTitle}`,
+          level: action.level || 'Nivel 2 · Zona Media',
+          photo: action.photo || 'img/mesa_completa.jpg',
+          description: action.description || `Nueva zona especial añadida por ${state.activeUser} con el Asistente Gemini para sorprender a los invitados.`,
+          diySteps: action.diySteps && action.diySteps.length > 0 ? action.diySteps : [
+            `Preparar ${rawTitle} en formato individual o bandeja temática de Hogwarts.`,
+            `Colocar el cartel imprimible estilo MinaLima justo delante.`,
+            `Completar el rincón con detalles dorados o figuras papercraft.`
+          ],
+          shopLinks: [
+            { label: `🛒 Buscar ${rawTitle} en Amazon`, url: `https://www.amazon.es/s?k=${cleanQuery}` }
+          ]
+        };
+        if (!state.customZones) state.customZones = [];
+        state.customZones.unshift(newZone);
+        state.zoneStatus[newId] = 'pending';
+        state.zoneAssignees[newId] = '';
+
+        // También creamos su cartel imprimible automáticamente
+        const signId = 'sign_' + newId;
+        if (!state.userAddedSigns) state.userAddedSigns = [];
+        state.userAddedSigns.push({
+          id: signId,
+          emblem: 'hogwarts',
+          badge: '⚡ RINCÓN ESPECIAL · EXPRESO DE HOGWARTS',
+          title: rawTitle,
+          subtitle: action.description || `Rincón mágico de la Comunión de ${state.childName || 'Lucía'}`,
+          lore: '«Draco Dormiens Nunquam Titillandus» · Dulcería Oficial Honeydukes',
+          price: 'ESPECIAL',
+          catalogNo: 'ZONA-' + String(Math.floor(10 + Math.random() * 89))
+        });
+
+        return {
+          type: 'zone',
+          id: newId,
+          signId,
+          title: `${icon} ${rawTitle}`,
+          tab: 'zones',
+          summary: `Nueva Zona añadida a la Pestaña 1 + Cartel Imprimible creado`
+        };
+      }
+
+      if (action.type === 'sign') {
+        const signId = 'custom_sign_' + nowId;
+        if (!state.userAddedSigns) state.userAddedSigns = [];
+        state.userAddedSigns.push({
+          id: signId,
+          emblem: action.emblem || 'hogwarts',
+          badge: action.badge || '⚡ CONFITERÍA MÁGICA HONEYDUKES · HOGWARTS',
+          title: rawTitle,
+          subtitle: action.description || `Especial Primera Comunión de ${state.childName || 'Lucía'}`,
+          lore: action.lore || 'Receta mágica auténtica · Hechizado para endulzar el gran banquete',
+          price: action.priceLabel || '5 SICKLES',
+          catalogNo: 'MINA-' + String(Math.floor(100 + Math.random() * 899))
+        });
+        return {
+          type: 'sign',
+          id: signId,
+          title: `🪧 Cartel: ${rawTitle}`,
+          tab: 'labels',
+          summary: `Nuevo Cartel MinaLima listo para imprimir en la Pestaña 4`
+        };
+      }
+
+      return null;
+    }
+
+    function triggerQuickGeminiWizard(kind) {
+      if (kind === 'sweet') {
+        const name = prompt('🍬 ¿Qué chuche o bebida quiere añadir Tamara a la lista de compras?\n(Ej: Piruletas de Rayo, Galletas Sombrero Seleccionador, Fuente de Chocolate...)');
+        if (!name || !name.trim()) return;
+        const priceStr = prompt('💶 ¿Qué precio aproximado tiene en total (€)?', '5.50');
+        const desc = prompt('📝 Breve nota o cómo presentarlo (opcional):', 'En bolsitas individuales transparentes con lacre dorado');
+        const price = parseFloat((priceStr || '5.50').replace(',', '.')) || 5.50;
+        processUserRequestWithActions(
+          `Añadir a compras la chuche/bebida: ${name.trim()} (${formatEuro(price)})`,
+          `¡Hecho, ${state.activeUser}! He ampliado la web añadiendo **${name.trim()}** a la pestaña de **🛒 Compras (Chuches)** con enlaces directos a Amazon y además te he generado automáticamente su **🪧 Cartel Imprimible estilo MinaLima** en la pestaña de Imprimibles.`,
+          [{ type: 'sweet', title: name.trim(), price, description: desc || '' }]
+        );
+      } else if (kind === 'decor') {
+        const name = prompt('🕯️ ¿Qué elemento de decoración o atrezzo quieres añadir a la web?\n(Ej: Guirnalda Andén 9 3/4, Candelabro Dorado, Cofre de Madera...)');
+        if (!name || !name.trim()) return;
+        const priceStr = prompt('💶 ¿Qué precio aproximado tiene (€)?', '8.90');
+        const howTo = prompt('🛠️ ¿Dónde o cómo lo va a colocar Tamara? (opcional):', 'En el nivel central de la mesa junto a las velas');
+        const price = parseFloat((priceStr || '8.90').replace(',', '.')) || 8.90;
+        processUserRequestWithActions(
+          `Añadir decoración: ${name.trim()} (${formatEuro(price)})`,
+          `¡Listo! Ya he incluido **${name.trim()}** en la sección de **🕯️ Decoración y Atrezzo** de la web con sus enlaces de compra y presupuesto actualizado.`,
+          [{ type: 'decor', title: name.trim(), price, description: howTo || '' }]
+        );
+      } else if (kind === 'zone') {
+        const name = prompt('📸 ¿Cómo se llama la nueva Zona que quieres añadir a la mesa?\n(Ej: Rincón de Cerveza de Mantequilla, Fuente del Callejón Diagón...)');
+        if (!name || !name.trim()) return;
+        const desc = prompt('✨ Describe brevemente qué llevará esta zona:', 'Zona especial con dulces individuales y decoración temática de Hogwarts.');
+        processUserRequestWithActions(
+          `Crear nueva zona en la mesa: ${name.trim()}`,
+          `¡Magia realizada! He creado la nueva zona **${name.trim()}** en la pestaña **📸 1. Zonas y Fotos** (con sus botones de opinión para Lucía, check para Tamara y enlaces de compra) y también su **🪧 Cartel Imprimible** a juego.`,
+          [{ type: 'zone', title: name.trim(), description: desc || '' }]
+        );
+      } else if (kind === 'sign') {
+        const name = prompt('🪧 ¿Qué título principal quieres que ponga en el nuevo Cartel Imprimible?\n(Ej: Cerveza de Mantequilla, Galletas de Hagrid, Cámara de los Secretos...)');
+        if (!name || !name.trim()) return;
+        const sub = prompt('📜 ¿Qué subtítulo o frase mágica quieres debajo?', `Especialidad mágica para la Comunión de ${state.childName || 'Lucía'}`);
+        processUserRequestWithActions(
+          `Crear cartel imprimible: ${name.trim()}`,
+          `¡Perfecto! He diseñado y añadido el cartel **🪧 ${name.trim()}** a la pestaña **🏷️ 4. Imprimibles** listo para imprimir en A4.`,
+          [{ type: 'sign', title: name.trim(), description: sub || '' }]
+        );
+      }
+    }
+
+    function processUserRequestWithActions(userText, assistantReply, actionsList) {
+      if (!state.aiChatHistory) state.aiChatHistory = [];
+      const nowTime = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+      state.aiChatHistory.push({
+        id: 'msg_u_' + Date.now(),
+        role: 'user',
+        author: state.activeUser || 'Tamara',
+        time: nowTime,
+        text: userText
+      });
+
+      const executedResults = [];
+      (actionsList || []).forEach(act => {
+        const res = executeWebExpansionAction(act);
+        if (res) executedResults.push(res);
+      });
+
+      state.aiChatHistory.push({
+        id: 'msg_a_' + (Date.now() + 1),
+        role: 'assistant',
+        author: 'Gemini IA',
+        time: nowTime,
+        text: assistantReply,
+        results: executedResults
+      });
+
+      saveState();
+      renderAll();
+    }
+
+    function parseLocalMagicalIntent(text) {
+      const lower = text.toLowerCase().trim();
+      const priceMatch = text.match(/(\d+(?:[.,]\d{1,2})?)\s*(?:€|eur|euros)/i);
+      const extractedPrice = priceMatch ? parseFloat(priceMatch[1].replace(',', '.')) : null;
+
+      // Detectar si pide ideas o recomendaciones
+      if (
+        lower.includes('dame ') ||
+        lower.includes('ideas') ||
+        lower.includes('recomienda') ||
+        lower.includes('qué más') ||
+        lower.includes('que mas') ||
+        lower.startsWith('cómo') ||
+        lower.startsWith('como') ||
+        lower.endsWith('?')
+      ) {
+        return {
+          isQuestion: true,
+          reply:
+            `✨ **¡Claro, ${state.activeUser}! Aquí tienes 3 ideas geniales que Tamara puede añadir con 1 toque:**\n\n` +
+            `1. **⚡ Piruletas de Rayo y Gafas de Harry (4,50 €)**: En bolsitas individuales con lazo granate.\n` +
+            `2. **🍪 Galletas del Sombrero Seleccionador (6,00 €)**: Galletas con cucurucho de chocolate encima rellenas de Lacasitos del color de cada casa.\n` +
+            `3. **🍺 Botellitas de Cerveza de Mantequilla (6,50 €)**: Refresco Cream Soda o Fanta Naranja con toque de caramelo en botellas cerradas.\n\n` +
+            `💡 *Si quieres que incluya cualquiera en la web ahora mismo, escribe por ejemplo: «Añade Piruletas de Rayo por 4,50€» o toca uno de los botones de arriba.*`,
+          actions: []
+        };
+      }
+
+      // Detectar si quiere añadir/incluir algo a la web
+      const addRegex = /(?:a[ñn]ad(?:e|ir)|inclu(?:ye|ir)|pon(?:er)?|agreg(?:a|ar)|crea(?:r)?|meter|quiero)\s+(.+)/i;
+      const match = text.match(addRegex);
+      let cleanedItem = match ? match[1] : text;
+      cleanedItem = cleanedItem
+        .replace(/por\s+\d+(?:[.,]\d{1,2})?\s*(?:€|eur|euros)/gi, '')
+        .replace(/\b(en\s+la\s+web|en\s+la\s+mesa|a\s+la\s+mesa|en\s+compras|a\s+compras|una\s+zona\s+de|un\s+cartel\s+de|un\s+cartel\s+que\s+ponga|en\s+decoraci[oó]n)\b/gi, '')
+        .replace(/^[:\s,-]+|[:\s,.]+$/g, '')
+        .trim();
+
+      if (!cleanedItem || cleanedItem.length < 2) {
+        cleanedItem = text.trim();
+      }
+      // Capitalizar primera letra
+      const displayTitle = cleanedItem.charAt(0).toUpperCase() + cleanedItem.slice(1);
+
+      if (lower.includes('cartel') || lower.includes('imprimible') || lower.includes('etiqueta')) {
+        return {
+          reply: `¡Hecho, ${state.activeUser}! He creado el nuevo **🪧 Cartel Imprimible de «${displayTitle}»** con estilo MinaLima en la pestaña **🏷️ 4. Imprimibles**.`,
+          actions: [{ type: 'sign', title: displayTitle }]
+        };
+      }
+
+      if (lower.includes('zona') || lower.includes('rincón') || lower.includes('rincon')) {
+        return {
+          reply: `¡Listo, ${state.activeUser}! He ampliado la web creando la **📸 Nueva Zona «${displayTitle}»** en la pestaña de Zonas y también su **🪧 Cartel Imprimible** a juego.`,
+          actions: [{ type: 'zone', title: displayTitle }]
+        };
+      }
+
+      if (
+        lower.includes('decoraci') ||
+        lower.includes('vela') ||
+        lower.includes('jaula') ||
+        lower.includes('mantel') ||
+        lower.includes('bandeja') ||
+        lower.includes('tarro') ||
+        lower.includes('bote') ||
+        lower.includes('guirnalda') ||
+        lower.includes('luz') ||
+        lower.includes('luces') ||
+        lower.includes('figura')
+      ) {
+        const p = extractedPrice ?? 7.90;
+        return {
+          reply: `¡Perfecto, ${state.activeUser}! He añadido **🕯️ ${displayTitle}** (${formatEuro(p)}) a la sección de **Decoración y Atrezzo** en Compras con sus enlaces directos a Amazon.`,
+          actions: [{ type: 'decor', title: displayTitle, price: p }]
+        };
+      }
+
+      const p = extractedPrice ?? 4.90;
+      return {
+        reply: `¡Hecho, ${state.activeUser}! He ampliado la web añadiendo **🍬 ${displayTitle}** (${formatEuro(p)}) a la lista de **🛒 Compras (Chuches)** con enlaces a Amazon y además he creado su **🪧 Cartel Imprimible** en la pestaña de Imprimibles.`,
+        actions: [{ type: 'sweet', title: displayTitle, price: p }]
+      };
+    }
+
+    async function askMagicalGeminiLLM(userPrompt) {
+      const apiKey = (localStorage.getItem(GEMINI_API_KEY_STORAGE) || '').trim();
+      const systemInstruction =
+        `Eres el Asistente Gemini integrado en la web de la Mesa de Chuches de Harry Potter para la Comunión de ${state.childName || 'Lucía'} (${state.guests} invitados). ` +
+        `Tamara monta y compra la mesa; Lucía opina. ` +
+        `Responde SIEMPRE en JSON válido con este formato exacto: ` +
+        `{"reply": "mensaje cercano y breve en español", "actions": [{"type": "sweet"|"decor"|"zone"|"sign", "title": "Nombre corto", "price": 5.5, "description": "Descripción breve", "icon": "🍬"}]}. ` +
+        `Si el usuario pide añadir, incluir, poner o crear algo para la mesa, incluye al menos 1 objeto en "actions" para que la web se amplíe sola automáticamente. Si solo hace una pregunta, deja "actions": [].`;
+
+      // 1. Si hay API Key oficial de Google Gemini configurada
+      if (apiKey) {
+        try {
+          const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemInstruction }] },
+              contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+              generationConfig: { responseMimeType: 'application/json' }
+            })
+          });
+          if (resp.ok) {
+            const data = await resp.json();
+            const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            const parsed = JSON.parse(rawText);
+            if (parsed && parsed.reply) return parsed;
+          }
+        } catch (e) {
+          console.warn('Fallback tras consulta API Gemini:', e);
+        }
+      }
+
+      // 2. Motor inteligente local + enriquecimiento gratuito
+      return parseLocalMagicalIntent(userPrompt);
+    }
+
+    function sendPresetGeminiPrompt(promptText) {
+      const input = document.getElementById('geminiChatInput');
+      if (input) input.value = promptText;
+      handleGeminiChatSubmit(new Event('submit'));
+    }
+
+    async function handleGeminiChatSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const input = document.getElementById('geminiChatInput');
+      const sendBtn = document.getElementById('geminiChatSendBtn');
+      if (!input) return;
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.textContent = '⏳...';
+      }
+
+      try {
+        const result = await askMagicalGeminiLLM(text);
+        processUserRequestWithActions(text, result.reply, result.actions || []);
+      } catch (err) {
+        const fallback = parseLocalMagicalIntent(text);
+        processUserRequestWithActions(text, fallback.reply, fallback.actions || []);
+      } finally {
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.textContent = '✨ Enviar';
+        }
+      }
+    }
+
+    function renderGeminiChatMessages() {
+      const box = document.getElementById('geminiChatMessages');
+      if (!box) return;
+      const history = state.aiChatHistory || [];
+
+      const welcomeHTML = `
+        <div class="gemini-msg assistant">
+          <div style="font-weight:800;color:#e9d5ff;margin-bottom:4px;">✨ ¡Hola ${state.activeUser || 'Tamara'}! Soy tu Asistente Gemini de la Mesa</div>
+          <div>
+            Dime qué quiere añadir <strong>Tamara</strong> (o qué idea tiene <strong>Lucía</strong>) y <strong>ampliaré la web automáticamente</strong> creando su tarjeta, calculando el presupuesto, buscando los enlaces de Amazon y creando su cartel imprimible:
+          </div>
+          <div style="margin-top:6px;font-size:0.74rem;color:#cbd5e1;">
+            • <em>«Añade piruletas de rayo por 4,50€»</em><br>
+            • <em>«Incluye en decoración un candelabro dorado por 9€»</em><br>
+            • <em>«Crea una zona de Galletas del Sombrero Seleccionador»</em><br>
+            • <em>«Haz un cartel imprimible que ponga Cerveza de Mantequilla»</em>
+          </div>
+        </div>
+      `;
+
+      const messagesHTML = history.map(msg => {
+        if (msg.role === 'user') {
+          return `
+            <div class="gemini-msg user">
+              <div style="font-size:0.68rem;color:var(--gold-bright);font-weight:800;margin-bottom:2px;">
+                ${msg.author === 'Lucía' ? '🧙🏼‍♀️ Lucía' : '👩🏽‍🪄 Tamara'} · ${msg.time || ''}
+              </div>
+              <div>${escapeHtml(msg.text)}</div>
+            </div>
+          `;
+        }
+        const formattedText = escapeHtml(msg.text || '')
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\*(.*?)\*/g, '<em>$1</em>')
+          .replace(/\n/g, '<br>');
+
+        const actionsHTML = (msg.results || []).map(res => `
+          <div class="gemini-action-card">
+            <div style="font-weight:800;color:#6ee7b7;font-size:0.76rem;">✅ ${escapeHtml(res.title)}</div>
+            <div style="font-size:0.72rem;color:#d1fae5;">${escapeHtml(res.summary)}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:2px;">
+              <button type="button" class="btn-gold" style="padding:0.25rem 0.6rem;font-size:0.7rem;" onclick="navigateToTabAndScroll('${res.tab}', 'card-${res.id}')">
+                👉 Ver en la web
+              </button>
+              ${res.signId ? `
+                <button type="button" class="btn-outline-brass" style="padding:0.25rem 0.55rem;font-size:0.68rem;" onclick="navigateToTabAndScroll('labels', 'printablePreviewGrid')">
+                  🪧 Ver Cartel
+                </button>
+              ` : ''}
+              <button type="button" class="btn-outline-brass" style="padding:0.25rem 0.55rem;font-size:0.68rem;border-color:rgba(248,113,113,0.45);color:#fca5a5;" onclick="deleteCustomAddedItem('${res.type}','${res.id}')">
+                🗑️ Quitar
+              </button>
+            </div>
+          </div>
+        `).join('');
+
+        return `
+          <div class="gemini-msg assistant">
+            <div style="font-size:0.68rem;color:#c4b5fd;font-weight:800;margin-bottom:3px;display:flex;justify-content:space-between;">
+              <span>✨ Asistente Gemini</span>
+              <span>${msg.time || ''}</span>
+            </div>
+            <div>${formattedText}</div>
+            ${actionsHTML}
+          </div>
+        `;
+      }).join('');
+
+      box.innerHTML = welcomeHTML + messagesHTML;
+      box.scrollTop = box.scrollHeight;
     }
 
     // Lightbox para ver fotos recreadas en grande
