@@ -1424,10 +1424,13 @@
         </div>
       </div>
 
-      <!-- Botones de Sincronización Colaborativa -->
+      <!-- Botones de Sincronización Colaborativa y Base de Datos Google -->
       <div class="sync-actions">
+        <button id="btnCloudStatus" type="button" class="btn-outline-brass" onclick="configureGoogleCloudUrl()" title="Sincronización automática en tiempo real con la Hoja de Google Sheets en vuestro Google Drive">
+          ☁️ Base de Datos Google
+        </button>
         <button type="button" class="btn-gold" onclick="shareProgressWhatsApp()" title="Envía un enlace mágico por WhatsApp con tus últimos checks, opiniones o comentarios">
-          📲 Enviar avances / opiniones por WhatsApp
+          📲 Enviar por WhatsApp
         </button>
         <button type="button" class="btn-outline-brass" onclick="copyShareLink()" title="Copiar enlace sincronizado">
           🔗 Copiar enlace
@@ -2509,9 +2512,227 @@
       return JSON.parse(JSON.stringify(DEFAULT_STATE));
     }
 
+    // URL del Web App de Google Apps Script conectado a la Hoja "Base de Datos - Mesa Harry Potter Comunion Lucia"
+    // ID de tu Hoja en Google Drive: 10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk
+    const DEFAULT_GOOGLE_SCRIPT_URL = '';
+    const GOOGLE_URL_STORAGE_KEY = 'hp_comunion_lucia_google_script_url';
+    let cloudPushTimer = null;
+    let isCloudSyncing = false;
+
+    function getGoogleScriptUrl() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const fromParam = params.get('gs');
+        if (fromParam && fromParam.startsWith('https://script.google.com/')) {
+          localStorage.setItem(GOOGLE_URL_STORAGE_KEY, fromParam.trim());
+        }
+      } catch (e) {}
+      return (DEFAULT_GOOGLE_SCRIPT_URL || state.googleScriptUrl || localStorage.getItem(GOOGLE_URL_STORAGE_KEY) || '').trim();
+    }
+
+    function updateCloudBadgeUI(statusText, colorHex) {
+      const btn = document.getElementById('btnCloudStatus');
+      if (!btn) return;
+      const url = getGoogleScriptUrl();
+      if (!url) {
+        btn.innerHTML = '☁️ Conectar Google Sheet';
+        btn.style.borderColor = 'var(--border-brass)';
+        btn.style.color = 'var(--gold-bright)';
+        return;
+      }
+      btn.innerHTML = statusText || '🟢 Google Drive Sincronizado';
+      if (colorHex) {
+        btn.style.borderColor = colorHex;
+        btn.style.color = colorHex;
+      }
+    }
+
+    const APPS_SCRIPT_SNIPPET = `const SHEET_ID = '10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk';
+
+function doGet() {
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName('DB');
+  const raw = sheet.getRange('A2').getValue();
+  const out = raw ? raw : '{}';
+  return ContentService.createTextOutput(out).setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  const sheet = SpreadsheetApp.openById(SHEET_ID).getSheetByName('DB');
+  const body = JSON.parse(e.postData.contents);
+  sheet.getRange('A2:D2').setValues([[
+    JSON.stringify(body.state || {}),
+    body.updatedAt || new Date().toISOString(),
+    body.author || 'Tamara',
+    'SINCRONIZADO_ACTIVO'
+  ]]);
+  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}`;
+
+    function configureGoogleCloudUrl() {
+      let modal = document.getElementById('googleCloudModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'googleCloudModal';
+        modal.style.cssText = 'position:fixed;inset:0;background:rgba(8,5,12,0.88);backdrop-filter:blur(6px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;';
+        modal.innerHTML = `
+          <div style="background:linear-gradient(165deg,#1d1427,#120c18);border:2px solid var(--gold-primary);border-radius:16px;max-width:640px;width:100%;padding:22px;color:var(--parchment-light);box-shadow:0 20px 50px rgba(0,0,0,0.85);max-height:90vh;overflow-y:auto;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;">
+              <h3 style="margin:0;font-family:'Cinzel Decorative',serif;color:var(--gold-bright);font-size:1.1rem;">☁️ Base de Datos en Google Drive (Tamara y Lucía)</h3>
+              <button onclick="document.getElementById('googleCloudModal').style.display='none'" style="background:none;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;">✕</button>
+            </div>
+            <p style="font-size:0.84rem;color:var(--parchment-mid);line-height:1.5;margin-bottom:12px;">
+              Tu hoja de cálculo ya está creada en tu carpeta <strong>Antigravity/</strong> de Google Drive. Para activar el puente en tiempo real (100% nativo en servidores de Google):
+            </p>
+            <ol style="font-size:0.82rem;color:var(--parchment-light);line-height:1.6;padding-left:18px;margin-bottom:14px;">
+              <li>Abre la hoja: <a href="https://docs.google.com/spreadsheets/d/10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk/edit" target="_blank" rel="noopener" style="color:var(--gold-bright);font-weight:700;text-decoration:underline;">Abrir Hoja de Google Sheets ↗</a></li>
+              <li>En el menú superior de la hoja, pulsa en <strong>Extensiones → Apps Script</strong>, borra lo que haya y pega este código:</li>
+            </ol>
+            <div style="position:relative;margin-bottom:14px;">
+              <pre style="background:#09060d;border:1px solid var(--border-brass);border-radius:8px;padding:10px;font-size:0.72rem;color:#fde68a;overflow-x:auto;margin:0;"><code>${APPS_SCRIPT_SNIPPET.replace(/</g, '&lt;')}</code></pre>
+              <button type="button" onclick="navigator.clipboard.writeText(APPS_SCRIPT_SNIPPET);this.textContent='✅ ¡Código copiado!';setTimeout(()=>this.textContent='📋 Copiar código',2000)" style="position:absolute;top:8px;right:8px;background:var(--gold-primary);color:#120c18;border:none;border-radius:6px;padding:4px 10px;font-size:0.74rem;font-weight:700;cursor:pointer;">📋 Copiar código</button>
+            </div>
+            <p style="font-size:0.82rem;color:var(--parchment-light);line-height:1.5;margin-bottom:10px;">
+              3. Pulsa arriba a la derecha en <strong>Implementar → Nueva implementación</strong> → Tipo: <strong>Aplicación web</strong> → Ejecutar como: <em>Yo</em> → Quién tiene acceso: <strong>Cualquier persona</strong> → <strong>Implementar</strong> y pega aquí abajo la URL que termina en <code>/exec</code>:
+            </p>
+            <input id="googleScriptUrlInput" type="url" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--gold-primary);background:#0c0812;color:#fff;font-size:0.85rem;margin-bottom:14px;" />
+            <div style="display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
+              <button type="button" onclick="document.getElementById('googleCloudModal').style.display='none'" class="btn-outline-gold" style="padding:8px 14px;">Cerrar</button>
+              <button type="button" onclick="saveGoogleCloudUrlFromModal()" class="btn-gold" style="padding:8px 16px;">⚡ Conectar y Sincronizar Ahora</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      }
+      document.getElementById('googleScriptUrlInput').value = getGoogleScriptUrl();
+      modal.style.display = 'flex';
+    }
+
+    function saveGoogleCloudUrlFromModal() {
+      const inputEl = document.getElementById('googleScriptUrlInput');
+      const cleaned = (inputEl ? inputEl.value : '').trim();
+      const modal = document.getElementById('googleCloudModal');
+      if (modal) modal.style.display = 'none';
+      if (!cleaned) {
+        localStorage.removeItem(GOOGLE_URL_STORAGE_KEY);
+        delete state.googleScriptUrl;
+        updateCloudBadgeUI();
+        return;
+      }
+      localStorage.setItem(GOOGLE_URL_STORAGE_KEY, cleaned);
+      state.googleScriptUrl = cleaned;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      updateCloudBadgeUI('🔄 Conectando con Google...', '#facc15');
+      schedulePushToGoogleCloud(true);
+      setTimeout(() => pullFromGoogleCloud(false), 1200);
+    }
+
+    function mergeCloudAndLocalStates(localSt, cloudSt) {
+      if (!cloudSt || typeof cloudSt !== 'object') return localSt;
+      const merged = Object.assign({}, DEFAULT_STATE, localSt, cloudSt);
+      merged.activeUser = localSt.activeUser || 'Tamara';
+      merged.selectedZoneId = localSt.selectedZoneId || 'zona-jaulas-cactus';
+      merged.zoneFilter = localSt.zoneFilter || 'all';
+      merged.shopFilter = localSt.shopFilter || 'all';
+      merged.zoneStatus = Object.assign({}, DEFAULT_STATE.zoneStatus, localSt.zoneStatus || {}, cloudSt.zoneStatus || {});
+      merged.zoneAssignees = normalizeOpinionMap(Object.assign({}, localSt.zoneAssignees || {}, cloudSt.zoneAssignees || {}), DEFAULT_STATE.zoneAssignees);
+      merged.itemPurchased = Object.assign({}, DEFAULT_STATE.itemPurchased, localSt.itemPurchased || {}, cloudSt.itemPurchased || {});
+      merged.itemAssignees = normalizeOpinionMap(Object.assign({}, localSt.itemAssignees || {}, cloudSt.itemAssignees || {}), DEFAULT_STATE.itemAssignees);
+
+      // Fusión inteligente de comentarios por ID para no perder ninguno de Tamara ni de Lucía
+      const mergedComments = {};
+      const allCommentKeys = new Set([
+        ...Object.keys(localSt.comments || {}),
+        ...Object.keys(cloudSt.comments || {})
+      ]);
+      allCommentKeys.forEach(k => {
+        const byId = new Map();
+        (localSt.comments?.[k] || []).forEach(c => { if (c && c.id) byId.set(c.id, c); });
+        (cloudSt.comments?.[k] || []).forEach(c => { if (c && c.id) byId.set(c.id, c); });
+        const list = Array.from(byId.values());
+        if (list.length > 0) mergedComments[k] = list;
+      });
+      merged.comments = stripLegacyDemoComments(mergedComments);
+
+      // Fusión de ideas por ID
+      const ideasById = new Map();
+      (localSt.ideas || []).forEach(i => { if (i && i.id) ideasById.set(i.id, i); });
+      (cloudSt.ideas || []).forEach(i => { if (i && i.id) ideasById.set(i.id, i); });
+      if (ideasById.size > 0) merged.ideas = Array.from(ideasById.values());
+
+      // Preservar URL del script
+      const scriptUrl = getGoogleScriptUrl() || cloudSt.googleScriptUrl;
+      if (scriptUrl) {
+        merged.googleScriptUrl = scriptUrl;
+        localStorage.setItem(GOOGLE_URL_STORAGE_KEY, scriptUrl);
+      }
+      return merged;
+    }
+
+    async function pullFromGoogleCloud(silent = true) {
+      const url = getGoogleScriptUrl();
+      if (!url || isCloudSyncing) {
+        updateCloudBadgeUI();
+        return;
+      }
+      try {
+        const res = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'no-store'
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        const remoteState = data && data.state ? data.state : data;
+        if (remoteState && typeof remoteState === 'object' && Object.keys(remoteState).length > 2) {
+          state = mergeCloudAndLocalStates(state, remoteState);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          update3DZoneHighlights();
+          renderAll();
+        }
+        updateCloudBadgeUI('🟢 Google Drive Sincronizado', '#34d399');
+      } catch (err) {
+        console.warn('Aviso al sincronizar desde Google Sheet:', err);
+        if (!silent) updateCloudBadgeUI('⚠️ Reintentando Google...', '#f59e0b');
+      }
+    }
+
+    function schedulePushToGoogleCloud(immediate = false) {
+      const url = getGoogleScriptUrl();
+      if (!url) {
+        updateCloudBadgeUI();
+        return;
+      }
+      updateCloudBadgeUI('🔄 Guardando en Google...', '#facc15');
+      if (cloudPushTimer) clearTimeout(cloudPushTimer);
+      cloudPushTimer = setTimeout(async () => {
+        isCloudSyncing = true;
+        try {
+          const payload = {
+            author: state.activeUser || 'Tamara',
+            updatedAt: new Date().toISOString(),
+            state: state
+          };
+          await fetch(url, {
+            method: 'POST',
+            mode: 'cors',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+          });
+          updateCloudBadgeUI('🟢 Google Drive Sincronizado', '#34d399');
+        } catch (err) {
+          console.warn('Error guardando en Google Sheet:', err);
+          updateCloudBadgeUI('⚠️ Guardado en móvil (sin red)', '#f59e0b');
+        } finally {
+          isCloudSyncing = false;
+        }
+      }, immediate ? 50 : 450);
+    }
+
     function saveState() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        schedulePushToGoogleCloud(false);
       } catch (e) {
         console.warn('No se pudo guardar en localStorage:', e);
       }
@@ -4930,6 +5151,12 @@
       setActiveUser(state.activeUser || 'Tamara');
       init3DTableScene();
       renderAll();
+      updateCloudBadgeUI();
+      pullFromGoogleCloud(true);
+      setInterval(() => pullFromGoogleCloud(true), 12000);
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') pullFromGoogleCloud(true);
+      });
     });
   </script>
 </body>
