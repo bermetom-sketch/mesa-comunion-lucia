@@ -1732,6 +1732,9 @@
               <button type="button" class="btn-outline-brass" style="justify-content:center;" onclick="exportBackupJSON()">
                 💾 Copia (.json)
               </button>
+              <button type="button" class="btn-outline-brass" style="grid-column:1 / -1;justify-content:center;border-color:rgba(248,113,113,0.45);color:#fca5a5;" onclick="resetAllButtonsAndComments()">
+                🔄 Resetear todos los botones y comentarios a cero
+              </button>
             </div>
           </div>
         </details>
@@ -2595,9 +2598,10 @@
     // =========================================================================
     // 3. ESTADO COLABORATIVO PERSISTENTE + SINCRONIZACIÓN POR URL / WHATSAPP
     // =========================================================================
-    const STORAGE_KEY = 'hp_comunion_lucia_collab_v3';
+    const STORAGE_KEY = 'hp_comunion_lucia_collab_v4_clean';
 
     const DEFAULT_STATE = {
+      _resetEpoch: 1,
       activeUser: 'Tamara',
       guests: 35,
       tier: 'balanced',
@@ -2619,18 +2623,18 @@
         'zona-papercraft': 'pending',
         'zona-jaulas-cactus': 'pending'
       },
-      // Valoración / opinión de Lucía sobre cada zona: 'love' | 'idea' | 'pending'
+      // Valoración / opinión de Lucía sobre cada zona: '' (sin marcar) | 'love' | 'idea' | 'pending'
       zoneAssignees: {
-        'zona-velas': 'love',
-        'zona-snitches': 'love',
-        'zona-pociones': 'love',
-        'zona-hedwig': 'love',
-        'zona-varitas': 'love',
-        'zona-escobas': 'love',
-        'zona-cantimploras': 'love',
-        'zona-ranas': 'love',
-        'zona-papercraft': 'love',
-        'zona-jaulas-cactus': 'love'
+        'zona-velas': '',
+        'zona-snitches': '',
+        'zona-pociones': '',
+        'zona-hedwig': '',
+        'zona-varitas': '',
+        'zona-escobas': '',
+        'zona-cantimploras': '',
+        'zona-ranas': '',
+        'zona-papercraft': '',
+        'zona-jaulas-cactus': ''
       },
       // Estado de compra de chuches y decoración por Tamara (true = ya comprado/listo)
       itemPurchased: {
@@ -2652,31 +2656,31 @@
         'potions': false,
         'props': false
       },
-      // Valoración / opinión de Lucía sobre cada artículo de compra: 'love' | 'idea' | 'pending'
+      // Valoración / opinión de Lucía sobre cada artículo de compra: '' (sin marcar) | 'love' | 'idea' | 'pending'
       itemAssignees: {
-        'cantimploras': 'love',
-        'snitches': 'love',
-        'frogs': 'love',
-        'beans': 'love',
-        'wands': 'love',
-        'slugs': 'love',
-        'hedwig': 'love',
-        'brooms': 'love',
-        'galleons': 'love',
-        'jaulas-cactus': 'love',
-        'papercraft': 'love',
-        'candles': 'love',
-        'jars': 'love',
-        'tablecloth': 'love',
-        'bags': 'love',
-        'potions': 'love',
-        'props': 'love'
+        'cantimploras': '',
+        'snitches': '',
+        'frogs': '',
+        'beans': '',
+        'wands': '',
+        'slugs': '',
+        'hedwig': '',
+        'brooms': '',
+        'galleons': '',
+        'jaulas-cactus': '',
+        'papercraft': '',
+        'candles': '',
+        'jars': '',
+        'tablecloth': '',
+        'bags': '',
+        'potions': '',
+        'props': ''
       },
       customShopLinks: {},
       completedSteps: [],
-      // Sin comentarios de ejemplo por defecto
+      // Sin comentarios por defecto
       comments: {},
-      // Muro de nuevas ideas colaborativas
+      // Muro de nuevas ideas colaborativas (botones desmarcados y 0 likes por defecto)
       ideas: [
         {
           id: 'idea-1',
@@ -2686,9 +2690,9 @@
           cost: 6.50,
           link: 'https://www.amazon.es/s?k=botellas+cristal+pequenas+cerveza+mantequilla',
           desc: 'Idea para Tamara: llenar 12 botellitas pequeñas cerradas con refresco Cream Soda o Fanta Naranja + un chorrito de sirope de caramelo.',
-          approved: true,
+          approved: false,
           done: false,
-          likes: 2
+          likes: 0
         },
         {
           id: 'idea-2',
@@ -2698,9 +2702,9 @@
           cost: 5.00,
           link: 'https://www.amazon.es/s?k=vasitos+postre+con+tapa+cuchara',
           desc: 'Vasitos individuales con tapa transparente rellenos de natillas de chocolate con galleta Oreo triturada ("tierra") y etiqueta de Mandrágora.',
-          approved: true,
+          approved: false,
           done: false,
-          likes: 2
+          likes: 0
         }
       ]
     };
@@ -2712,10 +2716,10 @@
       if (!mapObj || typeof mapObj !== 'object') return result;
       Object.keys(mapObj).forEach(k => {
         const val = mapObj[k];
-        if (val === 'love' || val === 'idea' || val === 'pending') {
+        if (val === 'love' || val === 'idea' || val === 'pending' || val === '') {
           result[k] = val;
         } else {
-          result[k] = 'love';
+          result[k] = '';
         }
       });
       return result;
@@ -2733,6 +2737,13 @@
     }
 
     function loadState() {
+      // Limpiar versiones antiguas en localStorage para evitar botones pre-activados antiguos
+      try {
+        localStorage.removeItem('hp_comunion_lucia_collab_v1');
+        localStorage.removeItem('hp_comunion_lucia_collab_v2');
+        localStorage.removeItem('hp_comunion_lucia_collab_v3');
+      } catch (e) {}
+
       // 1. Primero comprobar si viene un enlace mágico compartido en el hash (#sync=...)
       try {
         if (window.location.hash && window.location.hash.startsWith('#sync=')) {
@@ -2781,7 +2792,7 @@
     // =========================================================================
     const GOOGLE_SHEET_ID = '10p2BGynhsPssIdmlm8wUgwQSdPZjHZTtSFXBc7In-Rk';
     const GOOGLE_SHEET_GVIZ_URL = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json&sheet=DB&headers=1`;
-    const NTFY_TOPIC = 'mesa_hp_lucia_tamara_10p2BGynhsPssId';
+    const NTFY_TOPIC = 'mesa_hp_lucia_tamara_clean_10p2BGynhsPssId';
     const NTFY_BASE_URL = `https://ntfy.sh/${NTFY_TOPIC}`;
     const DEFAULT_GOOGLE_SCRIPT_URL = '';
     const GOOGLE_URL_STORAGE_KEY = 'hp_comunion_lucia_google_script_url';
@@ -2804,21 +2815,9 @@
     }
 
     function buildCompactCloudPayload(st) {
-      const defaultIdeaIds = new Set((DEFAULT_STATE.ideas || []).map(i => i.id));
-      const compactIdeas = [];
-      (st.ideas || []).forEach(idea => {
-        if (!idea || !idea.id) return;
-        if (defaultIdeaIds.has(idea.id)) {
-          const def = DEFAULT_STATE.ideas.find(d => d.id === idea.id);
-          if (!def || def.status !== idea.status) {
-            compactIdeas.push({ id: idea.id, status: idea.status, _patch: true });
-          }
-        } else {
-          compactIdeas.push(idea);
-        }
-      });
       return {
         v: 2,
+        re: st._resetEpoch || 1,
         ts: st._updatedTs || Date.now(),
         by: st.activeUser || 'Tamara',
         g: st.guests,
@@ -2829,8 +2828,9 @@
         za: st.zoneAssignees || {},
         ip: st.itemPurchased || {},
         ia: st.itemAssignees || {},
+        cs: st.completedSteps || [],
         cm: st.comments || {},
-        id: compactIdeas
+        id: st.ideas || []
       };
     }
 
@@ -2838,19 +2838,8 @@
       if (!raw || typeof raw !== 'object') return null;
       if (raw.state && typeof raw.state === 'object') return raw.state;
       if (raw.v === 2) {
-        const expandedIdeas = JSON.parse(JSON.stringify(DEFAULT_STATE.ideas || []));
-        (raw.id || []).forEach(item => {
-          if (!item || !item.id) return;
-          if (item._patch) {
-            const target = expandedIdeas.find(d => d.id === item.id);
-            if (target && item.status) target.status = item.status;
-          } else {
-            const idx = expandedIdeas.findIndex(d => d.id === item.id);
-            if (idx >= 0) expandedIdeas[idx] = item;
-            else expandedIdeas.push(item);
-          }
-        });
         return {
+          _resetEpoch: raw.re || 1,
           _updatedTs: raw.ts || 0,
           _lastAuthor: raw.by || 'Tamara',
           guests: raw.g ?? DEFAULT_STATE.guests,
@@ -2861,8 +2850,9 @@
           zoneAssignees: normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.zoneAssignees, raw.za || {}), DEFAULT_STATE.zoneAssignees),
           itemPurchased: Object.assign({}, DEFAULT_STATE.itemPurchased, raw.ip || {}),
           itemAssignees: normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.itemAssignees, raw.ia || {}), DEFAULT_STATE.itemAssignees),
+          completedSteps: Array.isArray(raw.cs) ? raw.cs : [],
           comments: stripLegacyDemoComments(raw.cm || {}),
-          ideas: expandedIdeas
+          ideas: Array.isArray(raw.id) && raw.id.length > 0 ? raw.id : JSON.parse(JSON.stringify(DEFAULT_STATE.ideas))
         };
       }
       return raw;
@@ -2887,11 +2877,28 @@
 
     function mergeCloudAndLocalStates(localSt, cloudSt) {
       if (!cloudSt || typeof cloudSt !== 'object') return localSt;
+      const localReset = Number(localSt._resetEpoch || 1);
+      const cloudReset = Number(cloudSt._resetEpoch || 1);
+
+      // Si uno de los dos dispositivos ha ejecutado un reseteo más reciente, prevalece el estado limpio
+      if (cloudReset > localReset) {
+        const cleanFromCloud = Object.assign({}, JSON.parse(JSON.stringify(DEFAULT_STATE)), cloudSt);
+        cleanFromCloud.activeUser = localSt.activeUser || 'Tamara';
+        cleanFromCloud.selectedZoneId = localSt.selectedZoneId || 'zona-jaulas-cactus';
+        cleanFromCloud.zoneFilter = localSt.zoneFilter || 'all';
+        cleanFromCloud.shopFilter = localSt.shopFilter || 'all';
+        return cleanFromCloud;
+      }
+      if (localReset > cloudReset) {
+        return localSt;
+      }
+
       const localTs = Number(localSt._updatedTs || 0);
       const cloudTs = Number(cloudSt._updatedTs || 0);
       const cloudIsNewer = cloudTs >= localTs;
 
-      const merged = Object.assign({}, DEFAULT_STATE, localSt);
+      const merged = Object.assign({}, JSON.parse(JSON.stringify(DEFAULT_STATE)), localSt);
+      merged._resetEpoch = Math.max(localReset, cloudReset);
       merged._updatedTs = Math.max(localTs, cloudTs);
       merged._lastAuthor = cloudIsNewer ? (cloudSt._lastAuthor || localSt._lastAuthor || 'Tamara') : (localSt._lastAuthor || 'Tamara');
       merged.activeUser = localSt.activeUser || 'Tamara';
@@ -2908,40 +2915,15 @@
         merged.zoneAssignees = normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.zoneAssignees, localSt.zoneAssignees || {}, cloudSt.zoneAssignees || {}), DEFAULT_STATE.zoneAssignees);
         merged.itemPurchased = Object.assign({}, DEFAULT_STATE.itemPurchased, localSt.itemPurchased || {}, cloudSt.itemPurchased || {});
         merged.itemAssignees = normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.itemAssignees, localSt.itemAssignees || {}, cloudSt.itemAssignees || {}), DEFAULT_STATE.itemAssignees);
+        if (Array.isArray(cloudSt.completedSteps)) merged.completedSteps = cloudSt.completedSteps;
+        merged.comments = stripLegacyDemoComments(cloudSt.comments || {});
+        if (Array.isArray(cloudSt.ideas)) merged.ideas = cloudSt.ideas;
       } else {
         merged.zoneStatus = Object.assign({}, DEFAULT_STATE.zoneStatus, cloudSt.zoneStatus || {}, localSt.zoneStatus || {});
         merged.zoneAssignees = normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.zoneAssignees, cloudSt.zoneAssignees || {}, localSt.zoneAssignees || {}), DEFAULT_STATE.zoneAssignees);
         merged.itemPurchased = Object.assign({}, DEFAULT_STATE.itemPurchased, cloudSt.itemPurchased || {}, localSt.itemPurchased || {});
         merged.itemAssignees = normalizeOpinionMap(Object.assign({}, DEFAULT_STATE.itemAssignees, cloudSt.itemAssignees || {}, localSt.itemAssignees || {}), DEFAULT_STATE.itemAssignees);
       }
-
-      // Fusión inteligente de comentarios por ID para no perder ninguno de Tamara ni de Lucía
-      const mergedComments = {};
-      const allCommentKeys = new Set([
-        ...Object.keys(localSt.comments || {}),
-        ...Object.keys(cloudSt.comments || {})
-      ]);
-      allCommentKeys.forEach(k => {
-        const byId = new Map();
-        (localSt.comments?.[k] || []).forEach(c => { if (c && c.id) byId.set(c.id, c); });
-        (cloudSt.comments?.[k] || []).forEach(c => { if (c && c.id) byId.set(c.id, c); });
-        const list = Array.from(byId.values());
-        if (list.length > 0) mergedComments[k] = list;
-      });
-      merged.comments = stripLegacyDemoComments(mergedComments);
-
-      // Fusión de ideas por ID respetando el estado más reciente
-      const ideasById = new Map();
-      const firstIdeas = cloudIsNewer ? (localSt.ideas || []) : (cloudSt.ideas || []);
-      const secondIdeas = cloudIsNewer ? (cloudSt.ideas || []) : (localSt.ideas || []);
-      firstIdeas.forEach(i => { if (i && i.id) ideasById.set(i.id, i); });
-      secondIdeas.forEach(i => {
-        if (i && i.id) {
-          const prev = ideasById.get(i.id) || {};
-          ideasById.set(i.id, Object.assign({}, prev, i));
-        }
-      });
-      if (ideasById.size > 0) merged.ideas = Array.from(ideasById.values());
 
       return merged;
     }
@@ -3145,7 +3127,7 @@
       // Valoraciones de Lucía en las zonas
       let lovedZones = 0, ideaZones = 0;
       TABLE_ZONES.forEach(z => {
-        const op = state.zoneAssignees[z.id] || 'love';
+        const op = state.zoneAssignees[z.id] || '';
         if (op === 'love') lovedZones++;
         if (op === 'idea') ideaZones++;
       });
@@ -3845,7 +3827,8 @@
     }
 
     function setZoneAssignee(zoneId, who) {
-      state.zoneAssignees[zoneId] = who;
+      // Si ya estaba marcado ese botón, al volver a tocarlo se desmarca ('')
+      state.zoneAssignees[zoneId] = (state.zoneAssignees[zoneId] === who) ? '' : who;
       saveState();
       renderAll();
     }
@@ -3857,9 +3840,26 @@
     }
 
     function setItemAssignee(itemId, who) {
-      state.itemAssignees[itemId] = who;
+      // Si ya estaba marcado ese botón, al volver a tocarlo se desmarca ('')
+      state.itemAssignees[itemId] = (state.itemAssignees[itemId] === who) ? '' : who;
       saveState();
       renderAll();
+    }
+
+    function resetAllButtonsAndComments() {
+      const currentRole = state.activeUser || 'Tamara';
+      const nextEpoch = (Number(state._resetEpoch) || 1) + 1;
+      state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+      state.activeUser = currentRole;
+      state._resetEpoch = nextEpoch;
+      state._updatedTs = Date.now();
+      state._lastAuthor = currentRole;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      schedulePushToGoogleCloud(true);
+      update3DZoneHighlights();
+      renderAll();
+      const detailsEl = document.getElementById('topbarMenuDetails');
+      if (detailsEl) detailsEl.removeAttribute('open');
     }
 
     function addCustomShopLink(itemId) {
@@ -3918,9 +3918,9 @@
         cost,
         link,
         desc,
-        approved: true,
+        approved: false,
         done: false,
-        likes: 1
+        likes: 0
       });
 
       document.getElementById('newIdeaForm').reset();
@@ -4034,11 +4034,14 @@
     // =========================================================================
     function renderLuciaOpinionBox(targetId, currentOpinion, isZone = true) {
       const fnName = isZone ? 'setZoneAssignee' : 'setItemAssignee';
+      const statusHint = currentOpinion
+        ? 'Toca otra vez para quitar'
+        : 'Sin marcar · Toca 1 botón';
       return `
         <div class="lucia-opinion-box">
           <div class="lucia-opinion-label">
             <span>🧙🏼‍♀️ ¿Qué opina Lucía?</span>
-            <span style="font-weight:600;color:var(--text-dim);">Toca 1 botón</span>
+            <span style="font-weight:600;color:var(--text-dim);">${statusHint}</span>
           </div>
           <div class="lucia-opinion-pills">
             <button type="button" class="opinion-pill-btn ${currentOpinion === 'love' ? 'active-love' : ''}" onclick="${fnName}('${targetId}', 'love')">
@@ -4119,7 +4122,7 @@
       if (!card) return;
       const zone = TABLE_ZONES.find(z => z.id === state.selectedZoneId) || TABLE_ZONES[0];
       const isDone = state.zoneStatus[zone.id] === 'done';
-      const opinion = state.zoneAssignees[zone.id] || 'love';
+      const opinion = state.zoneAssignees[zone.id] || '';
       const extraLinks = state.customShopLinks[zone.id] || [];
       const allLinks = [...zone.shopLinks, ...extraLinks];
 
@@ -4176,18 +4179,18 @@
 
       const filtered = TABLE_ZONES.filter(z => {
         const isDone = state.zoneStatus[z.id] === 'done';
-        const opinion = state.zoneAssignees[z.id] || 'love';
+        const opinion = state.zoneAssignees[z.id] || '';
         const commentsCount = (state.comments[z.id] || []).length;
         if (state.zoneFilter === 'done') return isDone;
         if (state.zoneFilter === 'pending') return !isDone;
         if (state.zoneFilter === 'love') return opinion === 'love';
-        if (state.zoneFilter === 'commented') return commentsCount > 0 || opinion === 'idea';
+        if (state.zoneFilter === 'commented') return commentsCount > 0 || opinion === 'idea' || opinion === 'pending';
         return true;
       });
 
       grid.innerHTML = filtered.map(zone => {
         const isDone = state.zoneStatus[zone.id] === 'done';
-        const opinion = state.zoneAssignees[zone.id] || 'love';
+        const opinion = state.zoneAssignees[zone.id] || '';
         const extraLinks = state.customShopLinks[zone.id] || [];
         const allLinks = [...zone.shopLinks, ...extraLinks];
 
@@ -4248,12 +4251,12 @@
 
       const filterItemFn = (id) => {
         const isDone = !!state.itemPurchased[id];
-        const opinion = state.itemAssignees[id] || 'love';
+        const opinion = state.itemAssignees[id] || '';
         const commentsCount = (state.comments[id] || []).length;
         if (state.shopFilter === 'done') return isDone;
         if (state.shopFilter === 'pending') return !isDone;
         if (state.shopFilter === 'love') return opinion === 'love';
-        if (state.shopFilter === 'commented') return commentsCount > 0 || opinion === 'idea';
+        if (state.shopFilter === 'commented') return commentsCount > 0 || opinion === 'idea' || opinion === 'pending';
         return true;
       };
 
@@ -4261,7 +4264,7 @@
       if (sweetsGrid) {
         sweetsGrid.innerHTML = SWEETS_CATALOG.filter(item => filterItemFn(item.id)).map(item => {
           const isDone = !!state.itemPurchased[item.id];
-          const opinion = state.itemAssignees[item.id] || 'love';
+          const opinion = state.itemAssignees[item.id] || '';
           const qty = Math.max(1, Math.round(item.baseQty35 * scale));
           const price = qty * item.priceByTier[state.tier];
           const weightGrams = Math.round(qty * item.unitWeightKg * 1000);
@@ -4313,7 +4316,7 @@
       if (decorGrid) {
         decorGrid.innerHTML = DECOR_ITEMS.filter(item => filterItemFn(item.id)).map(item => {
           const isDone = !!state.itemPurchased[item.id];
-          const opinion = state.itemAssignees[item.id] || 'love';
+          const opinion = state.itemAssignees[item.id] || '';
           const price = item.cost[state.tier];
           const extraLinks = state.customShopLinks[item.id] || [];
           const allLinks = [...item.links, ...extraLinks];
